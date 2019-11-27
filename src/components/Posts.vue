@@ -21,13 +21,16 @@
     `"
     >
       <!-- The result will automatically updated -->
-      <template #default="{ result: { data, loading } }">
+      <template #default="{ result: { data, loading, error } }">
         <!-- Some content -->
         <div v-if="loading">
           Loading...
         </div>
+        <div v-else-if="error">
+          {{ error }}
+        </div>
         <div
-          v-else-if="data"
+          v-else
           class="posts"
         >
           <PostCard
