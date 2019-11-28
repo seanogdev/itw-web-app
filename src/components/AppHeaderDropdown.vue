@@ -6,7 +6,7 @@
     <button
       class="app-header-dropdown__button"
       type="button"
-      @click="toggleOpen"
+      @click="toggle"
     >
       {{ buttonTitle }}
       <ChevronDown />
@@ -44,8 +44,25 @@ export default {
     },
   },
   methods: {
-    toggleOpen() {
-      this.isOpen = !this.isOpen;
+    toggle() {
+      if (this.isOpen) {
+        this.close();
+      } else {
+        this.open();
+      }
+    },
+    open() {
+      Object.values(this.$parent.$refs).filter(
+        // eslint-disable-next-line no-underscore-dangle
+        (ref) => ref._uid !== this._uid,
+      ).forEach((ref) => {
+        console.log('ref:', ref);
+        ref.close();
+      });
+      this.isOpen = true;
+    },
+    close() {
+      this.isOpen = false;
     },
   },
 };
@@ -58,6 +75,8 @@ export default {
     font-size: 15px;
     font-weight: 600;
     margin-right: $spacing-2;
+    user-select: none;
+    cursor: pointer;
 
     &:hover,
     &:focus {
@@ -96,6 +115,20 @@ export default {
         visibility: visible;
         opacity: 1;
         transform: translateY(0);
+    }
+
+    &::v-deep {
+        ul {
+            max-width: $app-width;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-gap: $spacing * 3;
+        }
+        li {
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
     }
 }
 

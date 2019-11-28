@@ -1,35 +1,28 @@
 <template>
-  <div class="post-card">
+  <router-link
+    :to="postUrl"
+    class="post-card"
+  >
     <post-image
       :image="post.featuredImage"
-      :link="postUrl"
     />
     <div class="post-card-main">
       <post-meta :post="post" />
-      <router-link
-        v-slot="{ href, navigate }"
-        :to="postUrl"
-      >
-        <h3 class="post-card-title">
-          <a
-            :href="href"
-            @click="navigate"
-          > {{ post.title }}</a>
-        </h3>
-      </router-link>
+      <h3 class="post-card-title">
+        {{ post.title }}
+      </h3>
       <!-- eslint-disable vue/no-v-html -->
       <div class="post-card-content">
         {{ post.excerpt | stripHtml | truncate(40) }}&hellip;
       </div>
-      <router-link
-        :to="postUrl"
-        class="post-card-more-link"
+      <span
+        class="post-card-more"
       >
         Read more...
-      </router-link>
+      </span>
+      <!-- eslint-enable vue/no-v-html -->
     </div>
-    <!-- eslint-enable vue/no-v-html -->
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -58,43 +51,53 @@ export default {
 
 <style lang="scss" scoped>
 .post-card {
-  background: #fff;
-  overflow: hidden;
-  border-radius: 4px;
-  border: 1px solid #e9ecf2;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid #e9ecf2;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        border-color: #c5cada;
+
+        h3 {
+            color: $app-primary;
+        }
+    }
 }
 
 .post-meta {
-  margin-bottom: $spacing * 3;
+    color: $text-primary;
+    margin-bottom: $spacing * 3;
 }
 
 .post-card-main {
-  padding: $spacing * 3 $spacing-2;
+    padding: $spacing * 3 $spacing-2;
 }
 
 .post-card-title {
-  font-size: 19px;
-  font-weight: 400;
-  margin-bottom: $spacing-2;
-  a {
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: $spacing-2;
     color: $text-primary;
-  }
 }
 
 img {
-  width: 100%;
-  object-fit: fill;
-  object-position: top center;
+    width: 100%;
+    object-fit: fill;
+    object-position: top center;
 }
 
 .post-card-content {
-  color: $text-secondary;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: $spacing;
+    color: $text-secondary;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: $spacing;
 }
 
-.post-card-more-link {
-  font-size: 13px;
+.post-card-more {
+    font-size: 13px;
 }
+
 </style>

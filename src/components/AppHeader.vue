@@ -8,15 +8,44 @@
         >
           <Logo />
         </router-link>
-        <AppHeaderDropdown button-title="Categories" />
-        <AppHeaderDropdown button-title="Authors" />
+        <AppHeaderDropdown
+          ref="dropdown"
+          button-title="Categories"
+        >
+          <ul v-if="categories">
+            <li
+              v-for="category in categories.edges"
+              :key="category.node.slug"
+            >
+              <router-link :to="`/category/${category.node.slug}`">
+                {{ category.node.name }}
+              </router-link>
+            </li>
+          </ul>
+        </AppHeaderDropdown>
+        <AppHeaderDropdown
+          ref="dropdown"
+          button-title="Authors"
+        >
+          <ul v-if="users">
+            <li
+              v-for="user in users.edges"
+              :key="user.node.slug"
+            >
+              <router-link :to="`/author/${user.node.slug}`">
+                {{ user.node.name }}
+              </router-link>
+            </li>
+          </ul>
+        </AppHeaderDropdown>
       </div>
       <div class="app-header__section app-header__section--right">
         <input
-          v-model="searchInput"
           type="search"
           placeholder="Search..."
           class="app-header-search"
+          :value="searchInput"
+          @input="updateSearchInput"
         >
         <a
           class="app-header-write-link"
@@ -28,6 +57,7 @@
 </template>
 
 <script>
+import gql from 'graphql-tag';
 import AppHeaderDropdown from '@/components/AppHeaderDropdown.vue';
 // eslint-disable-next-line import/extensions
 import Logo from '@/assets/logo.svg?inline';
@@ -41,6 +71,38 @@ export default {
     return {
       searchInput: '',
     };
+  },
+  apollo: {
+    categories: {
+      query: gql`query getCategories {
+        categories {
+           edges {
+             node {
+               slug,
+               name
+             }
+           }
+        }
+      }`,
+    },
+    users: {
+      query: gql`query getUsers {
+        users {
+          edges {
+            node {
+              name
+              slug
+            }
+          }
+        }
+      }`,
+    },
+  },
+  methods: {
+    updateSearchInput(value) {
+      this.searchInput = value;
+      this.$emit('search', value);
+    },
   },
 };
 </script>

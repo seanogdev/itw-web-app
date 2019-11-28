@@ -1,14 +1,14 @@
 <template>
   <div class="posts">
     <ApolloQuery
-      :variables="{ searchString }"
+      :variables="{ first: $options.pageSize, ...queryVariables}"
       :query="query"
       :tag="null"
     >
       <!-- The result will automatically updated -->
-      <template #default="{ result: { data, loading, error } }">
+      <template #default="{ result: { data, loading, error }, isLoading, query: apolloQuery }">
         <!-- Some content -->
-        <div v-if="loading">
+        <div v-if="isLoading">
           Loading...
         </div>
         <div v-else-if="error">
@@ -20,9 +20,16 @@
         >
           <PostCard
             v-for="edge in data.posts.edges"
-            :key="edge.post.postId"
-            :post="edge.post"
+            :key="edge.node.postId"
+            :post="edge.node"
           />
+          <intersect @enter="loadMore(apolloQuery, data.posts.pageInfo.endCursor, isLoading)">
+            <button
+              @click="loadMore(apolloQuery, data.posts.pageInfo.endCursor, isLoading)"
+            >
+              Load more
+            </button>
+          </intersect>
         </div>
       </template>
     </ApolloQuery>
@@ -30,18 +37,64 @@
 </template>
 
 <script>
-import { GET_POSTS_QUERY } from '@/queries/posts';
+import { Intersect } from 'vue-observable';
 import PostCard from '@/components/PostCard.vue';
 
 export default {
   components: {
     PostCard,
+    Intersect,
   },
+  props: {
+    query: {
+      type: Function,
+      required: true,
+    },
+    queryVariables: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  pageSize: 12,
   data() {
     return {
+      cursor: '',
+      hasMore: true,
       searchString: '',
-      query: GET_POSTS_QUERY,
     };
+  },
+  methods: {
+    async loadMore(query, after, loading) {
+      if (loading) {
+        return;
+      }
+      await query.fetchMore({
+        variables: {
+          after,
+        },
+        updateQuery: (prev, result) => {
+          if (prev.posts.pageInfo.endCursor === result.fetchMoreResult.posts.pageInfo.endCursor) {
+            return prev;
+          }
+          if (
+            !result.fetchMoreResult || !result.fetchMoreResult.posts.pageInfo.hasNextPage) {
+            this.hasMore = false;
+            return prev;
+          }
+
+          return {
+            ...prev,
+            posts: {
+              ...prev.posts,
+              edges: [
+                ...prev.posts.edges,
+                ...result.fetchMoreResult.posts.edges,
+              ],
+            },
+          };
+        },
+      });
+    },
   },
 };
 </script>

@@ -15,6 +15,11 @@ const routes = [
     name: 'post-single',
     component: () => import(/* webpackChunkName: "post-single" */ '@/views/PostSingle.vue'),
   },
+  {
+    path: '/category/:slug',
+    name: 'category-single',
+    component: () => import(/* webpackChunkName: "categories-single" */ '@/views/CategorySingle.vue'),
+  },
 ];
 
 const router = new VueRouter({
