@@ -5,6 +5,7 @@
     class="post-image"
   >
     <img
+      v-if="image && image.sourceUrl"
       :src="image.sourceUrl"
       :srcset="image.srcSet"
       :alt="image.altText"
@@ -18,7 +19,7 @@ export default {
   props: {
     image: {
       type: Object,
-      required: true,
+      default: null,
     },
     link: {
       type: String,
@@ -41,7 +42,7 @@ export default {
         type: 'router-link',
         props: {
           to: this.link,
-          title: this.image.altText,
+          title: this.image ? this.image.altText : '',
         },
       };
     },
@@ -51,12 +52,16 @@ export default {
 
 <style lang="scss" scoped>
 .post-image {
-  width: 100%;
-  display: block;
+    width: 100%;
+    height: 240px;
+    display: block;
+    background: #e1e6ee;
 }
 .post-image img {
-  width: 100%;
-  height: 62.375%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
 }
+
 </style>
