@@ -1,17 +1,22 @@
 <template>
   <div class="home">
-    <Posts />
+    <!-- Featured -->
+
+    <!-- Dept Specific -->
+
+    <!-- Paginated -->
+    <PostList />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Posts from '@/components/Posts.vue';
+import PostList from '@/components/PostList.vue';
 
 export default {
   name: 'Home',
   components: {
-    Posts,
+    PostList,
   },
 };
 </script>
