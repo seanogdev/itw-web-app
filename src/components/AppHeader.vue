@@ -55,8 +55,21 @@ export default {
     top: 0;
     width: 100%;
 
+    .app-header-dropdown,
+    .app-header-write-link {
+        display: none;
+    }
+
     @media (min-width: 800px) {
         height: $header-height;
+
+        .app-header-dropdown {
+            display: block;
+        }
+
+        .app-header-write-link {
+            display: flex;
+        }
     }
     svg {
         fill: transparent;
@@ -86,7 +99,6 @@ export default {
 }
 
 .app-header-search {
-    margin-right: $spacing-4;
     border: 1px solid rgba(#403e7f, 0.2);
     border-radius: 20px;
     padding: 0 $spacing-2;
@@ -105,6 +117,7 @@ export default {
     }
 }
 .app-header-write-link {
+    margin-left: $spacing-4;
     height: 40px;
     background: $app-primary;
     color: #fff;

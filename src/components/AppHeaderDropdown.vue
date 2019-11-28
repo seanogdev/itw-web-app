@@ -57,6 +57,7 @@ export default {
     color: $text-primary;
     font-size: 15px;
     font-weight: 600;
+    margin-right: $spacing-2;
 
     &:hover,
     &:focus {
@@ -64,6 +65,7 @@ export default {
     }
 
     svg {
+        margin-left: $spacing;
         width: 14px;
         height: 14px;
         fill: currentColor;

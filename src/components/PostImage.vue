@@ -3,6 +3,7 @@
     :is="containerComponent.type"
     v-bind="containerComponent.props"
     class="post-image"
+    :style="styles"
   >
     <img
       v-if="image && image.sourceUrl"
@@ -29,8 +30,15 @@ export default {
       type: String,
       default: 'lazy',
     },
+    height: {
+      type: Number,
+      default: 240,
+    },
   },
   computed: {
+    styles() {
+      return { height: `${this.height}px` };
+    },
     containerComponent() {
       if (!this.link) {
         return {
@@ -53,9 +61,12 @@ export default {
 <style lang="scss" scoped>
 .post-image {
     width: 100%;
-    height: 240px;
     display: block;
     background: #e1e6ee;
+}
+
+.post-image--card {
+    height: 240px;
 }
 .post-image img {
     width: 100%;
