@@ -1,36 +1,53 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">
-        Home
-      </router-link> |
-      <router-link to="/about">
-        About
-      </router-link>
+    <AppHeader />
+    <div class="app-content">
+      <router-view />
     </div>
-    <router-view />
   </div>
 </template>
 
 <script>
+import AppHeader from '@/components/AppHeader.vue';
+
 export default {
   metaInfo: {
     titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - In The Works` : 'In The Works'),
+  },
+  components: {
+    AppHeader,
   },
 
 }; </script>
 
 <style lang="scss">
+@import '@/styles/reset';
+
 body {
   background: #f5f5f5;
+}
+
+a {
+  text-decoration: none;
+  color: #6A84ED;
+
+  &:hover,
+  &:focus,
+  &:active {
+  color: #6A84ED;
+
+  }
 }
 #app {
   font-family: 'Fakt Soft', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+}
 
+.app-content {
+  max-width: $app-width;
+  margin: 0 auto;
 }
 
 #nav {

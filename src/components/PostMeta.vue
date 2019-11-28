@@ -2,7 +2,7 @@
   <div class="post-meta">
     <time
       :datetime="post.date"
-      class="post-card-date"
+      class="post-meta__date"
     >
       {{ post.date | formatDate }}
     </time>
@@ -41,5 +41,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.post-meta {
+  width: 100%;
+  display: flex;
 
+  & > * {
+    flex: 0 0 auto;
+    font-size: 13px;
+  }
+}
+
+.post-meta__date {
+  margin-right: auto;
+}
 </style>

@@ -48,6 +48,7 @@ export default {
 .post-card {
   background: #fff;
   overflow: hidden;
+  border-radius: 4px;
 }
 
 .post-card-main {
