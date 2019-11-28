@@ -7,14 +7,27 @@
     />
     <div class="post-card-main">
       <post-meta :post="post" />
-      <router-link :to="postUrl">
-        <h3>{{ post.title }}</h3>
+      <router-link
+        v-slot="{ href, navigate }"
+        :to="postUrl"
+      >
+        <h3 class="post-card-title">
+          <a
+            :href="href"
+            @click="navigate"
+          > {{ post.title }}</a>
+        </h3>
       </router-link>
       <!-- eslint-disable vue/no-v-html -->
-      <div
-        class="post-card-content"
-        v-html="post.excerpt"
-      />
+      <div class="post-card-content">
+        {{ post.excerpt | stripHtml | truncate(40) }}&hellip;
+      </div>
+      <router-link
+        :to="postUrl"
+        class="post-card-more-link"
+      >
+        Read more...
+      </router-link>
     </div>
     <!-- eslint-enable vue/no-v-html -->
   </div>
@@ -46,20 +59,43 @@ export default {
 
 <style lang="scss" scoped>
 .post-card {
-  background: #fff;
-  overflow: hidden;
-  border-radius: 4px;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid #e9ecf2;
 }
 
+.post-meta {
+    margin-bottom: $spacing * 3;
+}
 .post-card-main {
-  padding: 24px;
+    padding: $spacing-2;
 }
-a {
-  color: #42b983;
+
+.post-card-title {
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: $spacing-2;
+    a {
+        color: $text-primary;
+    }
 }
+
 img {
-  width: 100%;
-  object-fit: fill;
-  object-position: top center;
+    width: 100%;
+    object-fit: fill;
+    object-position: top center;
 }
+
+.post-card-content {
+    color: $text-secondary;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: $spacing;
+}
+
+.post-card-more-link {
+    font-size: 13px;
+}
+
 </style>

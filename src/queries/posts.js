@@ -1,6 +1,6 @@
 export const GET_POSTS_QUERY = (gql) => gql`
   query getPosts ($searchString: String) {
-    posts ( where: { search: $searchString } ) {
+    posts ( where: { search: $searchString }, first: 12 ) {
       edges {
         # aliasing to post
         post: node {

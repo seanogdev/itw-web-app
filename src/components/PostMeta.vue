@@ -42,16 +42,17 @@ export default {
 
 <style lang="scss" scoped>
 .post-meta {
-  width: 100%;
-  display: flex;
-
-  & > * {
-    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
     font-size: 13px;
-  }
+
+    & > * {
+        flex: 0 0 auto;
+    }
 }
 
 .post-meta__date {
-  margin-right: auto;
+    margin-right: auto;
 }
+
 </style>

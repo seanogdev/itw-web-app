@@ -24,42 +24,41 @@ export default {
 @import '@/styles/reset';
 
 body {
-  background: #f5f5f5;
+    background: #f5f5f5;
+    color: $text-primary;
 }
 
 a {
-  text-decoration: none;
-  color: #6A84ED;
+    text-decoration: none;
+    color: $app-primary;
 
-  &:hover,
-  &:focus,
-  &:active {
-  color: #6A84ED;
-
-  }
+    &:hover,
+    &:focus,
+    &:active {
+        color: $app-primary;
+    }
 }
+
 #app {
-  font-family: 'Fakt Soft', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+    font-family: 'Fakt Soft', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-top: $header-height--small;
+    position: relative;
+
+    @media (min-width: 800px) {
+        padding-top: $header-height;
+    }
 }
 
 .app-content {
-  max-width: $app-width;
-  margin: 0 auto;
-}
+    max-width: $app-width;
+    margin: 0 auto;
+    padding: $spacing * 4 $spacing-2;
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    @media (min-width: 800px) {
+        padding: $spacing * 6 $spacing-2;
     }
-  }
 }
+
 </style>
