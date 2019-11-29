@@ -1,23 +1,23 @@
 <template>
-  <div class="comments">
+  <div
+    v-if="comments"
+    class="comments-list"
+  >
     <div
-      v-if="comments"
-      class="comments-list"
+      v-for="comment in comments.nodes"
+      :key="comment.id"
+      class="comment"
     >
-      <div
-        v-for="comment in comments.nodes"
-        :key="comment.id"
-        class="comment"
-      >
+      <div class="comment-content">
         <div
-          class="comment-content"
+          class="comment-body"
           v-html="comment.content"
         />
-        <CommentList
-          v-if="comment.replies"
-          :comments="comment.replies"
-        />
       </div>
+      <CommentList
+        v-if="comment.replies"
+        :comments="comment.replies"
+      />
     </div>
   </div>
 </template>
@@ -25,7 +25,7 @@
 <script>
 
 export default {
-  name: 'CommentsList',
+  name: 'CommentList',
   props: {
     comments: {
       type: Array,
@@ -37,19 +37,31 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.comment-list {
-}
 
 .comment {
-  border-bottom: 1px solid black;
-  padding: $spacing-4;
+  padding: $spacing-2 0;
 
-  &:last-of-type {
-    border-bottom:0;
+  //sass-lint:disable-block no-combinators
+  &::v-deep .comments-list {
+    margin-left: $spacing-4;
   }
 }
 
 .comment-content {
+  padding: $spacing-4 $spacing-4 $spacing-2;
+  background: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid #e9ecf2;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        border-color: #c5cada;
+    }
+}
+
+.comment-body {
     font-size: 17px;
     line-height: 1.6;
 
@@ -58,6 +70,25 @@ export default {
         ul,
         ol {
             margin-bottom: $spacing-2;
+        }
+
+        br {
+          line-height: 1.8;
+        }
+
+        h1, h2, h3, h4 {
+          margin-top: $spacing;
+          font-weight: 500;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        h3 {
+          font-size: 18px;
         }
     }
 }

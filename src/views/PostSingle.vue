@@ -78,7 +78,7 @@ export default {
 }
 
 .post-single-main {
-    padding: $spacing-4 $spacing-4;
+    padding: $spacing-4 $spacing-6;
 }
 
 .post-single-title {
@@ -87,13 +87,29 @@ export default {
 }
 .post-single-content {
     font-size: 17px;
-    line-height: 1.6;
+    line-height: 1.7;
 
     &::v-deep {
         p,
         ul,
         ol {
             margin-bottom: $spacing-2;
+        }
+
+
+        h1, h2, h3, h4 {
+          margin-top: $spacing;
+          font-weight: 500;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        h3 {
+          font-size: 18px;
         }
     }
 }
