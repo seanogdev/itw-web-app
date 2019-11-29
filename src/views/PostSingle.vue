@@ -100,6 +100,12 @@ export default {
             margin-bottom: $spacing-2;
         }
 
+        .wp-block-image {
+            .aligncenter {
+                text-align: center;
+            }
+        }
+
 
         .wp-block-embed.is-type-video {
             margin: $spacing-4 0;
