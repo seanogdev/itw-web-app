@@ -125,9 +125,11 @@ export default {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             grid-gap: $spacing * 3;
+            grid-auto-flow: row dense;
         }
         li {
             margin-bottom: 8px;
+            line-height: 1.5;
             font-size: 17px;
         }
     }

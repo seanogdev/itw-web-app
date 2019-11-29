@@ -58,7 +58,7 @@
         <a
           class="app-header-write-link"
           target="_blank"
-          href="https://intheworks.teamwork.com/wp/wp-admin"
+          href="https://intheworks.teamwork.com/wp/wp-admin/post-new.php"
         >Write a Post</a>
       </div>
     </div>
