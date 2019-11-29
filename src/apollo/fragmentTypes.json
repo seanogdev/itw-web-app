@@ -1,0 +1,123 @@
+{
+  "__schema": {
+    "types": [
+      {
+        "kind": "INTERFACE",
+        "name": "Node",
+        "possibleTypes": [
+          {
+            "name": "Category"
+          },
+          {
+            "name": "Taxonomy"
+          },
+          {
+            "name": "PostType"
+          },
+          {
+            "name": "Post"
+          },
+          {
+            "name": "Page"
+          },
+          {
+            "name": "User"
+          },
+          {
+            "name": "Comment"
+          },
+          {
+            "name": "CommentAuthor"
+          },
+          {
+            "name": "MediaItem"
+          },
+          {
+            "name": "Tag"
+          },
+          {
+            "name": "Revision"
+          },
+          {
+            "name": "UserRole"
+          },
+          {
+            "name": "Menu"
+          },
+          {
+            "name": "MenuItem"
+          },
+          {
+            "name": "Plugin"
+          },
+          {
+            "name": "Theme"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "PostObjectUnion",
+        "possibleTypes": [
+          {
+            "name": "Post"
+          },
+          {
+            "name": "Page"
+          },
+          {
+            "name": "MediaItem"
+          },
+          {
+            "name": "Revision"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "CommentAuthorUnion",
+        "possibleTypes": [
+          {
+            "name": "CommentAuthor"
+          },
+          {
+            "name": "User"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "TermObjectUnion",
+        "possibleTypes": [
+          {
+            "name": "Category"
+          },
+          {
+            "name": "Tag"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "MenuItemObjectUnion",
+        "possibleTypes": [
+          {
+            "name": "Post"
+          },
+          {
+            "name": "Page"
+          },
+          {
+            "name": "Category"
+          },
+          {
+            "name": "Tag"
+          },
+          {
+            "name": "MenuItem"
+          }
+        ]
+      }
+    ]
+  }
+}

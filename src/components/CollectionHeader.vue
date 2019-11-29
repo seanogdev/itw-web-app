@@ -20,15 +20,14 @@ export default {
 
 <style lang="scss" scoped>
 .collection-header {
-    display: inline-block;
-    color: #373753;
-    padding-bottom: $spacing;
-    border-bottom: 1px solid rgba(#373753, 0.5);
-    font-size: 24px;
-    font-weight: 600;
-    &:hover {
-        border-color: #373753;
-    }
+  display: inline-block;
+  color: #373753;
+  padding-bottom: $spacing;
+  border-bottom: 1px solid rgba(#373753, 0.5);
+  font-size: 24px;
+  font-weight: 600;
+  &:hover {
+    border-color: #373753;
+  }
 }
-
 </style>

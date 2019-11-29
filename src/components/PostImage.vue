@@ -45,19 +45,18 @@ export default {
 
 <style lang="scss" scoped>
 .post-image {
-    width: 100%;
-    display: block;
-    background: #e1e6ee;
+  width: 100%;
+  display: block;
+  background: #e1e6ee;
 }
 
 .post-image--card {
-    height: 240px;
+  height: 240px;
 }
 .post-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
 }
-
 </style>

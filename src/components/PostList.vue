@@ -14,16 +14,17 @@
         root-margin="0px 0px 500px 0px"
         @enter="loadMore"
       >
-        <button
-          class="post-list-button"
-          type="button"
-          @click="loadMore"
-        >
-          <Loading v-if="$apollo.queries.posts.loading" />
-          <template v-else>
+        <div>
+          <Loading v-show="$apollo.queries.posts.loading" />
+          <button
+            v-show="!$apollo.queries.posts.loading"
+            class="post-list-button"
+            type="button"
+            @click="loadMore"
+          >
             Load more
-          </template>
-        </button>
+          </button>
+        </div>
       </intersect>
     </template>
     <EmptyState
@@ -138,26 +139,25 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .post-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    grid-gap: $spacing * 3;
-    margin-bottom: $spacing-6;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-gap: $spacing * 3;
+  margin-bottom: $spacing-6;
 }
 
 .post-list-button {
-    height: 40px;
-    background: transparent;
-    padding: 0 $spacing-3;
-    border-radius: 4px;
-    font-size: 16px;
-    margin: 0 auto;
-    display: block;
-    border: 1px solid #e9ecf2;
-    transition: all 0.2s ease-in-out;
+  height: 40px;
+  background: transparent;
+  padding: 0 $spacing-3;
+  border-radius: 4px;
+  font-size: 16px;
+  margin: 0 auto;
+  display: block;
+  border: 1px solid #e9ecf2;
+  transition: all 0.2s ease-in-out;
 
-    &:hover {
-        border-color: #c5cada;
-    }
+  &:hover {
+    border-color: #c5cada;
+  }
 }
-
 </style>

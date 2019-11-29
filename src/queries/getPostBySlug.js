@@ -22,39 +22,6 @@ export default gql`
           }
         }
       }
-      comments(first: 999, where: { orderby: COMMENT_DATE, order: ASC }) {
-        nodes {
-          ...CommentFields
-          replies: children {
-            nodes {
-              ...CommentFields
-              replies: children {
-                nodes {
-                  ...CommentFields
-                  replies: children {
-                    nodes {
-                      ...CommentFields
-                      replies: children {
-                        nodes {
-                          ...CommentFields
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   }
-
-fragment CommentFields on Comment {
-    id
-    date
-    type
-    approved
-    content
-}
 `;
