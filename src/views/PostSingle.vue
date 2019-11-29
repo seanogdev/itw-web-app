@@ -101,6 +101,11 @@ export default {
         }
 
         .wp-block-image {
+            margin-bottom: $spacing-2;
+
+            & > img {
+                width: 100%;
+            }
             .aligncenter {
                 text-align: center;
             }
