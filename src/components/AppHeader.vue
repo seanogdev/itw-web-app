@@ -52,6 +52,7 @@
           type="search"
           placeholder="Search..."
           class="app-header-search"
+          @keydown.enter="navigateToHome"
         >
         <a
           class="app-header-write-link"
@@ -97,6 +98,9 @@ export default {
   },
   methods: {
     ...mapActions(['updateSearchInput']),
+    navigateToHome() {
+      this.$router.push('/').catch((e) => e);
+    },
   },
 };
 </script>
