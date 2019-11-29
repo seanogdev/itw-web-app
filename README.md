@@ -6,6 +6,7 @@ Using vue & vue-apollo behind the scenes to query the data.
 
 ### 🙏 Things managed I to get done
 - Design
+- Tooling (as close to the company stack as possible)
 - Homepage (without prioritization)
 - Single post page (with comment rendering)
 - Category Page
