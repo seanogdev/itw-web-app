@@ -54,8 +54,8 @@ export default {
     background: #fff;
     overflow: hidden;
     border-radius: 4px;
-    border: 1px solid #e9ecf2;
     cursor: pointer;
+    border: 1px solid #e9ecf2;
     transition: all 0.2s ease-in-out;
 
     &:hover {

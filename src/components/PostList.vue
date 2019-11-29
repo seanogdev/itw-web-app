@@ -16,6 +16,8 @@
       @enter="loadMore"
     >
       <button
+        class="post-list-button"
+        type="button"
         @click="loadMore"
       >
         Load more
@@ -111,6 +113,23 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
     grid-gap: $spacing * 3;
+    margin-bottom: $spacing-6;
+}
+
+.post-list-button {
+    height: 40px;
+    background: transparent;
+    padding: 0 $spacing-3;
+    border-radius: 4px;
+    font-size: 16px;
+    margin: 0 auto;
+    display: block;
+    border: 1px solid #e9ecf2;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        border-color: #c5cada;
+    }
 }
 
 </style>

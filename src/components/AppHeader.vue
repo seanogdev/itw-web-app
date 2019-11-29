@@ -176,7 +176,7 @@ export default {
     height: 40px;
     font-size: 15px;
     background: transparent;
-    font-family: 'Fakt Soft';
+    font-family: $font-family;
     &:focus {
         outline: none;
         border-color: rgba(#403e7f, 0.5);

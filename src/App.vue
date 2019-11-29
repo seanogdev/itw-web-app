@@ -40,7 +40,7 @@ a {
 }
 
 #app {
-    font-family: 'Fakt Soft', Helvetica, Arial, sans-serif;
+    font-family: $font-family;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: $header-height--small;
