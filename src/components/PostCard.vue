@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { parseWpUrl } from '@/utils/helpers';
+import { parseISO, format } from 'date-fns';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
 
@@ -43,7 +43,11 @@ export default {
   },
   computed: {
     postUrl() {
-      return parseWpUrl(this.post.link);
+      const iso = this.post.date ? this.post.date : new Date().toISOString();
+      const date = parseISO(iso);
+      const year = format(date, 'yyyy');
+      const month = format(date, 'MM');
+      return `/${year}/${month}/${this.post.slug}`;
     },
   },
 };

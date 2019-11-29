@@ -9,6 +9,15 @@ module.exports = {
       },
     },
   },
+  devServer: {
+    proxy: {
+      '^/wp-content': {
+        target: 'http://localhost:8000',
+        ws: true,
+        changeOrigin: true,
+      },
+    },
+  },
   chainWebpack: (config) => {
     // GraphQL Loader
     config.module

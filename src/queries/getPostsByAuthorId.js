@@ -12,6 +12,7 @@ export default gql`
           link
           postId
           date
+          slug
           title
           excerpt
           featuredImage {

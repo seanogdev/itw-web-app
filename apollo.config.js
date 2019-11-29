@@ -3,7 +3,7 @@ module.exports = {
     service: {
       name: 'itw',
       // URL to the GraphQL API
-      url: 'http://localhost:8000/graphql',
+      url: 'https://demo.wpgraphql.com/graphql',
     },
     // Files processed by the extension
     includes: [
