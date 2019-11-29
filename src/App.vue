@@ -12,7 +12,13 @@ import AppHeader from '@/components/AppHeader.vue';
 
 export default {
   metaInfo: {
-    titleTemplate: (titleChunk) => (titleChunk ? `${titleChunk} - In The Works` : 'In The Works'),
+    titleTemplate: (titleChunk) => {
+      const appName = process.env.VUE_APP_NAME;
+      if (titleChunk) {
+        return `${titleChunk} -${appName}`;
+      }
+      return appName;
+    },
   },
   components: {
     AppHeader,

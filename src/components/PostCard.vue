@@ -3,9 +3,7 @@
     :to="postUrl"
     class="post-card"
   >
-    <post-image
-      :image="post.featuredImage"
-    />
+    <PostImage :post="post" />
     <div class="post-card-main">
       <post-meta :post="post" />
       <h3 class="post-card-title">

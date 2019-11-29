@@ -1,10 +1,7 @@
 <template>
-  <div
-    v-if="comments"
-    class="comments-list"
-  >
+  <div class="comments-list">
     <div
-      v-for="comment in comments.nodes"
+      v-for="comment in comments"
       :key="comment.id"
       class="comment"
     >
@@ -18,7 +15,7 @@
       </div>
       <CommentList
         v-if="comment.replies"
-        :comments="comment.replies"
+        :comments="comment.replies.nodes"
       />
     </div>
   </div>

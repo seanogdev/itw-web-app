@@ -3,7 +3,7 @@ module.exports = {
     service: {
       name: 'itw',
       // URL to the GraphQL API
-      url: 'https://demo.wpgraphql.com/graphql',
+      url: process.env.VUE_APP_GRAPHQL_ENDPOINT,
     },
     // Files processed by the extension
     includes: [

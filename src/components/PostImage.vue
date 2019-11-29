@@ -5,8 +5,8 @@
   >
     <img
       :src="imageUrl"
-      :srcset="image ? image.srcSet : null"
-      :alt="image ? image.altText : null"
+      :srcset="post.image ? post.image.srcSet : null"
+      :alt="post.image ? post.image.altText : null"
       :loading="loading"
     >
   </div>
@@ -15,9 +15,9 @@
 <script>
 export default {
   props: {
-    image: {
+    post: {
       type: Object,
-      default: null,
+      required: true,
     },
     loading: {
       type: String,
@@ -33,11 +33,11 @@ export default {
       return { height: `${this.height}px` };
     },
     imageUrl() {
-      if (this.image && this.image.sourceUrl) {
-        return this.image.sourceUrl;
+      if (this.post.featuredImage && this.post.featuredImage.sourceUrl) {
+        return this.post.featuredImage.sourceUrl;
       }
       // eslint-disable-next-line no-underscore-dangle
-      return `https://picsum.photos/seed/${this._uid}/200/300`;
+      return `https://picsum.photos/seed/${this.post.postId}/200/300`;
     },
   },
 };

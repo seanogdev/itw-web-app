@@ -5,7 +5,7 @@
     >
       <template v-if="post">
         <PostImage
-          :image="post.featuredImage"
+          :post="post"
           :height="400"
         />
         <div class="post-single-main">
@@ -22,9 +22,12 @@
         </div>
       </template>
     </div>
-    <div class="post-comments">
+    <div
+      v-if="post.comments"
+      class="post-comments"
+    >
       <CollectionHeader>Comments</CollectionHeader>
-      <CommentList :comments="post.comments" />
+      <CommentList :comments="post.comments.nodes" />
     </div>
   </div>
 </template>
