@@ -37,7 +37,7 @@
               :key="user.node.slug"
             >
               <router-link
-                :to="`/author/${user.node.slug}`"
+                :to="`/author/${user.node.userId}`"
                 @click="$refs.dropdown.close()"
               >
                 {{ user.node.name }}
@@ -98,7 +98,7 @@ export default {
           edges {
             node {
               name
-              slug
+              userId
             }
           }
         }

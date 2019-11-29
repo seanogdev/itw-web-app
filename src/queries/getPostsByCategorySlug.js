@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query getPosts($slug: String, $first: Int, $after: String) {
+  query getPosts($slug: String!, $first: Int, $after: String) {
     posts(where: { categoryName: $slug }, first: $first, after: $after) {
       pageInfo {
         endCursor

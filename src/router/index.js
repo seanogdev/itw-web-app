@@ -20,6 +20,11 @@ const routes = [
     name: 'category-single',
     component: () => import(/* webpackChunkName: "categories-single" */ '@/views/CategorySingle.vue'),
   },
+  {
+    path: '/author/:id',
+    name: 'author-single',
+    component: () => import(/* webpackChunkName: "categories-single" */ '@/views/AuthorSingle.vue'),
+  },
 ];
 
 const router = new VueRouter({

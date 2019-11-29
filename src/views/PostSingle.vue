@@ -22,7 +22,7 @@
         </div>
       </template>
     </div>
-    <div class="comments">
+    <div class="post-comments">
       <CollectionHeader>Comments</CollectionHeader>
       <CommentList :comments="post.comments" />
     </div>
@@ -68,7 +68,7 @@ export default {
     overflow: hidden;
     border-radius: 4px;
     border: 1px solid #e9ecf2;
-    max-width: 8 * 120px;
+    max-width: $app-width * 0.8;
     margin: 0 auto;
 }
 
@@ -96,6 +96,11 @@ export default {
             margin-bottom: $spacing-2;
         }
     }
+}
+
+.post-comments {
+  margin: $spacing-8 auto;
+  max-width: $app-width * 0.8;
 }
 
 </style>

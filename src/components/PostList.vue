@@ -50,6 +50,7 @@ export default {
         return {
           searchString: this.searchString,
           first: this.$options.pageSize,
+          ...this.queryVariables,
         };
       },
       query() {

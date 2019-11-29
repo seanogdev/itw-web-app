@@ -22,7 +22,7 @@ export default gql`
           }
         }
       }
-      comments(first: 999) {
+      comments(first: 999, where: { orderby: COMMENT_DATE, order: ASC }) {
         nodes {
           ...CommentFields
           replies: children {
