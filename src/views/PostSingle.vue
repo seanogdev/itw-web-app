@@ -96,27 +96,40 @@ export default {
             margin-bottom: $spacing-2;
         }
 
+        b,
+        strong {
+            font-weight: 500;
+        }
 
-        h1, h2, h3, h4 {
-          margin-top: $spacing;
-          font-weight: 500;
+        i,
+        emphasis {
+            font-style: italic;
+        }
+
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: $spacing;
+            font-weight: 500;
         }
 
         h1 {
-          font-size: 24px;
+            font-size: 24px;
         }
         h2 {
-          font-size: 20px;
+            font-size: 20px;
         }
         h3 {
-          font-size: 18px;
+            font-size: 18px;
         }
     }
 }
 
 .post-comments {
-  margin: $spacing-8 auto;
-  max-width: $app-width * 0.8;
+    margin: $spacing-8 auto;
+    max-width: $app-width * 0.8;
 }
 
 </style>
