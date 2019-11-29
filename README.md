@@ -14,7 +14,7 @@ Using vue & vue-apollo behind the scenes to query the data.
 - Infinite scrolling (fires early so its seamless)
 
 ### 😢Things missing 
-- [ ] Realtime Search (soon)
+- [x] ~~Realtime Search (soon)~~
 - [ ] Auth 
 - [ ] CreateComment mutation
 - [ ] Like system (less soon)
