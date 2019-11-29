@@ -79,6 +79,7 @@ export default {
 .post-card-title {
     font-size: 19px;
     font-weight: 400;
+    line-height: 1.4;
     margin-bottom: $spacing-2;
     color: $text-primary;
 }
