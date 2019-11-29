@@ -24,6 +24,7 @@
     </div>
     <div class="comments">
       <CollectionHeader>Comments</CollectionHeader>
+      <CommentList :comments="post.comments" />
     </div>
   </div>
 </template>
@@ -32,12 +33,14 @@
 import getPostBySlug from '@/queries/getPostBySlug';
 
 import CollectionHeader from '@/components/CollectionHeader.vue';
+import CommentList from '@/components/CommentList.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
 
 export default {
   components: {
     CollectionHeader,
+    CommentList,
     PostImage,
     PostMeta,
   },
