@@ -9,10 +9,12 @@
       class="comment"
     >
       <div class="comment-content">
+        <!-- eslint-disable vue/no-v-html -->
         <div
           class="comment-body"
           v-html="comment.content"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </div>
       <CommentList
         v-if="comment.replies"
@@ -23,7 +25,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'CommentList',
   props: {
@@ -37,23 +38,21 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
 .comment {
-  padding: $spacing-2 0;
+    padding: $spacing-2 0;
 
-  //sass-lint:disable-block no-combinators
-  &::v-deep .comments-list {
-    margin-left: $spacing-4;
-  }
+    //sass-lint:disable-block no-combinators
+    &::v-deep .comments-list {
+        margin-left: $spacing-4;
+    }
 }
 
 .comment-content {
-  padding: $spacing-4 $spacing-4 $spacing-2;
-  background: #fff;
+    padding: $spacing-4 $spacing-4 $spacing-2;
+    background: #fff;
     overflow: hidden;
     border-radius: 4px;
     border: 1px solid #e9ecf2;
-    cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &:hover {
@@ -73,22 +72,25 @@ export default {
         }
 
         br {
-          line-height: 1.8;
+            line-height: 1.8;
         }
 
-        h1, h2, h3, h4 {
-          margin-top: $spacing;
-          font-weight: 500;
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: $spacing;
+            font-weight: 500;
         }
 
         h1 {
-          font-size: 24px;
+            font-size: 24px;
         }
         h2 {
-          font-size: 20px;
+            font-size: 20px;
         }
         h3 {
-          font-size: 18px;
+            font-size: 18px;
         }
     }
 }
