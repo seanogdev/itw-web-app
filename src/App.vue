@@ -27,6 +27,7 @@ export default {
 }; </script>
 
 <style lang="scss">
+@import '@/styles/fonts';
 @import '@/styles/reset';
 
 body {

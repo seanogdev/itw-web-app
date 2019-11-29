@@ -1,0 +1,27 @@
+@mixin font($name, $weight, $style) {
+    @font-face {
+        font-family: 'FaktSoft';
+        font-style: #{$style};
+        font-weight: $weight;
+        src: url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.woff'),
+        url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.ttf'),
+        url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.eot');
+    }
+}
+
+@include font('Thin', 100, 'normal');
+@include font('ThinItalic', 100, 'italic');
+@include font('Light', 200, 'normal');
+@include font('LightItalic', 200, 'italic');
+@include font('Blond', 300, 'normal');
+@include font('BlondItalic', 300, 'italic');
+@include font('Normal', 400, 'normal');
+@include font('NormalItalic', 400, 'italic');
+@include font('Medium', 500, 'normal');
+@include font('MediumItalic', 500, 'italic');
+@include font('SemiBold', 600, 'normal');
+@include font('SemiBoldItalic', 700, 'italic');
+@include font('Bold', 700, 'normal');
+@include font('BoldItalic', 700, 'italic');
+@include font('Black', 800, 'normal');
+@include font('BlackItalic', 800, 'italic');
