@@ -78,7 +78,11 @@ export default {
 }
 
 .post-single-main {
-    padding: $spacing-4 $spacing-6;
+    padding: $spacing-4;
+
+    @media(min-width: 800px) {
+        padding: $spacing-4 $spacing-6;
+    }
 }
 
 .post-single-title {
@@ -103,7 +107,12 @@ export default {
             .wp-block-embed__wrapper {
                 width: calc( 100% + #{$spacing * 12});
                 position: relative;
-                left: -$spacing-6;
+                left: -$spacing-4;
+
+                @media(min-width: 800px) {
+                    left: -$spacing-6;
+                }
+
 
                 iframe {
                     width: 100%;
