@@ -102,7 +102,7 @@ export default {
     width: 100%;
     position: absolute;
     top: 100%;
-    height: 300px;
+    min-height: 300px;
     display: block;
     left: 0;
     background: #fff;
@@ -110,6 +110,7 @@ export default {
     transform: translateY(-20px);
     transition: all 0.2s ease-in-out;
     visibility: hidden;
+    padding: $spacing-4 0;
 
     .app-header-dropdown--is-open & {
         visibility: visible;

@@ -82,7 +82,7 @@ export default {
   apollo: {
     categories: {
       query: gql`query getCategories {
-        categories {
+        categories(first:999) {
            edges {
              node {
                slug,
@@ -94,7 +94,7 @@ export default {
     },
     users: {
       query: gql`query getUsers {
-        users {
+        users(first:999) {
           edges {
             node {
               name

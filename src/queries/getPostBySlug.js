@@ -22,7 +22,7 @@ export default gql`
           }
         }
       }
-      comments {
+      comments(first: 999) {
         nodes {
           ...CommentFields
           replies: children {

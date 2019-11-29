@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss" scoped>
 .collection-header {
-    display: inline;
+    display: inline-block;
     color: #373753;
     padding-bottom: $spacing;
     border-bottom: 1px solid rgba(#373753, 0.5);
