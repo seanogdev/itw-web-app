@@ -121,15 +121,12 @@ export default {
         ul {
             max-width: $app-width;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            grid-gap: $spacing * 3;
-            grid-auto-flow: row dense;
+            columns: 4;
+            column-gap: $spacing-4;
         }
         li {
-            margin-bottom: 8px;
-            line-height: 1.5;
-            font-size: 17px;
+            margin-bottom: $spacing-2;
+            font-size: 16px;
         }
     }
 }

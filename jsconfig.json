@@ -3,10 +3,11 @@
     "./src/**/*"
   ],
   "compilerOptions": {
-    "baseUrl": "src",
+    "target": "esnext",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     }
   },

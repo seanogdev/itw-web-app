@@ -10,10 +10,11 @@
         />
         <div class="post-single-main">
           <PostMeta :post="post" />
-          <h1 class="post-single-title">
-            {{ post.title }}
-          </h1>
           <!-- eslint-disable vue/no-v-html -->
+          <h1
+            class="post-single-title"
+            v-html="post.title"
+          />
           <div
             class="post-single-content"
             v-html="post.content"

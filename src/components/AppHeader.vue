@@ -66,10 +66,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag';
 import AppHeaderDropdown from '@/components/AppHeaderDropdown.vue';
 // eslint-disable-next-line import/extensions
 import Logo from '@/assets/logo.svg?inline';
+import getCategories from '../queries/getCategories';
+import getUsers from '../queries/getUsers';
 
 export default {
   components: {
@@ -83,30 +84,10 @@ export default {
   },
   apollo: {
     categories: {
-      query: gql`
-      query getCategories {
-        categories(first:999, where: { orderby: NAME }) {
-           edges {
-             node {
-               slug,
-               name
-             }
-           }
-        }
-      }`,
+      query: getCategories,
     },
     users: {
-      query: gql`
-      query getUsers {
-        users(first:999, where: { orderby: { field:NICE_NAME}}) {
-          edges {
-            node {
-              name
-              userId
-            }
-          }
-        }
-      }`,
+      query: getUsers,
     },
   },
   methods: {

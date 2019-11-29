@@ -6,10 +6,11 @@
     <PostImage :post="post" />
     <div class="post-card-main">
       <post-meta :post="post" />
-      <h3 class="post-card-title">
-        {{ post.title }}
-      </h3>
       <!-- eslint-disable vue/no-v-html -->
+      <h3
+        class="post-card-title"
+        v-html="post.title"
+      />
       <div class="post-card-content">
         {{ post.excerpt | stripHtml | truncate(40) }}&hellip;
       </div>
