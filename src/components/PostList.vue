@@ -12,7 +12,7 @@
     </div>
     <intersect
       v-if="posts && hasMore"
-      root-margin="0px 0px 50% 0px"
+      root-margin="0px 0px 500px 0px"
       @enter="loadMore"
     >
       <button
