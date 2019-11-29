@@ -48,12 +48,10 @@
       </div>
       <div class="app-header__section app-header__section--right">
         <input
+          v-model="searchInput"
           type="search"
           placeholder="Search..."
           class="app-header-search"
-          :value="searchInput"
-          @change="updateSearchInput"
-          @input="updateSearchInput"
         >
         <a
           class="app-header-write-link"
@@ -66,6 +64,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import AppHeaderDropdown from '@/components/AppHeaderDropdown.vue';
 // eslint-disable-next-line import/extensions
 import Logo from '@/assets/logo.svg?inline';
@@ -77,11 +76,6 @@ export default {
     AppHeaderDropdown,
     Logo,
   },
-  data() {
-    return {
-      searchInput: '',
-    };
-  },
   apollo: {
     categories: {
       query: getCategories,
@@ -90,11 +84,19 @@ export default {
       query: getUsers,
     },
   },
-  methods: {
-    updateSearchInput(event) {
-      this.searchInput = event.target.value;
-      this.$emit('search', this.searchInput);
+  computed: {
+    ...mapState({ searchInputFromState: 'searchInput' }),
+    searchInput: {
+      get() {
+        return this.$store.state.searchInputFromState;
+      },
+      set(value) {
+        this.updateSearchInput(value);
+      },
     },
+  },
+  methods: {
+    ...mapActions(['updateSearchInput']),
   },
 };
 </script>

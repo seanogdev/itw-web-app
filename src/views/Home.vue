@@ -7,7 +7,9 @@
     <!-- Paginated -->
     <PostList
       :query="$options.query"
-      :query-variables="queryVariables"
+      :query-variables="{
+        searchString: this.$store.state.searchInput,
+      }"
     />
   </div>
 </template>
@@ -24,10 +26,5 @@ export default {
     PostList,
   },
   query: getPosts,
-  data() {
-    return {
-      queryVariables: {},
-    };
-  },
 };
 </script>

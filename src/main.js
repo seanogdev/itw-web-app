@@ -6,6 +6,7 @@ import App from '@/App.vue';
 import router from './router';
 import defaultClient from '@/apollo/client';
 import filters from '@/utils/filters';
+import store from './store';
 
 Vue.config.productionTip = false;
 
@@ -25,5 +26,6 @@ Object.entries(filters).forEach(([name, filterFunction]) => {
 new Vue({
   router,
   render: (h) => h(App),
+  store,
   apolloProvider,
 }).$mount('#app');
