@@ -56,7 +56,6 @@ export default {
         // eslint-disable-next-line no-underscore-dangle
         (ref) => ref._uid !== this._uid,
       ).forEach((ref) => {
-        console.log('ref:', ref);
         ref.close();
       });
       this.isOpen = true;
