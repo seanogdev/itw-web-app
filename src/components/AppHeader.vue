@@ -125,6 +125,7 @@ export default {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1;
 
     .app-header-dropdown,
     .app-header-write-link {

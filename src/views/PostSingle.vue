@@ -96,6 +96,22 @@ export default {
             margin-bottom: $spacing-2;
         }
 
+
+        .wp-block-embed.is-type-video {
+            margin: $spacing-4 0;
+            width: 100%;
+            .wp-block-embed__wrapper {
+                width: calc( 100% + #{$spacing * 12});
+                position: relative;
+                left: -$spacing-6;
+
+                iframe {
+                    width: 100%;
+                    height: 480px;
+                }
+            }
+        }
+
         b,
         strong {
             font-weight: 500;
