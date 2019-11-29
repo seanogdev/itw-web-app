@@ -25,6 +25,11 @@ const routes = [
     name: 'author-single',
     component: () => import(/* webpackChunkName: "categories-single" */ '@/views/AuthorSingle.vue'),
   },
+  {
+    path: '*',
+    component: () => import(/* webpackChunkName: "categories-single" */ '@/components/EmptyState.vue'),
+
+  },
 ];
 
 const router = new VueRouter({

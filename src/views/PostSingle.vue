@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div
-      class="post-single"
-    >
-      <template v-if="post">
+    <Loading v-if="$apollo.queries.post.loading" />
+    <EmptyState
+      v-else-if="!post"
+      message="Post not found"
+    />
+    <template v-else>
+      <div class="post-single">
         <PostImage
           :post="post"
           :height="400"
@@ -21,15 +24,15 @@
           />
           <!-- eslint-enable vue/no-v-html -->
         </div>
-      </template>
-    </div>
-    <div
-      v-if="post.comments"
-      class="post-comments"
-    >
-      <CollectionHeader>Comments</CollectionHeader>
-      <CommentList :comments="post.comments.nodes" />
-    </div>
+      </div>
+      <div
+        v-if="post.comments"
+        class="post-comments"
+      >
+        <CollectionHeader>Comments</CollectionHeader>
+        <CommentList :comments="post.comments.nodes" />
+      </div>
+    </template>
   </div>
 </template>
 
@@ -38,6 +41,8 @@ import getPostBySlug from '@/queries/getPostBySlug';
 
 import CollectionHeader from '@/components/CollectionHeader.vue';
 import CommentList from '@/components/CommentList.vue';
+import EmptyState from '@/components/EmptyState.vue';
+import Loading from '@/components/Loading.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
 
@@ -45,6 +50,8 @@ export default {
   components: {
     CollectionHeader,
     CommentList,
+    EmptyState,
+    Loading,
     PostImage,
     PostMeta,
   },

@@ -1,40 +1,51 @@
 <template>
   <div class="posts">
-    <div
-      v-if="posts"
-      class="post-list"
-    >
-      <PostCard
-        v-for="edge in posts.edges"
-        :key="edge.node.postId"
-        :post="edge.node"
-      />
-    </div>
-    <intersect
-      v-if="posts && hasMore"
-      root-margin="0px 0px 500px 0px"
-      @enter="loadMore"
-    >
-      <button
-        class="post-list-button"
-        type="button"
-        @click="loadMore"
+    <Loading v-if="!posts && $apollo.queries.posts.loading" />
+    <template v-if="posts && posts.edges.length">
+      <div class="post-list">
+        <PostCard
+          v-for="edge in posts.edges"
+          :key="edge.node.postId"
+          :post="edge.node"
+        />
+      </div>
+      <intersect
+        v-if="hasMore"
+        root-margin="0px 0px 500px 0px"
+        @enter="loadMore"
       >
-        Load more
-      </button>
-    </intersect>
+        <button
+          class="post-list-button"
+          type="button"
+          @click="loadMore"
+        >
+          <Loading v-if="$apollo.queries.posts.loading" />
+          <template v-else>
+            Load more
+          </template>
+        </button>
+      </intersect>
+    </template>
+    <EmptyState
+      v-if="!$apollo.queries.posts.loading && !posts.edges.length"
+      :message="emptyStateMessage"
+    />
   </div>
 </template>
 
 <script>
 import { Intersect } from 'vue-observable';
+import EmptyState from '@/components/EmptyState.vue';
+import Loading from '@/components/Loading.vue';
 import PostCard from '@/components/PostCard.vue';
 
 export default {
   pageSize: 12,
   components: {
-    PostCard,
+    EmptyState,
     Intersect,
+    Loading,
+    PostCard,
   },
   props: {
     query: {
@@ -50,7 +61,6 @@ export default {
     posts: {
       variables() {
         return {
-          searchString: this.searchString,
           first: this.$options.pageSize,
           ...this.queryVariables,
         };
@@ -60,13 +70,31 @@ export default {
       },
     },
   },
+
   data() {
     return {
       cursor: '',
       hasMore: true,
-      searchString: '',
     };
   },
+
+  computed: {
+    emptyStateMessage() {
+      let message = 'No posts found';
+      const searchString = this.$store.state.searchInput;
+      if (searchString) {
+        message = `${message} with the term "${searchString}"`;
+      }
+      return message;
+    },
+  },
+
+  watch: {
+    queryVariables() {
+      this.hasMore = true;
+    },
+  },
+
   methods: {
     async loadMore() {
       if (this.$apollo.queries.posts.loading) {

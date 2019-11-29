@@ -26,5 +26,10 @@ export default {
     PostList,
   },
   query: getPosts,
+  metaInfo() {
+    return {
+      title: this.$store.state.searchInput ? `"${this.$store.state.searchInput}"` : null,
+    };
+  },
 };
 </script>
