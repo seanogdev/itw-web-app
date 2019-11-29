@@ -83,8 +83,9 @@ export default {
   },
   apollo: {
     categories: {
-      query: gql`query getCategories {
-        categories(first:999) {
+      query: gql`
+      query getCategories {
+        categories(first:999, where: { orderby: NAME }) {
            edges {
              node {
                slug,
@@ -95,8 +96,9 @@ export default {
       }`,
     },
     users: {
-      query: gql`query getUsers {
-        users(first:999) {
+      query: gql`
+      query getUsers {
+        users(first:999, where: { orderby: { field:NICE_NAME}}) {
           edges {
             node {
               name
