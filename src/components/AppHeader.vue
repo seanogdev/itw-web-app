@@ -52,10 +52,12 @@
           placeholder="Search..."
           class="app-header-search"
           :value="searchInput"
+          @change="updateSearchInput"
           @input="updateSearchInput"
         >
         <a
           class="app-header-write-link"
+          target="_blank"
           href="https://intheworks.teamwork.com/wp/wp-admin"
         >Write a Post</a>
       </div>
@@ -106,9 +108,9 @@ export default {
     },
   },
   methods: {
-    updateSearchInput(value) {
-      this.searchInput = value;
-      this.$emit('search', value);
+    updateSearchInput(event) {
+      this.searchInput = event.target.value;
+      this.$emit('search', this.searchInput);
     },
   },
 };
