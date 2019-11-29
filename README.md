@@ -1,6 +1,6 @@
 # itw-web-app
 
-A redesign concept for In The Works for the Teamwork hackathon in November 2019. Its a entirely seperate frontend, accesing the data from Wordpress using [wpgraphql](https://www.wpgraphql.com/).
+A redesign concept for In The Works for the Teamwork hackathon in November 2019. Its an entirely seperate frontend, accesing the data from Wordpress using [wpgraphql](https://www.wpgraphql.com/).
 
 Using vue & vue-apollo behind the scenes to query the data.
 
