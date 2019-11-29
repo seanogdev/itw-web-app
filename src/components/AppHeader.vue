@@ -1,3 +1,4 @@
+
 <template>
   <div class="app-header">
     <div class="app-header__content">
@@ -17,7 +18,10 @@
               v-for="category in categories.edges"
               :key="category.node.slug"
             >
-              <router-link :to="`/category/${category.node.slug}`">
+              <router-link
+                :to="`/category/${category.node.slug}`"
+                @click="$refs.dropdown.close()"
+              >
                 {{ category.node.name }}
               </router-link>
             </li>
@@ -32,7 +36,10 @@
               v-for="user in users.edges"
               :key="user.node.slug"
             >
-              <router-link :to="`/author/${user.node.slug}`">
+              <router-link
+                :to="`/author/${user.node.slug}`"
+                @click="$refs.dropdown.close()"
+              >
                 {{ user.node.name }}
               </router-link>
             </li>
