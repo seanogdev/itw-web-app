@@ -1,38 +1,26 @@
 <template>
   <div class="posts">
-    <ApolloQuery
-      :variables="{ first: $options.pageSize, ...queryVariables}"
-      :query="query"
-      :tag="null"
+    <div
+      v-if="posts"
+      class="post-list"
     >
-      <!-- The result will automatically updated -->
-      <template #default="{ result: { data, loading, error }, isLoading, query: apolloQuery }">
-        <!-- Some content -->
-        <div v-if="isLoading">
-          Loading...
-        </div>
-        <div v-else-if="error">
-          {{ error }}
-        </div>
-        <div
-          v-else-if="data"
-          class="post-list"
-        >
-          <PostCard
-            v-for="edge in data.posts.edges"
-            :key="edge.node.postId"
-            :post="edge.node"
-          />
-          <intersect @enter="loadMore(apolloQuery, data.posts.pageInfo.endCursor, isLoading)">
-            <button
-              @click="loadMore(apolloQuery, data.posts.pageInfo.endCursor, isLoading)"
-            >
-              Load more
-            </button>
-          </intersect>
-        </div>
-      </template>
-    </ApolloQuery>
+      <PostCard
+        v-for="edge in posts.edges"
+        :key="edge.node.postId"
+        :post="edge.node"
+      />
+    </div>
+    <intersect
+      v-if="posts && hasMore"
+      root-margin="0px 0px 500px 0px"
+      @enter="loadMore"
+    >
+      <button
+        @click="loadMore"
+      >
+        Load more
+      </button>
+    </intersect>
   </div>
 </template>
 
@@ -41,13 +29,14 @@ import { Intersect } from 'vue-observable';
 import PostCard from '@/components/PostCard.vue';
 
 export default {
+  pageSize: 12,
   components: {
     PostCard,
     Intersect,
   },
   props: {
     query: {
-      type: Function,
+      type: Object,
       required: true,
     },
     queryVariables: {
@@ -55,7 +44,19 @@ export default {
       default: () => ({}),
     },
   },
-  pageSize: 12,
+  apollo: {
+    posts: {
+      variables() {
+        return {
+          searchString: this.searchString,
+          first: this.$options.pageSize,
+        };
+      },
+      query() {
+        return this.query;
+      },
+    },
+  },
   data() {
     return {
       cursor: '',
@@ -64,36 +65,40 @@ export default {
     };
   },
   methods: {
-    async loadMore(query, after, loading) {
-      if (loading) {
+    async loadMore() {
+      if (this.$apollo.queries.posts.loading) {
         return;
       }
-      await query.fetchMore({
-        variables: {
-          after,
-        },
-        updateQuery: (prev, result) => {
-          if (prev.posts.pageInfo.endCursor === result.fetchMoreResult.posts.pageInfo.endCursor) {
-            return prev;
-          }
-          if (
-            !result.fetchMoreResult || !result.fetchMoreResult.posts.pageInfo.hasNextPage) {
-            this.hasMore = false;
-            return prev;
-          }
 
-          return {
-            ...prev,
-            posts: {
-              ...prev.posts,
-              edges: [
-                ...prev.posts.edges,
-                ...result.fetchMoreResult.posts.edges,
-              ],
-            },
-          };
+      if (!this.posts.pageInfo.endCursor) {
+        this.hasMore = false;
+        return;
+      }
+      await this.$apollo.queries.posts.fetchMore({
+        variables: {
+          after: this.posts.pageInfo.endCursor,
         },
+        updateQuery: this.updateQuery,
       });
+    },
+    updateQuery(previousResult, { fetchMoreResult }) {
+      const newEdges = fetchMoreResult.posts.edges;
+      const { pageInfo } = fetchMoreResult.posts;
+
+      if (!newEdges.length) {
+        this.hasMore = false;
+        return previousResult;
+      }
+      return {
+        // Put the new posts at the end of the list and update `pageInfo`
+        // so we have the new `endCursor` and `hasNextPage` values
+        posts: {
+          // eslint-disable-next-line no-underscore-dangle
+          __typename: previousResult.posts.__typename,
+          edges: [...previousResult.posts.edges, ...newEdges],
+          pageInfo,
+        },
+      };
     },
   },
 };

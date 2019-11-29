@@ -1,13 +1,8 @@
 <template>
   <div class="home">
-    <!-- Featured -->
-
-    <!-- Dept Specific -->
-
-    <!-- Paginated -->
     <PostList
-      :query="query"
-      :query-variables="{ slug: $route.params.slug}"
+      :query="$options.query"
+      :query-variables="{ slug: $route.params.slug }"
     />
   </div>
 </template>
@@ -16,16 +11,13 @@
 
 // @ is an alias to /src
 import PostList from '@/components/PostList.vue';
-import { GET_POSTS_QUERY_CATEGORIES } from '../queries/posts';
+import getPostsByCategorySlug from '@/queries/getPostsByCategorySlug';
+
 
 export default {
   components: {
     PostList,
   },
-  data() {
-    return {
-      query: GET_POSTS_QUERY_CATEGORIES,
-    };
-  },
+  query: getPostsByCategorySlug,
 };
 </script>

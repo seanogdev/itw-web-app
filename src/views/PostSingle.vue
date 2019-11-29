@@ -29,10 +29,11 @@
 </template>
 
 <script>
+import getPostBySlug from '@/queries/getPostBySlug';
+
 import CollectionHeader from '@/components/CollectionHeader.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
-import { GET_POST_BY_SLUG } from '@/queries/posts';
 
 export default {
   components: {
@@ -42,7 +43,7 @@ export default {
   },
   apollo: {
     post: {
-      query: () => GET_POST_BY_SLUG,
+      query: getPostBySlug,
       variables() {
         return {
           slug: this.$route.params.slug,
