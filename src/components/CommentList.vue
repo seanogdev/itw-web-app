@@ -71,6 +71,16 @@ export default {
             margin-bottom: $spacing-2;
         }
 
+        b,
+        strong {
+            font-weight: 500;
+        }
+
+        i,
+        emphasis {
+            font-style: italic;
+        }
+
         br {
             line-height: 1.8;
         }
