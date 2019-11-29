@@ -1,18 +1,15 @@
 <template>
-  <component
-    :is="containerComponent.type"
-    v-bind="containerComponent.props"
+  <div
     class="post-image"
     :style="styles"
   >
     <img
-      v-if="image && image.sourceUrl"
-      :src="image.sourceUrl"
-      :srcset="image.srcSet"
-      :alt="image.altText"
+      :src="imageUrl"
+      :srcset="image ? image.srcSet : null"
+      :alt="image ? image.altText : null"
       :loading="loading"
     >
-  </component>
+  </div>
 </template>
 
 <script>
@@ -20,10 +17,6 @@ export default {
   props: {
     image: {
       type: Object,
-      default: null,
-    },
-    link: {
-      type: String,
       default: null,
     },
     loading: {
@@ -39,20 +32,12 @@ export default {
     styles() {
       return { height: `${this.height}px` };
     },
-    containerComponent() {
-      if (!this.link) {
-        return {
-          type: 'div',
-          props: {},
-        };
+    imageUrl() {
+      if (this.image && this.image.sourceUrl) {
+        return this.image.sourceUrl;
       }
-      return {
-        type: 'router-link',
-        props: {
-          to: this.link,
-          title: this.image ? this.image.altText : '',
-        },
-      };
+      // eslint-disable-next-line no-underscore-dangle
+      return `https://picsum.photos/seed/${this._uid}/200/300`;
     },
   },
 };
