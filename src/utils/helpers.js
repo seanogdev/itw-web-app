@@ -22,8 +22,10 @@ export function stripHtml(html) {
 }
 
 export function truncate(str, wordCount = 15) {
-  return str.split(' ').splice(0, wordCount).join(' ');
+  return str
+    .split(' ')
+    .splice(0, wordCount)
+    .join(' ');
 }
-
 
 export const isProduction = process.env.NODE_ENV === 'production';

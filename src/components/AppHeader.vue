@@ -1,45 +1,23 @@
-
 <template>
   <div class="app-header">
     <div class="app-header__content">
       <div class="app-header__section app-header__section--left">
-        <router-link
-          to="/"
-          class="app-header__logo"
-        >
+        <router-link to="/" class="app-header__logo">
           <Logo />
         </router-link>
-        <AppHeaderDropdown
-          ref="dropdown"
-          button-title="Categories"
-        >
+        <AppHeaderDropdown ref="dropdown" button-title="Categories">
           <ul v-if="categories">
-            <li
-              v-for="category in categories.edges"
-              :key="category.node.slug"
-            >
-              <router-link
-                :to="`/category/${category.node.slug}`"
-                @click="$refs.dropdown.close()"
-              >
+            <li v-for="category in categories.edges" :key="category.node.slug">
+              <router-link :to="`/category/${category.node.slug}`" @click="$refs.dropdown.close()">
                 {{ category.node.name }}
               </router-link>
             </li>
           </ul>
         </AppHeaderDropdown>
-        <AppHeaderDropdown
-          ref="dropdown"
-          button-title="Authors"
-        >
+        <AppHeaderDropdown ref="dropdown" button-title="Authors">
           <ul v-if="users">
-            <li
-              v-for="user in users.edges"
-              :key="user.node.slug"
-            >
-              <router-link
-                :to="`/author/${user.node.userId}`"
-                @click="$refs.dropdown.close()"
-              >
+            <li v-for="user in users.edges" :key="user.node.slug">
+              <router-link :to="`/author/${user.node.userId}`" @click="$refs.dropdown.close()">
                 {{ user.node.name }}
               </router-link>
             </li>
@@ -53,12 +31,13 @@
           placeholder="Search..."
           class="app-header-search"
           @keydown.enter="navigateToHome"
-        >
+        />
         <a
           class="app-header-write-link"
           target="_blank"
           href="https://intheworks.teamwork.com/wp/wp-admin/post-new.php"
-        >Write a Post</a>
+          >Write a Post</a
+        >
       </div>
     </div>
   </div>
@@ -69,8 +48,8 @@ import { mapActions, mapState } from 'vuex';
 import AppHeaderDropdown from '@/components/AppHeaderDropdown.vue';
 // eslint-disable-next-line import/extensions
 import Logo from '@/assets/logo.svg?inline';
-import getCategories from '../queries/getCategories';
-import getUsers from '../queries/getUsers';
+import getCategories from '@/apollo/queries/getCategories';
+import getUsers from '@/apollo/queries/getUsers';
 
 export default {
   components: {

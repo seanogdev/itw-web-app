@@ -7,17 +7,14 @@
     <!-- Paginated -->
     <PostList
       :query="$options.query"
-      :query-variables="{
-        searchString: this.$store.state.searchInput,
-      }"
+      :query-variables="{ searchString: this.$store.state.searchInput }"
     />
   </div>
 </template>
 
 <script>
-
 // @ is an alias to /src
-import getPosts from '@/queries/getPosts';
+import getPosts from '@/apollo/queries/getPosts';
 import FeaturedPosts from '@/components/FeaturedPosts.vue';
 import PostList from '@/components/PostList.vue';
 

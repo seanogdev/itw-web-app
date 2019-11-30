@@ -28,7 +28,6 @@ const routes = [
   {
     path: '*',
     component: () => import(/* webpackChunkName: "categories-single" */ '@/components/EmptyState.vue'),
-
   },
 ];
 

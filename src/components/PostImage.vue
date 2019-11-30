@@ -1,14 +1,11 @@
 <template>
-  <div
-    class="post-image"
-    :style="styles"
-  >
+  <div class="post-image" :style="styles">
     <img
       :src="imageUrl"
       :srcset="post.image ? post.image.srcSet : null"
       :alt="post.image ? post.image.altText : null"
       :loading="loading"
-    >
+    />
   </div>
 </template>
 

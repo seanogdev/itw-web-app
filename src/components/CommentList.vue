@@ -1,18 +1,10 @@
 <template>
-  <div
-    v-if="comments.length"
-    class="comment-list"
-  >
-    <CommentCard
-      v-for="comment in comments"
-      :key="comment.commentId"
-      :comment="comment"
-    />
+  <div v-if="comments.length" class="comment-list">
+    <CommentCard v-for="comment in comments" :key="comment.commentId" :comment="comment" />
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'CommentList',
   components: {

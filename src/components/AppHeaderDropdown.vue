@@ -1,13 +1,6 @@
 <template>
-  <div
-    class="app-header-dropdown"
-    :class="dropdownClasses"
-  >
-    <button
-      class="app-header-dropdown__button"
-      type="button"
-      @click="toggle"
-    >
+  <div class="app-header-dropdown" :class="dropdownClasses">
+    <button class="app-header-dropdown__button" type="button" @click="toggle">
       {{ buttonTitle }}
       <ChevronDown />
     </button>
@@ -38,9 +31,7 @@ export default {
   },
   computed: {
     dropdownClasses() {
-      return [
-        { 'app-header-dropdown--is-open': this.isOpen },
-      ];
+      return [{ 'app-header-dropdown--is-open': this.isOpen }];
     },
   },
   methods: {
@@ -52,12 +43,14 @@ export default {
       }
     },
     open() {
-      Object.values(this.$parent.$refs).filter(
-        // eslint-disable-next-line no-underscore-dangle
-        (ref) => ref._uid !== this._uid,
-      ).forEach((ref) => {
-        ref.close();
-      });
+      Object.values(this.$parent.$refs)
+        .filter(
+          // eslint-disable-next-line no-underscore-dangle
+          (ref) => ref._uid !== this._uid,
+        )
+        .forEach((ref) => {
+          ref.close();
+        });
       this.isOpen = true;
     },
     close() {

@@ -19,5 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/itw2020/
 /wp-content/uploads/

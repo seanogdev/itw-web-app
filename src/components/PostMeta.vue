@@ -1,16 +1,10 @@
 <template>
   <div class="post-meta">
-    <time
-      :datetime="post.date"
-      class="post-meta__date"
-    >
+    <time :datetime="post.date" class="post-meta__date">
       {{ post.date | formatDate }}
     </time>
 
-    <router-link
-      v-if="category"
-      :to="categoryUrl"
-    >
+    <router-link v-if="category" :to="categoryUrl">
       {{ category.name }}
     </router-link>
   </div>

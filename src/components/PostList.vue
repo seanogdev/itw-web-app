@@ -3,17 +3,9 @@
     <Loading v-if="!posts && $apollo.queries.posts.loading" />
     <template v-if="posts && posts.edges.length">
       <div class="post-list">
-        <PostCard
-          v-for="edge in posts.edges"
-          :key="edge.node.postId"
-          :post="edge.node"
-        />
+        <PostCard v-for="edge in posts.edges" :key="edge.node.postId" :post="edge.node" />
       </div>
-      <intersect
-        v-if="hasMore"
-        root-margin="0px 0px 500px 0px"
-        @enter="loadMore"
-      >
+      <intersect v-if="hasMore" root-margin="0px 0px 500px 0px" @enter="loadMore">
         <div>
           <Loading v-show="$apollo.queries.posts.loading" />
           <button

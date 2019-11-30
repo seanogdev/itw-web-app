@@ -2,28 +2,18 @@
   <div class="comment">
     <div class="comment-card">
       <div class="comment-card-content">
-        <router-link
-          :to="getLinkForAuthor(comment.author)"
-          class="comment-card-name"
-        >
+        <router-link :to="getLinkForAuthor(comment.author)" class="comment-card-name">
           {{ comment.author.name }}
         </router-link>
-        <time
-          :datetime="comment.date"
-          class="comment-card-date"
-        >{{ comment.date | formatDate }}</time>
+        <time :datetime="comment.date" class="comment-card-date">{{
+          comment.date | formatDate
+        }}</time>
         <!-- eslint-disable vue/no-v-html -->
-        <div
-          class="comment-card-body"
-          v-html="comment.content"
-        />
+        <div class="comment-card-body" v-html="comment.content" />
         <!-- eslint-enable vue/no-v-html -->
       </div>
     </div>
-    <CommentList
-      v-if="comment.replies.nodes.length"
-      :comments="comment.replies.nodes"
-    />
+    <CommentList v-if="comment.replies.nodes.length" :comments="comment.replies.nodes" />
   </div>
 </template>
 

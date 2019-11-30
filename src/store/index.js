@@ -20,6 +20,5 @@ export default new Vuex.Store({
       commit('updateSearchInput', value);
     },
   },
-  modules: {
-  },
+  modules: {},
 });
