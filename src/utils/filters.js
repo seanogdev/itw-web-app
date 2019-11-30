@@ -1,5 +1,5 @@
 import { parseISO, format } from 'date-fns/esm';
-import { stripHtml, truncate } from '@/utils/helpers';
+import { stripHtml, truncate, decode } from '@/utils/helpers';
 
 /**
  * @param {Date} date
@@ -12,6 +12,7 @@ function formatDate(date, formatString = 'MMMM d, yyyy') {
 }
 
 export default {
+  decode,
   formatDate,
   stripHtml,
   truncate,

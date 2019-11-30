@@ -4,7 +4,9 @@
     <div class="post-card-main">
       <post-meta :post="post" />
       <!-- eslint-disable vue/no-v-html -->
-      <h3 class="post-card-title" v-html="post.title" />
+      <h3 class="post-card-title">
+        {{ post.title | decode }}
+      </h3>
       <div class="post-card-content">
         {{ post.excerpt | stripHtml | truncate(trunncationAmount) }}&hellip;
       </div>

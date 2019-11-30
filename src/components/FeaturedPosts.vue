@@ -14,7 +14,9 @@
           >
             <li>
               <!-- eslint-disable vue/no-v-html -->
-              <a :href="href" @click="navigate" v-html="post.node.title" />
+              <a :href="href" @click="navigate">
+                {{ post.node.title | decode }}
+              </a>
               <!-- eslint-enable vue/no-v-html -->
               <time :datetime="post.node.date">
                 {{ post.node.date | formatDate }}

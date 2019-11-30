@@ -1,4 +1,9 @@
 import { parseISO, format } from 'date-fns/esm';
+import he from 'he';
+
+export function decode(string) {
+  return he.decode(string);
+}
 
 export function parseWpUrl(link) {
   try {

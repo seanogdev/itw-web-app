@@ -8,7 +8,9 @@
         <div class="post-single-main">
           <PostMeta :post="post" />
           <!-- eslint-disable vue/no-v-html -->
-          <h1 class="post-single-title" v-html="post.title" />
+          <h1 class="post-single-title">
+            {{ post.title | decode }}
+          </h1>
           <div class="post-single-content" v-html="post.content" />
           <!-- eslint-enable vue/no-v-html -->
         </div>
@@ -36,6 +38,7 @@ import CreateCommentForm from '@/components/CreateCommentForm.vue';
 import EmptyState from '@/components/EmptyState.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
+import { decode } from '../utils/helpers';
 
 export default {
   components: {
@@ -71,7 +74,7 @@ export default {
   },
   metaInfo() {
     return {
-      title: this.post ? this.post.title : null,
+      title: this.post ? decode(this.post.title) : null,
     };
   },
 };
