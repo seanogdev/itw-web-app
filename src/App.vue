@@ -62,10 +62,6 @@ a {
     max-width: $app-width;
     margin: 0 auto;
     padding: $spacing * 4 $spacing-2;
-
-    @media (min-width: 800px) {
-        padding: $spacing * 6 $spacing-2;
-    }
 }
 
 </style>

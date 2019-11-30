@@ -2,8 +2,12 @@
   <router-link
     :to="postUrl"
     class="post-card"
+    :class="postCardClass"
   >
-    <PostImage :post="post" />
+    <PostImage
+      :post="post"
+      :height="imageHeight"
+    />
     <div class="post-card-main">
       <post-meta :post="post" />
       <!-- eslint-disable vue/no-v-html -->
@@ -12,7 +16,7 @@
         v-html="post.title"
       />
       <div class="post-card-content">
-        {{ post.excerpt | stripHtml | truncate(40) }}&hellip;
+        {{ post.excerpt | stripHtml | truncate(trunncationAmount) }}&hellip;
       </div>
       <!-- eslint-enable vue/no-v-html -->
     </div>
@@ -20,9 +24,9 @@
 </template>
 
 <script>
-import { parseISO, format } from 'date-fns';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
+import { generatePostUrl } from '@/utils/helpers';
 
 export default {
   components: {
@@ -34,14 +38,29 @@ export default {
       type: Object,
       required: true,
     },
+    trunncationAmount: {
+      type: Number,
+      default: 40,
+    },
+    variant: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
+    postCardClass() {
+      return [
+        { [`post-card--${this.variant}`]: this.variant },
+      ];
+    },
+    imageHeight() {
+      if (this.variant === 'large') {
+        return 360;
+      }
+      return 240;
+    },
     postUrl() {
-      const iso = this.post.date ? this.post.date : new Date().toISOString();
-      const date = parseISO(iso);
-      const year = format(date, 'yyyy');
-      const month = format(date, 'MM');
-      return `/${year}/${month}/${this.post.slug}`;
+      return generatePostUrl(this.post);
     },
   },
 };
@@ -49,49 +68,71 @@ export default {
 
 <style lang="scss" scoped>
 .post-card {
-  background: #fff;
-  overflow: hidden;
-  border-radius: 4px;
-  cursor: pointer;
-  border: 1px solid #e9ecf2;
-  transition: all 0.2s ease-in-out;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #e9ecf2;
+    transition: all 0.2s ease-in-out;
 
-  &:hover {
-    border-color: #c5cada;
+    &:hover {
+        border-color: #c5cada;
 
-    h3 {
-      color: $app-primary;
+        h3 {
+            color: $app-primary;
+        }
     }
-  }
+}
+
+.post-card--large {
+    display: flex;
+
+    .post-image {
+        flex: 1 0 400px;
+    }
+
+    .post-card-title {
+        font-size: 26px;
+        font-weight: 500;
+    }
+
+    .post-meta {
+        font-size: 15px;
+    }
+
+    .post-card-main {
+        padding: $spacing-4;
+    }
 }
 
 .post-meta {
-  color: $text-primary;
-  margin-bottom: $spacing * 3;
+    color: $text-primary;
+    margin-bottom: $spacing * 3;
 }
 
 .post-card-main {
-  padding: $spacing * 3 $spacing-2;
+    padding: $spacing * 3 $spacing-2;
 }
 
 .post-card-title {
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1.4;
-  margin-bottom: $spacing-2;
-  color: $text-primary;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin-bottom: $spacing-2;
+    color: $text-primary;
 }
 
 img {
-  width: 100%;
-  object-fit: fill;
-  object-position: top center;
+    width: 100%;
+    object-fit: fill;
+    object-position: top center;
 }
 
 .post-card-content {
-  color: $text-secondary;
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: $spacing;
+    color: $text-secondary;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: $spacing;
 }
+
 </style>

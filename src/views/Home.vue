@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- Featured -->
-
+    <FeaturedPosts v-show="!this.$store.state.searchInput" />
     <!-- Dept Specific -->
 
     <!-- Paginated -->
@@ -18,11 +18,13 @@
 
 // @ is an alias to /src
 import getPosts from '@/queries/getPosts';
+import FeaturedPosts from '@/components/FeaturedPosts.vue';
 import PostList from '@/components/PostList.vue';
 
 export default {
   name: 'Home',
   components: {
+    FeaturedPosts,
     PostList,
   },
   query: getPosts,
