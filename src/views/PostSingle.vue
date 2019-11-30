@@ -137,6 +137,10 @@ export default {
       }
     }
 
+    .wp-caption-text {
+      font-size: 13px;
+    }
+
     .wp-block-embed.is-type-video {
       margin: $spacing-4 0;
       width: 100%;
@@ -170,18 +174,19 @@ export default {
     h2,
     h3,
     h4 {
-      margin-top: $spacing;
+      margin-top: $spacing-4;
+      margin-bottom: $spacing;
       font-weight: 500;
     }
 
     h1 {
-      font-size: 24px;
+      font-size: 28px;
     }
     h2 {
-      font-size: 20px;
+      font-size: 24px;
     }
     h3 {
-      font-size: 18px;
+      font-size: 20px;
     }
   }
 }
