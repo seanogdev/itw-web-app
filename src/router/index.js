@@ -18,7 +18,8 @@ const routes = [
   {
     path: '/category/:slug',
     name: 'category-single',
-    component: () => import(/* webpackChunkName: "categories-single" */ '@/views/CategorySingle.vue'),
+    component: () =>
+      import(/* webpackChunkName: "categories-single" */ '@/views/CategorySingle.vue'),
   },
   {
     path: '/author/:id',
@@ -27,7 +28,8 @@ const routes = [
   },
   {
     path: '*',
-    component: () => import(/* webpackChunkName: "categories-single" */ '@/components/EmptyState.vue'),
+    component: () =>
+      import(/* webpackChunkName: "categories-single" */ '@/components/EmptyState.vue'),
   },
 ];
 

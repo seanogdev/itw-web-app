@@ -5,9 +5,9 @@
         <router-link :to="getLinkForAuthor(comment.author)" class="comment-card-name">
           {{ comment.author.name }}
         </router-link>
-        <time :datetime="comment.date" class="comment-card-date">{{
-          comment.date | formatDate
-        }}</time>
+        <time :datetime="comment.date" class="comment-card-date">
+          {{ comment.date | formatDate }}
+        </time>
         <!-- eslint-disable vue/no-v-html -->
         <div class="comment-card-body" v-html="comment.content" />
         <!-- eslint-enable vue/no-v-html -->
