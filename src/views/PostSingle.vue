@@ -15,7 +15,11 @@
       </div>
       <div v-if="comments" class="post-comments">
         <CollectionHeader>Comments</CollectionHeader>
-        <CommentList :comments="comments.nodes" />
+        <template v-if="comments.nodes.length">
+          <CommentList :post-id="post.postId" :comments="comments.nodes" />
+        </template>
+        <CollectionHeader>Leave a new comment</CollectionHeader>
+        <CreateCommentForm :post-id="post.postId" />
       </div>
     </template>
   </div>
@@ -27,6 +31,7 @@ import getPostBySlug from '@/apollo/queries/getPostBySlug';
 
 import CollectionHeader from '@/components/CollectionHeader.vue';
 import CommentList from '@/components/CommentList.vue';
+import CreateCommentForm from '@/components/CreateCommentForm.vue';
 import EmptyState from '@/components/EmptyState.vue';
 import Loading from '@/components/Loading.vue';
 import PostImage from '@/components/PostImage.vue';
@@ -34,6 +39,7 @@ import PostMeta from '@/components/PostMeta.vue';
 
 export default {
   components: {
+    CreateCommentForm,
     CollectionHeader,
     CommentList,
     EmptyState,

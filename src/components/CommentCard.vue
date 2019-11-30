@@ -11,25 +11,46 @@
         <!-- eslint-disable vue/no-v-html -->
         <div class="comment-card-body" v-html="comment.content" />
         <!-- eslint-enable vue/no-v-html -->
+        <button @click="toggleReplyForm">Reply to {{ comment.author.name }}</button>
       </div>
     </div>
-    <CommentList v-if="comment.replies.nodes.length" :comments="comment.replies.nodes" />
+    <CreateCommentForm
+      v-if="shouldShowReplyForm"
+      :parent-comment-id="comment.commentId"
+      :post-id="postId"
+    />
+    <CommentList
+      v-if="comment.replies.nodes.length"
+      :post-id="postId"
+      :comments="comment.replies.nodes"
+    />
   </div>
 </template>
 
 <script>
 import CommentList from '@/components/CommentList.vue';
+import CreateCommentForm from '@/components/CreateCommentForm.vue';
 
 export default {
   name: 'CommentCard',
   components: {
     CommentList,
+    CreateCommentForm,
   },
   props: {
     comment: {
       type: Object,
       required: true,
     },
+    postId: {
+      type: Number,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      shouldShowReplyForm: false,
+    };
   },
   methods: {
     getLinkForAuthor(author) {
@@ -37,6 +58,9 @@ export default {
         return '';
       }
       return `/authors/${author.userId}`;
+    },
+    toggleReplyForm() {
+      this.shouldShowReplyForm = !this.shouldShowReplyForm;
     },
   },
 };

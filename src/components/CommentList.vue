@@ -1,6 +1,11 @@
 <template>
   <div v-if="comments.length" class="comment-list">
-    <CommentCard v-for="comment in comments" :key="comment.commentId" :comment="comment" />
+    <CommentCard
+      v-for="comment in comments"
+      :key="comment.commentId"
+      :post-id="postId"
+      :comment="comment"
+    />
   </div>
 </template>
 
@@ -16,6 +21,10 @@ export default {
     comments: {
       type: Array,
       default: null,
+    },
+    postId: {
+      type: Number,
+      required: true,
     },
   },
 };
