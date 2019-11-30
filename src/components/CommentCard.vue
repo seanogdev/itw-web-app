@@ -99,7 +99,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .comment-card {
   margin-top: $spacing-4;
   padding: $spacing-4 $spacing-6;
@@ -127,13 +127,14 @@ export default {
 
 .comment-card-date {
   font-size: 14px;
+  color: #9b9cb1;
   padding-bottom: $spacing-3;
 }
 
 .comment-card-body {
   font-size: 17px;
   line-height: 1.6;
-  padding-bottom: $spacing-4;
+  padding-bottom: $spacing-2;
   color: $text-secondary;
 
   &::v-deep {
@@ -175,6 +176,12 @@ export default {
       font-size: 18px;
     }
   }
+}
+
+.app-button {
+  height: 32px;
+  padding: 0 $spacing-3;
+  font-size: 13px;
 }
 
 .create-comment {
