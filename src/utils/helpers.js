@@ -5,6 +5,18 @@ export function decode(string) {
   return he.decode(string);
 }
 
+export function linkify(string) {
+  // Regex source https://rubular.com/r/eGPe4bGlwMd98E
+  const urlRegex = /(https?:\/\/[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}([a-zA-Z0-9]|[/]))/g;
+  return string.replace(urlRegex, '<a href="$1" target="_blank">$1</a>');
+}
+
+export function nl2br(string) {
+  return `<p>${String(string)
+    .trim() // trim trailing whitespace
+    .replace(/\n/g, '<br />')}</p>`;
+}
+
 export function parseWpUrl(link) {
   try {
     return new URL(link).pathname;
