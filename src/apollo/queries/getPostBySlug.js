@@ -9,11 +9,12 @@ export default gql`
       date
       content
       author {
-        userId
         avatar(size: 200) {
           url
         }
-        name
+        description
+        nickname
+        userId
       }
       featuredImage {
         altText

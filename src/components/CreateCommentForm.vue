@@ -8,7 +8,7 @@
       :name="textareaKey"
       cols="30"
       rows="10"
-      @keydown.enter="submitComment"
+      @keydown.enter="handleCmdEnter"
     ></textarea>
     <div class="create-comment-buttons">
       <AppButton v-if="showCancelButton" alt class="create-comment-submit" @click="$emit('cancel')">

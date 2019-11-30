@@ -1,19 +1,24 @@
 <template>
   <component :is="tag" class="app-button" :class="classes" v-bind="computedProps" v-on="$listeners">
-    <slot />
+    <Loading v-if="loading" />
+    <slot v-else />
   </component>
 </template>
 
 <script>
 export default {
   props: {
-    tag: {
-      type: String,
-      default: 'button',
-    },
     alt: {
       type: Boolean,
       default: false,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    tag: {
+      type: String,
+      default: 'button',
     },
   },
 
@@ -61,6 +66,15 @@ export default {
   &:active {
     background: #4461d7;
     cursor: pointer;
+  }
+
+  .loader {
+    //sass-lint:disable-block no-combinators
+    &::v-deep {
+      & > * {
+        background: #fff;
+      }
+    }
   }
 }
 

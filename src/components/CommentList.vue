@@ -3,6 +3,7 @@
     <CommentCard
       v-for="comment in comments"
       :key="comment.commentId"
+      :depth="depth"
       :post-id="postId"
       :comment="comment"
     />
@@ -18,6 +19,10 @@ export default {
     CommentCard: () => import('@/components/CommentCard.vue'),
   },
   props: {
+    depth: {
+      type: Number,
+      default: 1,
+    },
     comments: {
       type: Array,
       default: null,

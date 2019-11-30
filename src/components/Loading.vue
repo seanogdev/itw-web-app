@@ -7,10 +7,11 @@
 </template>
 
 <style lang="scss" scoped>
+$size: $spacing;
 @keyframes loader {
   to {
     opacity: 0.1;
-    transform: translate3d(0, -$spacing-2, 0);
+    transform: translate3d(0, -$size, 0);
   }
 }
 .loader {
@@ -18,9 +19,9 @@
   justify-content: center;
 }
 .loader > div {
-  width: $spacing-2;
-  height: $spacing-2;
-  margin: $spacing-4 $spacing/2;
+  width: $size;
+  height: $size;
+  margin: $size * 2 $size/4;
   background: $app-primary;
   border-radius: 50%;
   animation: loader 0.6s infinite alternate;

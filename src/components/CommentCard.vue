@@ -21,7 +21,7 @@
       </div>
     </div>
     <CreateCommentForm
-      v-if="shouldShowReplyForm"
+      v-if="computedShowReplyForm"
       ref="commentForm"
       :parent-comment-id="comment.commentId"
       :post-id="postId"
@@ -31,6 +31,7 @@
     />
     <CommentList
       v-if="comment.replies.nodes.length"
+      :depth="depth + 1"
       :post-id="postId"
       :comments="comment.replies.nodes"
     />
@@ -49,6 +50,10 @@ export default {
     CreateCommentForm,
   },
   props: {
+    depth: {
+      type: Number,
+      required: true,
+    },
     comment: {
       type: Object,
       required: true,
@@ -62,6 +67,11 @@ export default {
     return {
       shouldShowReplyForm: false,
     };
+  },
+  computed: {
+    computedShowReplyForm() {
+      return this.depth < 5 && this.shouldShowReplyForm;
+    },
   },
   methods: {
     getLinkForAuthor(author) {
