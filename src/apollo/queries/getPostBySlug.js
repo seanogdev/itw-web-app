@@ -8,6 +8,13 @@ export default gql`
       title
       date
       content
+      author {
+        userId
+        avatar(size: 200) {
+          url
+        }
+        name
+      }
       featuredImage {
         altText
         sourceUrl

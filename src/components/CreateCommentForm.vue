@@ -1,8 +1,8 @@
 <template>
   <form ref="form" class="create-comment" @submit.prevent="submitComment">
-    <h3 v-if="title" class="create-comment-title">{{ title }}</h3>
+    <label v-if="title" :for="textareaKey" class="create-comment-title">{{ title }}</label>
     <textarea
-      id=""
+      :id="textareaKey"
       v-model="message"
       class="create-comment-message"
       :name="textareaKey"
@@ -15,6 +15,10 @@
         Cancel
       </AppButton>
 
+      <AppButton v-else-if="message" alt class="create-comment-submit" @click="clearMessage">
+        Clear
+      </AppButton>
+
       <AppButton class="create-comment-submit">Add comment</AppButton>
     </div>
   </form>
@@ -22,6 +26,7 @@
 
 <script>
 import createComment from '@/apollo/mutations/createComment';
+import { focusFirstFocusable } from '../utils/helpers';
 
 export default {
   props: {
@@ -31,7 +36,7 @@ export default {
     },
     parentCommentId: {
       type: Number,
-      required: true,
+      default: null,
     },
     title: {
       type: String,
@@ -57,6 +62,11 @@ export default {
     },
   },
   methods: {
+    async clearMessage() {
+      this.message = '';
+      await this.$nextTick();
+      focusFirstFocusable(this.$el);
+    },
     handleCmdEnter(event) {
       const systemModifierKey = navigator.platform === 'MacIntel' ? event.metaKey : event.ctrlKey;
       if (systemModifierKey) {

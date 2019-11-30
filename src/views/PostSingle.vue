@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="post-single">
     <Loading v-if="$apollo.queries.post.loading" />
     <EmptyState v-else-if="!post" message="Post not found" />
     <template v-else>
-      <div class="post-single">
+      <div class="post-single-box">
         <PostImage :post="post" :height="400" />
         <div class="post-single-main">
           <PostMeta :post="post" />
@@ -13,13 +13,13 @@
           <!-- eslint-enable vue/no-v-html -->
         </div>
       </div>
+      <AuthorBox :author="post.author" />
       <div v-if="comments" class="post-comments">
         <CollectionHeader>Comments</CollectionHeader>
         <template v-if="comments.nodes.length">
           <CommentList :post-id="post.postId" :comments="comments.nodes" />
         </template>
-        <CollectionHeader>Leave a new comment</CollectionHeader>
-        <CreateCommentForm :post-id="post.postId" />
+        <CreateCommentForm title="Leave a new comment" :post-id="post.postId" />
       </div>
     </template>
   </div>
@@ -29,6 +29,7 @@
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import getPostBySlug from '@/apollo/queries/getPostBySlug';
 
+import AuthorBox from '@/components/AuthorBox.vue';
 import CollectionHeader from '@/components/CollectionHeader.vue';
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
@@ -38,6 +39,7 @@ import PostMeta from '@/components/PostMeta.vue';
 
 export default {
   components: {
+    AuthorBox,
     CreateCommentForm,
     CollectionHeader,
     CommentList,
@@ -77,12 +79,16 @@ export default {
 
 <style lang="scss" scoped>
 .post-single {
+  max-width: $app-width * 0.8;
+  margin: 0 auto;
+}
+
+.post-single-box {
   background: #fff;
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid #e9ecf2;
-  max-width: $app-width * 0.8;
-  margin: 0 auto;
+  margin-bottom: $spacing-4;
 }
 
 .post-meta {
@@ -177,12 +183,16 @@ export default {
   }
 }
 
+.author-box {
+  margin-bottom: $spacing-4;
+}
+
 .post-comments {
-  margin: $spacing-8 auto;
+  margin: 0 auto $spacing-8;
   max-width: $app-width * 0.8;
 
   .comment-list {
-    padding-bottom: $spacing-8;
+    padding-bottom: $spacing-2;
   }
 }
 </style>
