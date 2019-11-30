@@ -85,12 +85,13 @@ export default {
 }
 
 .post-card--large {
-    display: flex;
+    @media (min-width: 800px) {
+        display: flex;
 
-    .post-image {
-        flex: 1 0 400px;
+        .post-image {
+            flex: 1 0 400px;
+        }
     }
-
     .post-card-title {
         font-size: 26px;
         font-weight: 500;

@@ -93,12 +93,18 @@ export default {
 }
 
 .featured-posts-content {
-    display: grid;
-    grid-template-columns: 1fr $spacing * 47;
-    grid-gap: $spacing * 3;
+    @media (min-width: 800px) {
+        display: grid;
+        grid-template-columns: 1fr minmax(0px, $spacing * 47);
+        grid-gap: $spacing * 3;
+    }
 }
 
 .other-posts {
+    display: none;
+    @media (min-width: 800px) {
+        display: block;
+    }
     & > .collection-header {
         font-size: 14px;
     }
