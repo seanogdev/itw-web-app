@@ -4,7 +4,7 @@
     <div class="featured-posts-content">
       <PostCard :post="posts.edges[0].node" variant="large" :trunncation-amount="50" />
       <div v-if="otherPosts.length" class="other-posts">
-        <CollectionHeader>Other Company News</CollectionHeader>
+        <CollectionHeader tag="h3">Other Company News</CollectionHeader>
         <ol>
           <router-link
             v-for="post in otherPosts"
@@ -72,11 +72,7 @@ export default {
 
 <style lang="scss" scoped>
 .featured-posts {
-  margin-bottom: $spacing * 4;
-
-  & > .collection-header {
-    margin-bottom: $spacing * 4;
-  }
+  margin-bottom: $spacing-4;
 }
 
 .featured-posts-content {
@@ -93,8 +89,11 @@ export default {
     display: block;
   }
 
-  & > .collection-header {
-    font-size: 16px;
+  &::v-deep > .collection-header {
+    margin-bottom: $spacing / 2;
+    h3 {
+      font-size: 16px;
+    }
   }
 
   li {
