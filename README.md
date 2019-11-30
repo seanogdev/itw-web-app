@@ -13,12 +13,12 @@ Using vue & vue-apollo behind the scenes to query the data.
 - Author Page
 - Infinite scrolling (fires early so its seamless)
 
-### 😢Things missing 
+### 😢Things missing
 - [x] ~~Realtime Search (soon)~~
-- [ ] Auth 
+- [x] Auth (works but not enabled yet)
 - [ ] CreateComment mutation
 - [ ] Like system (less soon)
- 
+
 ## 🛠 Project setup ([vue-cli](https://cli.vuejs.org/))
 ```
 npm install

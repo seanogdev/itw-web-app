@@ -90,23 +90,32 @@ export default {
   @media (min-width: 800px) {
     display: block;
   }
+
   & > .collection-header {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   li {
     margin-top: $spacing-3;
     display: flex;
     flex-direction: column;
+
     a {
+      color: #494e6a;
       font-size: 17px;
       font-weight: 500;
       padding-bottom: $spacing;
+    }
+
+    &:hover a,
+    a:focus {
+      color: $app-primary;
     }
   }
 
   time {
     font-size: 13px;
+    color: rgba(#494e6a, 40%);
   }
 }
 </style>
