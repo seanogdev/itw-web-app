@@ -32,12 +32,14 @@
           class="app-header-search"
           @keydown.enter="navigateToHome"
         />
-        <a
-          class="app-header-write-link"
+        <AppButton
+          class="app-button--header"
+          tag="a"
           target="_blank"
           href="https://intheworks.teamwork.com/wp/wp-admin/post-new.php"
-          >Write a Post</a
         >
+          Write a Post
+        </AppButton>
       </div>
     </div>
   </div>
@@ -96,7 +98,7 @@ export default {
   z-index: 1;
 
   .app-header-dropdown,
-  .app-header-write-link {
+  .app-button.app-button--header {
     display: none;
   }
 
@@ -107,7 +109,7 @@ export default {
       display: block;
     }
 
-    .app-header-write-link {
+    .app-button.app-button--header {
       display: flex;
     }
   }
@@ -150,22 +152,12 @@ export default {
     outline: none;
     border-color: rgba(#403e7f, 0.5);
   }
-
-  &::placeholder {
-    margin-top: 8px;
-    line-height: normal;
-  }
 }
-.app-header-write-link {
+
+.app-button.app-button--header {
   margin-left: $spacing-4;
-  height: 40px;
-  background: $app-primary;
-  color: #fff;
-  border-radius: 4px;
-  padding: 0 $spacing-2;
-  font-weight: 500;
   display: flex;
+  justify-content: center;
   align-items: center;
-  font-size: 14px;
 }
 </style>

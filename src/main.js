@@ -2,11 +2,12 @@ import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import VueMeta from 'vue-meta';
 
-import App from '@/App.vue';
 import router from './router';
 import defaultClient from '@/apollo/client';
+import components from '@/utils/components';
 import filters from '@/utils/filters';
 import store from './store';
+import App from '@/App.vue';
 
 Vue.config.productionTip = false;
 
@@ -20,6 +21,11 @@ const apolloProvider = new VueApollo({
 // Filters
 Object.entries(filters).forEach(([name, filterFunction]) => {
   Vue.filter(name, filterFunction);
+});
+
+// Components
+Object.entries(components).forEach(([name, component]) => {
+  Vue.component(name, component);
 });
 
 // @ts-ignore

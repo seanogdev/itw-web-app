@@ -11,13 +11,23 @@
         <!-- eslint-disable vue/no-v-html -->
         <div class="comment-card-body" v-html="comment.content" />
         <!-- eslint-enable vue/no-v-html -->
-        <button @click="toggleReplyForm">Reply to {{ comment.author.name }}</button>
+        <AppButton
+          :disabled="shouldShowReplyForm"
+          :title="`Reply to ${comment.author.name}`"
+          @click="toggleReplyForm"
+        >
+          Reply to {{ comment.author.name.split(' ')[0] }}
+        </AppButton>
       </div>
     </div>
     <CreateCommentForm
       v-if="shouldShowReplyForm"
+      ref="commentForm"
       :parent-comment-id="comment.commentId"
       :post-id="postId"
+      :title="`Replying to ${comment.author.name.split(' ')[0]}`"
+      @cancel="onCancel"
+      @success="onCreateCommentSuccess"
     />
     <CommentList
       v-if="comment.replies.nodes.length"
@@ -30,6 +40,7 @@
 <script>
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
+import { focusFirstFocusable } from '../utils/helpers';
 
 export default {
   name: 'CommentCard',
@@ -59,8 +70,20 @@ export default {
       }
       return `/authors/${author.userId}`;
     },
-    toggleReplyForm() {
+    async toggleReplyForm() {
       this.shouldShowReplyForm = !this.shouldShowReplyForm;
+
+      // Wait for it to render
+      await this.$nextTick();
+      if (this.shouldShowReplyForm) {
+        focusFirstFocusable(this.$refs.commentForm.$el);
+      }
+    },
+    onCancel() {
+      this.shouldShowReplyForm = false;
+    },
+    onCreateCommentSuccess() {
+      this.shouldShowReplyForm = false;
     },
   },
 };
@@ -94,12 +117,14 @@ export default {
 
 .comment-card-date {
   font-size: 14px;
-  padding-bottom: $spacing-4;
+  padding-bottom: $spacing-3;
 }
 
 .comment-card-body {
   font-size: 17px;
   line-height: 1.6;
+  padding-bottom: $spacing-4;
+  color: $text-secondary;
 
   &::v-deep {
     p,
@@ -140,5 +165,9 @@ export default {
       font-size: 18px;
     }
   }
+}
+
+.create-comment {
+  margin-top: $spacing-2;
 }
 </style>

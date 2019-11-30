@@ -33,7 +33,6 @@ import CollectionHeader from '@/components/CollectionHeader.vue';
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
 import EmptyState from '@/components/EmptyState.vue';
-import Loading from '@/components/Loading.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
 
@@ -43,8 +42,6 @@ export default {
     CollectionHeader,
     CommentList,
     EmptyState,
-
-    Loading,
     PostImage,
     PostMeta,
   },
@@ -103,7 +100,11 @@ export default {
 
 .post-single-title {
   font-size: 29px;
+  line-height: 1.4;
   margin-bottom: $spacing-2;
+  @media (min-width: 800px) {
+    font-size: 40px;
+  }
 }
 .post-single-content {
   font-size: 17px;
@@ -179,5 +180,9 @@ export default {
 .post-comments {
   margin: $spacing-8 auto;
   max-width: $app-width * 0.8;
+
+  .comment-list {
+    padding-bottom: $spacing-8;
+  }
 }
 </style>

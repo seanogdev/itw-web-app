@@ -29,7 +29,6 @@
 <script>
 import { Intersect } from 'vue-observable';
 import EmptyState from '@/components/EmptyState.vue';
-import Loading from '@/components/Loading.vue';
 import PostCard from '@/components/PostCard.vue';
 
 export default {
@@ -37,7 +36,6 @@ export default {
   components: {
     EmptyState,
     Intersect,
-    Loading,
     PostCard,
   },
   props: {

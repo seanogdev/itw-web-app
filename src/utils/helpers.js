@@ -29,3 +29,38 @@ export function truncate(str, wordCount = 15) {
 }
 
 export const isProduction = process.env.NODE_ENV === 'production';
+
+export const getFirstFocusable = (
+  element,
+  selectors = [
+    'a[href]',
+    '[contenteditable]',
+    'input:not([disabled]):not([type=file])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+  ],
+) => {
+  const focusableElements = element.querySelectorAll(selectors.join(','));
+
+  if (!focusableElements.length) {
+    return false;
+  }
+
+  return focusableElements[0];
+};
+
+/**
+ *
+ * @param {HTMLElement} element
+ * @param {Array} selectors
+ */
+export const focusFirstFocusable = (element, selectors) => {
+  const firstFocusable = getFirstFocusable(element, selectors);
+
+  if (firstFocusable) {
+    // Needed for FF to show the cursor
+    // if theres an overflow to the right
+    firstFocusable.scrollLeft = 99999;
+    firstFocusable.focus();
+  }
+};

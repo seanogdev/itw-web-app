@@ -33,7 +33,8 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
 .comment-list {
-  .comment-list {
+  .comment-list,
+  .create-comment {
     margin-left: $spacing-4;
   }
 }
