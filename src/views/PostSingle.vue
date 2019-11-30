@@ -188,6 +188,12 @@ export default {
     h3 {
       font-size: 20px;
     }
+
+    ul ul,
+    ol ol {
+      /* Add a margin for any <ul> inside another <ul> */
+      margin-left: $spacing-2;
+    }
   }
 }
 

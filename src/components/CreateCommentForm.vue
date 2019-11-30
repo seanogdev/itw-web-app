@@ -11,12 +11,17 @@
       @keydown.enter="handleCmdEnter"
     ></textarea>
     <div class="create-comment-buttons">
-      <AppButton v-if="showCancelButton" alt class="create-comment-submit" @click="$emit('cancel')">
-        Cancel
+      <AppButton v-if="message" alt class="create-comment-submit" @click="clearMessage">
+        Clear
       </AppButton>
 
-      <AppButton v-else-if="message" alt class="create-comment-submit" @click="clearMessage">
-        Clear
+      <AppButton
+        v-else-if="showCancelButton"
+        alt
+        class="create-comment-submit"
+        @click="$emit('cancel')"
+      >
+        Cancel
       </AppButton>
 
       <AppButton class="create-comment-submit">Add comment</AppButton>
