@@ -18,17 +18,24 @@
           <div class="post-single-content" v-html="post.content" />
         </div>
       </div>
+      <AuthorBox ref="authorBox" :author="post.author" />
       <Intersect root-margin="0px 0px 500px 0px" @enter="loadComments">
-        <AuthorBox ref="authorBox" :author="post.author" />
+        <div v-if="!comments" class="post-single-comments-load-more">
+          <app-button @click="loadComments">Load comments</app-button>
+        </div>
       </Intersect>
-      <Loading v-if="$apollo.queries.comments.loading" />
-      <div v-else-if="comments && comments.nodes.length" class="post-single-comments">
+      <Loading v-if="!comments && $apollo.queries.comments.loading" />
+      <div v-else-if="comments" class="post-single-comments">
         <CollectionHeader>Comments</CollectionHeader>
-        <CommentList :post-id="post.postId" :comments="comments.nodes" />
+        <CommentList
+          v-if="comments.nodes.length"
+          :post-id="post.postId"
+          :comments="comments.nodes"
+        />
+        <div v-else class="post-single-comments-load-more">
+          There are no comments on this post yet. Be the first!
+        </div>
         <CreateCommentForm title="Leave a new comment" :post-id="post.postId" />
-      </div>
-      <div v-else class="post-single-comments-empty">
-        <app-button @click="loadComments">Load comments</app-button>
       </div>
     </template>
   </div>
@@ -252,10 +259,12 @@ export default {
   }
 }
 
-.post-single-comments-empty {
+.post-single-comments-load-more {
   display: flex;
   justify-content: center;
   align-items: center;
   align-content: center;
+  margin-bottom: $spacing-4;
+  font-size: 18px;
 }
 </style>

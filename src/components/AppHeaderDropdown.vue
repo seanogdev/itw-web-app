@@ -56,6 +56,8 @@ export default {
   margin-right: $spacing-2;
   user-select: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 
   &:hover,
   &:focus {
@@ -64,8 +66,7 @@ export default {
 
   svg {
     margin-left: $spacing;
-    width: 14px;
-    height: 14px;
+    width: 12px;
     fill: currentColor;
     transition: transform 0.2s ease-in;
   }
