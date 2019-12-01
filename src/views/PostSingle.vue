@@ -18,11 +18,9 @@
         </div>
       </div>
       <AuthorBox ref="authorBox" :author="post.author" />
-      <div v-if="comments" class="post-comments">
+      <div v-if="comments && comments.nodes.length" class="post-comments">
         <CollectionHeader>Comments</CollectionHeader>
-        <template v-if="comments.nodes.length">
-          <CommentList :post-id="post.postId" :comments="comments.nodes" />
-        </template>
+        <CommentList :post-id="post.postId" :comments="comments.nodes" />
         <CreateCommentForm title="Leave a new comment" :post-id="post.postId" />
       </div>
     </template>
