@@ -9,10 +9,6 @@
     }
 }
 
-@include font('Thin', 100, 'normal');
-@include font('ThinItalic', 100, 'italic');
-@include font('Light', 200, 'normal');
-@include font('LightItalic', 200, 'italic');
 @include font('Blond', 300, 'normal');
 @include font('BlondItalic', 300, 'italic');
 @include font('Normal', 400, 'normal');
@@ -20,8 +16,4 @@
 @include font('Medium', 500, 'normal');
 @include font('MediumItalic', 500, 'italic');
 @include font('SemiBold', 600, 'normal');
-@include font('SemiBoldItalic', 700, 'italic');
-@include font('Bold', 700, 'normal');
-@include font('BoldItalic', 700, 'italic');
-@include font('Black', 800, 'normal');
-@include font('BlackItalic', 800, 'italic');
+@include font('SemiBold', 600, 'italic');
