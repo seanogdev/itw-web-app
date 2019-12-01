@@ -1,4 +1,6 @@
 import gql from 'graphql-tag';
+import UserFields from '@/apollo/fragments/UserFields';
+import CommentAuthorFields from '@/apollo/fragments/CommentAuthorFields';
 
 export default gql`
   mutation createComment(
@@ -31,20 +33,15 @@ export default gql`
         }
         author {
           ... on User {
-            userId
-            name
-            firstName
-            lastName
-            avatar(size: 100) {
-              url
-            }
+            ...UserFields
           }
           ... on CommentAuthor {
-            name
-            id
+            ...CommentAuthorFields
           }
         }
       }
     }
   }
+  ${UserFields}
+  ${CommentAuthorFields}
 `;

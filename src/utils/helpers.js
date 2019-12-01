@@ -1,4 +1,3 @@
-import { parseISO, format } from 'date-fns/esm';
 import he from 'he';
 
 export function decode(string) {
@@ -25,19 +24,11 @@ export function parseWpUrl(link) {
   }
 }
 
-export function generateAuthorName(author) {
-  if (author.firstName && author.lastName) {
-    return `${author.firstName} ${author.lastName}`;
+export function generateFullName(user) {
+  if (user.firstName && user.lastName) {
+    return `${user.firstName} ${user.lastName}`;
   }
-  return author.name;
-}
-
-export function generatePostUrl(post) {
-  const iso = post.date ? post.date : new Date().toISOString();
-  const date = parseISO(iso);
-  const year = format(date, 'yyyy');
-  const month = format(date, 'MM');
-  return `/${year}/${month}/${post.slug}`;
+  return user.name;
 }
 
 export function stripHtml(html) {

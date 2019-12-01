@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import UserFields from '../fragments/UserFields';
+import CommentAuthorFields from '../fragments/CommentAuthorFields';
 
 export default gql`
   query getCommentsByPostId($postId: ID!) {
@@ -37,8 +38,7 @@ export default gql`
     content
     author {
       ... on CommentAuthor {
-        name
-        id
+        ...CommentAuthorFields
       }
       ... on User {
         ...UserFields
@@ -48,5 +48,6 @@ export default gql`
       }
     }
   }
+  ${CommentAuthorFields}
   ${UserFields}
 `;

@@ -13,7 +13,7 @@
           </h1>
           <span class="post-single-author">
             Written by
-            <router-link :to="post.author.internalLink">{{ authorName }}</router-link>
+            <router-link :to="post.author.internalLink">{{ post.author.fullName }}</router-link>
           </span>
           <div class="post-single-content" v-html="post.content" />
         </div>
@@ -45,7 +45,7 @@
 import { Intersect } from 'vue-observable';
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import getPostBySlug from '@/apollo/queries/getPostBySlug';
-import { decode, generateAuthorName } from '@/utils/helpers';
+import { decode } from '@/utils/helpers';
 
 import AuthorBox from '@/components/AuthorBox.vue';
 import CollectionHeader from '@/components/CollectionHeader.vue';
@@ -83,11 +83,6 @@ export default {
         };
       },
       skip: true,
-    },
-  },
-  computed: {
-    authorName() {
-      return generateAuthorName(this.post.author);
     },
   },
   methods: {

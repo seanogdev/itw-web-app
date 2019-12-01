@@ -7,7 +7,7 @@
         :to="comment.author.internalLink"
         class="comment-card-avatar"
       >
-        <img :src="comment.author.avatar.url" width="50" alt="authorName" />
+        <img :src="comment.author.avatar.url" width="50" :alt="comment.author.fullName" />
       </router-link>
       <div class="comment-card-content">
         <router-link
@@ -15,9 +15,9 @@
           :to="comment.author.internalLink"
           class="comment-card-name"
         >
-          {{ authorName }}
+          {{ comment.author.fullName }}
         </router-link>
-        <div v-else class="comment-card-name">{{ authorName }}</div>
+        <div v-else class="comment-card-name">{{ comment.author.fullName }}</div>
         <time :datetime="comment.date" class="comment-card-date">
           {{ comment.date | formatDate }}
         </time>
@@ -49,7 +49,7 @@
 <script>
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
-import { focusFirstFocusable, generateAuthorName } from '@/utils/helpers';
+import { focusFirstFocusable } from '@/utils/helpers';
 
 export default {
   name: 'CommentCard',
@@ -79,12 +79,6 @@ export default {
   computed: {
     shouldShowReplyButton() {
       return this.depth < 5;
-    },
-    authorName() {
-      return generateAuthorName(this.comment.author);
-    },
-    authorUrl() {
-      return `/author/${this.comment.author.userId}`;
     },
     replyButtonText() {
       if (this.shouldShowReplyForm) {

@@ -6,6 +6,7 @@ export default gql`
     userId
     name
     internalLink @client
+    fullName @client
     nicename
     firstName
     lastName

@@ -33,7 +33,6 @@ import CollectionHeader from '@/components/CollectionHeader.vue';
 import PostCard from '@/components/PostCard.vue';
 import getPosts from '@/apollo/queries/getPosts';
 import getPostsByCategorySlug from '@/apollo/queries/getPostsByCategorySlug';
-import { generatePostUrl } from '@/utils/helpers';
 
 const categorySlug = process.env.VUE_APP_FEATURED_CATEGORY_SLUG;
 
@@ -59,11 +58,6 @@ export default {
       const otherPosts = [...this.posts.edges];
       otherPosts.shift();
       return otherPosts;
-    },
-  },
-  methods: {
-    generatePostUrl(post) {
-      return generatePostUrl(post.node);
     },
   },
 };

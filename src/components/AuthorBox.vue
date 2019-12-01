@@ -2,12 +2,18 @@
 <template>
   <div class="author-box">
     <div v-if="author.avatar" class="author-box-image">
-      <img :src="author.avatar.url" :alt="authorName" loading="lazy" width="150px" height="150px" />
+      <img
+        :src="author.avatar.url"
+        :alt="author.fullName"
+        loading="lazy"
+        width="150px"
+        height="150px"
+      />
     </div>
     <div class="author-box-content">
       <router-link v-slot="{ href, navigate }" :to="author.internalLink">
         <h3 class="author-box-name">
-          <a :href="href" @click="navigate">{{ authorName }}</a>
+          <a :href="href" @click="navigate">{{ author.fullName }}</a>
         </h3>
       </router-link>
       <div class="author-box-description" v-html="authorDescription" />
@@ -21,7 +27,7 @@
 </template>
 
 <script>
-import { nl2br, linkify, decode, generateAuthorName } from '@/utils/helpers';
+import { nl2br, linkify, decode } from '@/utils/helpers';
 
 export default {
   props: {
@@ -31,9 +37,6 @@ export default {
     },
   },
   computed: {
-    authorName() {
-      return generateAuthorName(this.author);
-    },
     authorDescription() {
       if (!this.author.description) {
         return '';

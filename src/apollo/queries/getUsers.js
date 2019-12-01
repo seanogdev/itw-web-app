@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import UserFieldsShort from '../fragments/UserFieldsShort';
+import UserFieldsShort from '@/apollo/fragments/UserFieldsShort';
 
 export default gql`
   query getUsers {

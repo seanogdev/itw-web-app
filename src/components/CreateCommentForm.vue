@@ -1,11 +1,5 @@
 <template>
-  <form
-    v-if="currentUser"
-    ref="form"
-    class="create-comment"
-    :disabled="isLoading"
-    @submit.prevent="submitComment"
-  >
+  <form ref="form" class="create-comment" :disabled="isLoading" @submit.prevent="submitComment">
     <label v-if="title" :for="textareaKey" class="create-comment-title">{{ title }}</label>
     <textarea
       :id="textareaKey"
@@ -14,9 +8,10 @@
       class="create-comment-message"
       autocapitalize="off"
       autocomplete="off"
+      :disabled="!currentUser"
       autocorrect="off"
       data-lpignore="true"
-      placeholder="Your message here..."
+      :placeholder="placeholderMessage"
       rows="2"
       :name="textareaKey"
       @keydown.enter="handleCmdEnter"
@@ -82,6 +77,12 @@ export default {
   computed: {
     showCancelButton() {
       return !!this.parentCommentId;
+    },
+    placeholderMessage() {
+      if (!this.currentUser) {
+        return 'You must have an account to post a message';
+      }
+      return 'Your message here...';
     },
     textareaKey() {
       return `comment-message-${this.parentCommentId || 'new'}`;
