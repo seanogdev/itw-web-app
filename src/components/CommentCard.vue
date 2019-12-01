@@ -37,7 +37,7 @@
       @success="onCreateCommentSuccess"
     />
     <CommentList
-      v-if="comment.replies.nodes.length"
+      v-if="comment.replies && comment.replies.nodes.length"
       :key="comment.replies.nodes.length"
       :depth="depth + 1"
       :post-id="postId"

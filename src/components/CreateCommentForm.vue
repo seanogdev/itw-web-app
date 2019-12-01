@@ -1,5 +1,10 @@
 <template>
-  <form ref="form" class="create-comment" :disabled="isLoading" @submit.prevent="submitComment">
+  <form
+    ref="form"
+    class="create-comment"
+    :disabled="isLoading || !currentUser"
+    @submit.prevent="submitComment"
+  >
     <label v-if="title" :for="textareaKey" class="create-comment-title">{{ title }}</label>
     <textarea
       :id="textareaKey"
@@ -227,6 +232,10 @@ export default {
   resize: none;
   color: $text-secondary;
   border-radius: 4px;
+
+  &:disabled {
+    opacity: 0.6;
+  }
 
   &::placeholder {
     color: #c5cada;
