@@ -38,8 +38,6 @@ export default gql`
     id
     commentId
     date
-    type
-    approved
     content
     author {
       ... on CommentAuthor {
@@ -47,6 +45,8 @@ export default gql`
         id
       }
       ... on User {
+        firstName
+        lastName
         name
         userId
       }

@@ -6,6 +6,7 @@ export default gql`
     $parentCommentId: ID
     $postId: Int!
     $clientMutationId: String!
+    $userId: Int!
   ) {
     createComment(
       input: {
@@ -13,17 +14,27 @@ export default gql`
         content: $message
         parent: $parentCommentId
         commentOn: $postId
+        userId: $userId
       }
     ) {
+      clientMutationId
       success
       comment {
         id
         commentId
         content
+        date
+        replies: children {
+          nodes {
+            id
+          }
+        }
         author {
           ... on User {
             userId
             name
+            firstName
+            lastName
           }
           ... on CommentAuthor {
             name

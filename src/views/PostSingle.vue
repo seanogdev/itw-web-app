@@ -85,7 +85,6 @@ export default {
   methods: {
     scrollToAuthorBox() {
       const { authorBox } = this.$refs;
-      console.log('authorBox:', authorBox);
       if (authorBox.$el) {
         authorBox.$el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
       }

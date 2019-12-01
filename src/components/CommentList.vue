@@ -2,7 +2,7 @@
   <div v-if="comments.length" class="comment-list">
     <CommentCard
       v-for="comment in comments"
-      :key="comment.commentId"
+      :key="comment.id"
       :depth="depth"
       :post-id="postId"
       :comment="comment"

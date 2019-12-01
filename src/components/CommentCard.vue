@@ -3,20 +3,20 @@
   <div class="comment">
     <div class="comment-card">
       <div class="comment-card-content">
-        <router-link :to="getLinkForAuthor(comment.author)" class="comment-card-name">
-          {{ comment.author.name }}
+        <router-link :to="authorUrl" class="comment-card-name">
+          {{ authorName }}
         </router-link>
         <time :datetime="comment.date" class="comment-card-date">
           {{ comment.date | formatDate }}
         </time>
         <div class="comment-card-body" v-html="comment.content" />
-        <AppButton :alt="shouldShowReplyForm" @click="toggleReplyForm">
+        <AppButton v-if="shouldShowReplyButton" :alt="shouldShowReplyForm" @click="toggleReplyForm">
           {{ replyButtonText }}
         </AppButton>
       </div>
     </div>
     <CreateCommentForm
-      v-if="computedShowReplyForm"
+      v-if="shouldShowReplyForm"
       ref="commentForm"
       :parent-comment-id="comment.commentId"
       :post-id="postId"
@@ -26,6 +26,7 @@
     />
     <CommentList
       v-if="comment.replies.nodes.length"
+      :key="comment.replies.nodes.length"
       :depth="depth + 1"
       :post-id="postId"
       :comments="comment.replies.nodes"
@@ -64,8 +65,17 @@ export default {
     };
   },
   computed: {
-    computedShowReplyForm() {
-      return this.depth < 5 && this.shouldShowReplyForm;
+    shouldShowReplyButton() {
+      return this.depth < 5;
+    },
+    authorName() {
+      if (this.comment.author.firstName && this.comment.author.lastName) {
+        return `${this.comment.author.firstName} ${this.comment.author.lastName}`;
+      }
+      return this.comment.author.name;
+    },
+    authorUrl() {
+      return `/authors/${this.comment.author.userId}`;
     },
     replyButtonText() {
       if (this.shouldShowReplyForm) {
@@ -75,12 +85,6 @@ export default {
     },
   },
   methods: {
-    getLinkForAuthor(author) {
-      if (!author.userId) {
-        return '';
-      }
-      return `/authors/${author.userId}`;
-    },
     async toggleReplyForm() {
       this.shouldShowReplyForm = !this.shouldShowReplyForm;
 

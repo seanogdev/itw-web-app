@@ -37,7 +37,10 @@
 <script>
 import { required } from 'vuelidate/lib/validators';
 import autosize from 'autosize';
-import createComment from '@/apollo/mutations/createComment';
+import getCurrentUser from '@/apollo/queries/getCurrentUser';
+import createCommentMutation from '@/apollo/mutations/createComment';
+import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
+import { nl2br } from '@/utils/helpers';
 
 export default {
   props: {
@@ -65,6 +68,11 @@ export default {
       required,
     },
   },
+  apollo: {
+    currentUser: {
+      query: getCurrentUser,
+    },
+  },
   computed: {
     showCancelButton() {
       return !!this.parentCommentId;
@@ -89,24 +97,91 @@ export default {
         this.$v.$touch();
         return;
       }
+      if (!this.currentUser) {
+        return;
+      }
+      this.isLoading = true;
       try {
         await this.$apollo.mutate({
-          mutation: createComment,
+          mutation: createCommentMutation,
           variables: {
             clientMutationId: 'clientMutationId',
             message: this.message,
             postId: this.postId,
             parentCommentId: this.parentCommentId,
+            userId: this.currentUser.userId,
           },
-          update: this.updateStore(),
+          optimisticResponse: {
+            __typename: 'Mutation',
+            createComment: {
+              __typename: 'CreateCommentPayload',
+              success: true,
+              clientMutationId: 'clientMutationId',
+              comment: {
+                __typename: 'Comment',
+                commentId: -1,
+                id: -1,
+                approved: true,
+                content: `${nl2br(this.message)}`,
+                date: new Date().toISOString(),
+                author: {
+                  __typename: 'User',
+                  name: this.currentUser.name || '',
+                  firstName: this.currentUser.firstName,
+                  lastName: this.currentUser.lastName,
+                  userId: this.currentUser.userId,
+                },
+                replies: {
+                  __typename: 'CommentToCommentConnection',
+                  nodes: [],
+                },
+                type: 'uhm',
+              },
+            },
+          },
+          update: (
+            store,
+            {
+              data: {
+                createComment: { comment },
+              },
+            },
+          ) => {
+            const cachedData = store.readQuery({
+              query: getCommentsByPostId,
+              variables: { postId: this.postId },
+            });
+            if (this.parentCommentId) {
+              this.updateParentComment(cachedData.comments.nodes, comment);
+            } else {
+              cachedData.comments.nodes.push(comment);
+            }
+            store.writeQuery({
+              query: getCommentsByPostId,
+              variables: { postId: this.postId },
+              data: cachedData,
+            });
+          },
         });
+        this.message = '';
+        this.$v.$reset();
         this.$emit('success');
       } catch (e) {
-        //
+        console.log('e:', e);
+      } finally {
+        this.isLoading = false;
       }
     },
-    updateStore() {
-      //
+
+    updateParentComment(nodes, comment) {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const node of nodes) {
+        if (node.commentId === this.parentCommentId) {
+          node.replies.nodes.push(comment);
+        } else if (node.replies && node.replies.nodes.length) {
+          this.updateParentComment(node.replies.nodes, comment);
+        }
+      }
     },
   },
 };
