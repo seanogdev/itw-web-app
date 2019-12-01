@@ -104,8 +104,8 @@ export default {
 
     a {
       color: #494e6a;
-      font-size: 17px;
-      padding-bottom: $spacing;
+      font-size: 16px;
+      padding-bottom: 12px;
       transition: all 0.2s ease-in-out;
     }
 

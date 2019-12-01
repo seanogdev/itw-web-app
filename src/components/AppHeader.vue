@@ -33,10 +33,11 @@
           @keydown.enter="navigateToHome"
         />
         <AppButton
+          v-if="adminUrl"
           class="app-button--header"
           tag="a"
           target="_blank"
-          href="https://intheworks.teamwork.com/wp/wp-admin/post-new.php"
+          :href="adminUrl"
         >
           Write a Post
         </AppButton>
@@ -68,6 +69,12 @@ export default {
   },
   computed: {
     ...mapState({ searchInputFromState: 'searchInput' }),
+    adminUrl() {
+      if (!process.env.VUE_APP_WORDPRESS_URL) {
+        return null;
+      }
+      return `${process.env.VUE_APP_WORDPRESS_URL}/wp-admin/post-new.php`;
+    },
     searchInput: {
       get() {
         return this.$store.state.searchInputFromState;
