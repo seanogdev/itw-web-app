@@ -1,12 +1,21 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="author-box">
     <div v-if="author.avatar" class="author-box-image">
       <img :src="author.avatar.url" :alt="authorName" loading="lazy" width="150px" height="150px" />
     </div>
     <div class="author-box-content">
-      <h3 class="author-box-name">{{ authorName }}</h3>
+      <router-link v-slot="{ href, navigate }" :to="`/author/${author.userId}`">
+        <h3 class="author-box-name">
+          <a :href="href" @click="navigate">{{ authorName }}</a>
+        </h3>
+      </router-link>
       <div class="author-box-description" v-html="authorDescription" />
-      <div class="author-box-links"></div>
+      <div class="author-box-links">
+        <router-link :to="`/author/${author.userId}`">
+          View all posts by {{ author.firstName }}
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +38,9 @@ export default {
       return this.author.name;
     },
     authorDescription() {
+      if (!this.author.description) {
+        return '';
+      }
       return nl2br(linkify(decode(this.author.description)));
     },
   },
@@ -68,11 +80,14 @@ export default {
   align-items: center;
   justify-self: center;
 }
+
 .author-box-name {
   font-size: 24px;
   margin-bottom: $spacing-2;
 }
+
 .author-box-description {
+  margin-bottom: $spacing-4;
   &::v-deep {
     * {
       line-height: 1.5;
@@ -87,6 +102,9 @@ export default {
     }
   }
 }
+
 .author-box-links {
+  font-size: 16px;
+  font-weight: 500;
 }
 </style>

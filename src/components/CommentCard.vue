@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="comment">
     <div class="comment-card">
@@ -8,15 +9,9 @@
         <time :datetime="comment.date" class="comment-card-date">
           {{ comment.date | formatDate }}
         </time>
-        <!-- eslint-disable vue/no-v-html -->
         <div class="comment-card-body" v-html="comment.content" />
-        <!-- eslint-enable vue/no-v-html -->
-        <AppButton
-          :disabled="shouldShowReplyForm"
-          :title="`Reply to ${comment.author.name}`"
-          @click="toggleReplyForm"
-        >
-          Reply to {{ comment.author.name.split(' ')[0] }}
+        <AppButton :alt="shouldShowReplyForm" @click="toggleReplyForm">
+          {{ replyButtonText }}
         </AppButton>
       </div>
     </div>
@@ -71,6 +66,12 @@ export default {
   computed: {
     computedShowReplyForm() {
       return this.depth < 5 && this.shouldShowReplyForm;
+    },
+    replyButtonText() {
+      if (this.shouldShowReplyForm) {
+        return 'Hide';
+      }
+      return `Reply to ${this.comment.author.name}`;
     },
   },
   methods: {
@@ -127,7 +128,7 @@ export default {
 
 .comment-card-date {
   font-size: 14px;
-  color: #9b9cb1;
+  color: $text-tertiary;
   padding-bottom: $spacing-3;
 }
 

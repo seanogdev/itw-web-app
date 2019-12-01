@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div v-if="posts" class="featured-posts">
     <CollectionHeader>Latest Company News</CollectionHeader>
@@ -9,15 +10,13 @@
           <router-link
             v-for="post in otherPosts"
             :key="post.node.postId"
-            v-slot="{ href, route, navigate }"
+            v-slot="{ href, navigate }"
             :to="generatePostUrl(post)"
           >
             <li>
-              <!-- eslint-disable vue/no-v-html -->
               <a :href="href" @click="navigate">
                 {{ post.node.title | decode }}
               </a>
-              <!-- eslint-enable vue/no-v-html -->
               <time :datetime="post.node.date">
                 {{ post.node.date | formatDate }}
               </time>
@@ -106,6 +105,7 @@ export default {
       font-size: 17px;
       font-weight: 500;
       padding-bottom: $spacing;
+      transition: all 0.2s ease-in-out;
     }
 
     &:hover a,
@@ -116,7 +116,7 @@ export default {
 
   time {
     font-size: 13px;
-    color: rgba(#494e6a, 40%);
+    color: $text-tertiary;
   }
 }
 </style>

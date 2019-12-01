@@ -1,16 +1,15 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <router-link :to="postUrl" class="post-card" :class="postCardClass">
     <PostImage :post="post" :height="imageHeight" />
     <div class="post-card-main">
       <post-meta :post="post" />
-      <!-- eslint-disable vue/no-v-html -->
       <h3 class="post-card-title">
         {{ post.title | decode }}
       </h3>
       <div class="post-card-content">
         {{ post.excerpt | stripHtml | truncate(trunncationAmount) }}&hellip;
       </div>
-      <!-- eslint-enable vue/no-v-html -->
     </div>
   </router-link>
 </template>
@@ -68,7 +67,7 @@ export default {
   &:hover {
     border-color: #c5cada;
 
-    h3 {
+    .post-card-title {
       color: $app-primary;
     }
   }
@@ -111,6 +110,7 @@ export default {
   line-height: 1.4;
   margin-bottom: $spacing-2;
   color: $text-primary;
+  transition: all 0.2s ease-in-out;
 }
 
 img {

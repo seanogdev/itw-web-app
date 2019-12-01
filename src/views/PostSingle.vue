@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="post-single">
     <Loading v-if="$apollo.queries.post.loading" />
@@ -7,15 +8,16 @@
         <PostImage :post="post" :height="400" />
         <div class="post-single-main">
           <PostMeta :post="post" />
-          <!-- eslint-disable vue/no-v-html -->
           <h1 class="post-single-title">
             {{ post.title | decode }}
           </h1>
+          <span class="post-single-author">
+            Written by <button type="button" @click="scrollToAuthorBox">{{ authorName }}</button>
+          </span>
           <div class="post-single-content" v-html="post.content" />
-          <!-- eslint-enable vue/no-v-html -->
         </div>
       </div>
-      <AuthorBox :author="post.author" />
+      <AuthorBox ref="authorBox" :author="post.author" />
       <div v-if="comments" class="post-comments">
         <CollectionHeader>Comments</CollectionHeader>
         <template v-if="comments.nodes.length">
@@ -30,6 +32,7 @@
 <script>
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import getPostBySlug from '@/apollo/queries/getPostBySlug';
+import { decode } from '@/utils/helpers';
 
 import AuthorBox from '@/components/AuthorBox.vue';
 import CollectionHeader from '@/components/CollectionHeader.vue';
@@ -38,7 +41,6 @@ import CreateCommentForm from '@/components/CreateCommentForm.vue';
 import EmptyState from '@/components/EmptyState.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
-import { decode } from '../utils/helpers';
 
 export default {
   components: {
@@ -72,6 +74,23 @@ export default {
       },
     },
   },
+  computed: {
+    authorName() {
+      if (this.post.author.firstName && this.post.author.lastName) {
+        return `${this.post.author.firstName} ${this.post.author.lastName}`;
+      }
+      return this.post.author.name;
+    },
+  },
+  methods: {
+    scrollToAuthorBox() {
+      const { authorBox } = this.$refs;
+      console.log('authorBox:', authorBox);
+      if (authorBox.$el) {
+        authorBox.$el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+      }
+    },
+  },
   metaInfo() {
     return {
       title: this.post ? decode(this.post.title) : null,
@@ -99,22 +118,42 @@ export default {
   font-size: 15px;
 }
 
+.loader {
+  margin-top: 40vh;
+}
+
 .post-single-main {
   padding: $spacing-4;
 
   @media (min-width: 800px) {
-    padding: $spacing-4 $spacing-6;
+    padding: $spacing-4 $spacing-6 $spacing-6;
   }
 }
 
 .post-single-title {
   font-size: 29px;
   line-height: 1.4;
-  margin-bottom: $spacing-2;
+  margin-bottom: $spacing;
   @media (min-width: 800px) {
     font-size: 40px;
   }
 }
+
+.post-single-author {
+  font-size: 18px;
+  color: $text-tertiary;
+  font-weight: 300;
+  display: inline-block;
+  margin-bottom: $spacing-4;
+  button {
+    font-weight: 300;
+    font-size: 18px;
+    color: $app-primary;
+    background: transparent;
+    text-align: left;
+  }
+}
+
 .post-single-content {
   font-size: 17px;
   line-height: 1.7;
@@ -206,7 +245,7 @@ export default {
   max-width: $app-width * 0.8;
 
   .comment-list {
-    padding-bottom: $spacing-2;
+    padding-bottom: $spacing-4;
   }
 }
 </style>
