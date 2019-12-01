@@ -5,6 +5,7 @@ export default gql`
     currentUser: viewer {
       id
       userId
+      name
       firstName
       lastName
     }
