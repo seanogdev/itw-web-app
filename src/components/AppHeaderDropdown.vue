@@ -95,6 +95,8 @@ export default {
   position: absolute;
   top: 100%;
   min-height: 300px;
+  max-height: 600px;
+  overflow: scroll;
   display: block;
   left: 0;
   background: #fff;
@@ -113,13 +115,16 @@ export default {
   &::v-deep {
     ul {
       max-width: $app-width;
+      overflow: hidden;
+      overflow-y: scroll;
+      display: block;
       margin: 0 auto;
       columns: 4;
       column-gap: $spacing-4;
     }
     li {
       margin-bottom: $spacing-2;
-      font-size: 16px;
+      font-size: 14px;
     }
   }
 }

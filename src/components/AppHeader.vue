@@ -119,7 +119,7 @@ export default {
 }
 
 .app-header__logo {
-  margin-right: $spacing * 2;
+  margin-right: $spacing * 6;
 }
 
 .app-header__content {

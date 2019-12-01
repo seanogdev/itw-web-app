@@ -135,6 +135,10 @@ export default {
   margin-bottom: $spacing-6;
 }
 
+.loader {
+  margin-top: calc(100% - $spacing/2);
+}
+
 .post-list-button {
   height: 40px;
   background: transparent;

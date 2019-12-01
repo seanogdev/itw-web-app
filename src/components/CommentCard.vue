@@ -36,7 +36,7 @@
 <script>
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
-import { focusFirstFocusable } from '../utils/helpers';
+import { focusFirstFocusable } from '@/utils/helpers';
 
 export default {
   name: 'CommentCard',

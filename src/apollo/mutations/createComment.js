@@ -1,12 +1,16 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation createComment($message: String!, $userId: Int!, $parentCommentId: ID, $postId: Int!) {
+  mutation createComment(
+    $message: String!
+    $parentCommentId: ID
+    $postId: Int!
+    $clientMutationId: String!
+  ) {
     createComment(
       input: {
-        clientMutationId: "CreateComment"
+        clientMutationId: $clientMutationId
         content: $message
-        userId: $userId
         parent: $parentCommentId
         commentOn: $postId
       }

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { nl2br, linkify, decode } from '../utils/helpers';
+import { nl2br, linkify, decode } from '@/utils/helpers';
 
 export default {
   props: {

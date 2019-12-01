@@ -1,37 +1,43 @@
 <template>
-  <form ref="form" class="create-comment" @submit.prevent="submitComment">
+  <form ref="form" class="create-comment" :disabled="isLoading" @submit.prevent="submitComment">
     <label v-if="title" :for="textareaKey" class="create-comment-title">{{ title }}</label>
     <textarea
       :id="textareaKey"
-      v-model="message"
+      ref="textarea"
+      v-model="$v.message.$model"
       class="create-comment-message"
+      autocapitalize="off"
+      autocomplete="off"
+      autocorrect="off"
+      data-lpignore="true"
+      placeholder="Your message here..."
+      rows="2"
       :name="textareaKey"
-      cols="30"
-      rows="10"
       @keydown.enter="handleCmdEnter"
-    ></textarea>
+    >
+    </textarea>
+    <span v-if="$v.$error" class="create-comment-error">Please provide a message</span>
     <div class="create-comment-buttons">
-      <AppButton v-if="message" alt class="create-comment-submit" @click="clearMessage">
-        Clear
-      </AppButton>
-
-      <AppButton
-        v-else-if="showCancelButton"
-        alt
-        class="create-comment-submit"
-        @click="$emit('cancel')"
-      >
+      <AppButton v-if="showCancelButton" alt class="create-comment-submit" @click="$emit('cancel')">
         Cancel
       </AppButton>
 
-      <AppButton class="create-comment-submit">Add comment</AppButton>
+      <AppButton
+        class="create-comment-submit"
+        type="submit"
+        :loading="isLoading"
+        :disabled="$v.$error"
+      >
+        Add comment
+      </AppButton>
     </div>
   </form>
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators';
+import autosize from 'autosize';
 import createComment from '@/apollo/mutations/createComment';
-import { focusFirstFocusable } from '../utils/helpers';
 
 export default {
   props: {
@@ -51,11 +57,12 @@ export default {
   data() {
     return {
       message: '',
+      isLoading: false,
     };
   },
-  apollo: {
-    createComment: {
-      mutation: createComment,
+  validations: {
+    message: {
+      required,
     },
   },
   computed: {
@@ -66,12 +73,10 @@ export default {
       return `comment-message-${this.parentCommentId || 'new'}`;
     },
   },
+  mounted() {
+    autosize(this.$refs.textarea);
+  },
   methods: {
-    async clearMessage() {
-      this.message = '';
-      await this.$nextTick();
-      focusFirstFocusable(this.$el);
-    },
     handleCmdEnter(event) {
       const systemModifierKey = navigator.platform === 'MacIntel' ? event.metaKey : event.ctrlKey;
       if (systemModifierKey) {
@@ -79,8 +84,29 @@ export default {
         this.submitComment();
       }
     },
-    submitComment() {
-      this.$emit('success');
+    async submitComment() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+      try {
+        await this.$apollo.mutate({
+          mutation: createComment,
+          variables: {
+            clientMutationId: 'clientMutationId',
+            message: this.message,
+            postId: this.postId,
+            parentCommentId: this.parentCommentId,
+          },
+          update: this.updateStore(),
+        });
+        this.$emit('success');
+      } catch (e) {
+        //
+      }
+    },
+    updateStore() {
+      //
     },
   },
 };
@@ -109,23 +135,37 @@ export default {
 }
 
 .create-comment-message {
-  margin-bottom: $spacing-4;
+  margin-bottom: $spacing-2;
   border: 1px solid lighten($text-secondary, 40%);
   padding: $spacing-2;
   font-size: 16px;
   font-family: $font-family;
   line-height: 1.7;
+  resize: none;
   color: $text-secondary;
   border-radius: 4px;
+
+  &::placeholder {
+    color: #c5cada;
+  }
 
   &:focus {
     outline: none;
     border-color: $text-secondary;
+    &::placeholder {
+      color: #fff;
+    }
   }
+}
+
+.create-comment-error {
+  color: $app-primary;
+  margin-bottom: $spacing-2;
 }
 
 .create-comment-buttons {
   align-self: flex-end;
+  margin-top: $spacing-2;
 
   & > *:not(:first-child) {
     margin-left: $spacing-2;

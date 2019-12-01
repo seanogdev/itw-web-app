@@ -119,7 +119,7 @@ export default {
 }
 
 .loader {
-  margin-top: 40vh;
+  margin-top: calc(100% - $spacing/2);
 }
 
 .post-single-main {
@@ -201,7 +201,7 @@ export default {
 
     b,
     strong {
-      font-weight: 500;
+      font-weight: 600;
     }
 
     i,

@@ -34,7 +34,7 @@ export default {
         return this.post.featuredImage.sourceUrl;
       }
       // eslint-disable-next-line no-underscore-dangle
-      return `https://picsum.photos/seed/${this.post.postId}/600/800`;
+      return `https://picsum.photos/seed/${this.post.postId}/800/1280`;
     },
   },
 };
