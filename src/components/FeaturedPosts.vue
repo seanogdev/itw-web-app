@@ -89,21 +89,22 @@ export default {
   }
 
   &::v-deep > .collection-header {
-    margin-bottom: $spacing / 2;
+    margin-bottom: $spacing-2;
+
     h3 {
+      padding-bottom: $spacing-2;
       font-size: 16px;
     }
   }
 
   li {
-    margin-top: $spacing-3;
+    margin-bottom: $spacing-3;
     display: flex;
     flex-direction: column;
 
     a {
       color: #494e6a;
       font-size: 17px;
-      font-weight: 500;
       padding-bottom: $spacing;
       transition: all 0.2s ease-in-out;
     }
@@ -115,7 +116,7 @@ export default {
   }
 
   time {
-    font-size: 13px;
+    font-size: 12px;
     color: $text-tertiary;
   }
 }

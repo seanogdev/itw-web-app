@@ -44,7 +44,7 @@ export default {
     },
     imageHeight() {
       if (this.variant === 'large') {
-        return 360;
+        return 400;
       }
       return 240;
     },
