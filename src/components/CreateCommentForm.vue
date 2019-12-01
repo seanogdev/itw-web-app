@@ -32,7 +32,7 @@
         class="create-comment-submit"
         type="submit"
         :loading="isLoading"
-        :disabled="$v.$error"
+        :disabled="$v.$error || !currentUser"
       >
         Add comment
       </AppButton>
