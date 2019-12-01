@@ -3,11 +3,10 @@ import CategoryFields from './CategoryFields';
 
 export default gql`
   fragment PostFields on Post {
-    link
-    internalLink @client
-    postId
     date
     slug
+    internalLink @client
+    postId
     title
     excerpt
     featuredImage {
