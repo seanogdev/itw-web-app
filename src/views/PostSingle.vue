@@ -71,11 +71,8 @@ export default {
       query: getPostBySlug,
       variables() {
         return {
-          slug: this.slug,
+          slug: this.$route.params.slug,
         };
-      },
-      skip() {
-        return !this.slug;
       },
     },
     comments: {
@@ -86,15 +83,6 @@ export default {
         };
       },
       skip: true,
-    },
-  },
-  computed: {
-    slug() {
-      // Total garbage but it works with the public endpoint for now
-      const str = this.$route.path;
-      const cleanPath = str.endsWith('/') ? str.slice(0, -1) : str;
-      const segments = cleanPath.split('/');
-      return segments[segments.length - 1];
     },
   },
   methods: {
