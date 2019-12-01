@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // @ts-nocheck
 /* eslint-disable no-underscore-dangle, import/no-extraneous-dependencies */
 require('dotenv-flow').config();
