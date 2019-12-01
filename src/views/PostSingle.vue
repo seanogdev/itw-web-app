@@ -33,7 +33,7 @@
           :comments="comments.nodes"
         />
         <div v-else class="post-single-comments-load-more">
-          There are no comments on this post yet. Be the first!
+          There are no comments on this post yet.
         </div>
         <CreateCommentForm title="Leave a new comment" :post-id="post.postId" />
       </div>
