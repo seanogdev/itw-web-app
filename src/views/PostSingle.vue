@@ -12,7 +12,8 @@
             {{ post.title | decode }}
           </h1>
           <span class="post-single-author">
-            Written by <button type="button" @click="scrollToAuthorBox">{{ authorName }}</button>
+            Written by
+            <router-link :to="`/author/${post.author.userId}`">{{ authorName }}</router-link>
           </span>
           <div class="post-single-content" v-html="post.content" />
         </div>
