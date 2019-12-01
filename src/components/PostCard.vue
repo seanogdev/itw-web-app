@@ -78,7 +78,7 @@ export default {
     display: flex;
 
     .post-image {
-      flex: 1 0 400px;
+      flex: 1 1 340px;
     }
   }
   .post-card-title {
