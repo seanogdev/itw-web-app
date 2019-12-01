@@ -5,20 +5,20 @@
         <router-link to="/" class="app-header__logo">
           <Logo />
         </router-link>
-        <AppHeaderDropdown ref="dropdown" button-title="Categories">
+        <AppHeaderDropdown button-title="Categories">
           <ul v-if="categories">
-            <li v-for="category in categories.edges" :key="category.node.slug">
-              <router-link :to="`/category/${category.node.slug}`" @click="$refs.dropdown.close()">
-                {{ category.node.name }}
+            <li v-for="{ node: category } in categories.edges" :key="category.slug">
+              <router-link :to="`/category/${category.slug}`" @click.native="resetActiveHeaderTab">
+                {{ category.name }}
               </router-link>
             </li>
           </ul>
         </AppHeaderDropdown>
-        <AppHeaderDropdown ref="dropdown" button-title="Authors">
+        <AppHeaderDropdown button-title="Authors">
           <ul v-if="users">
-            <li v-for="user in users.edges" :key="user.node.slug">
-              <router-link :to="`/author/${user.node.userId}`" @click="$refs.dropdown.close()">
-                {{ user.node.name }}
+            <li v-for="{ node: user } in users.edges" :key="user.slug">
+              <router-link :to="`/author/${user.userId}`" @click.native="resetActiveHeaderTab">
+                {{ user.name }}
               </router-link>
             </li>
           </ul>
@@ -78,7 +78,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateSearchInput']),
+    ...mapActions(['updateSearchInput', 'resetActiveHeaderTab']),
     navigateToHome() {
       this.$router.push('/').catch((e) => e);
     },

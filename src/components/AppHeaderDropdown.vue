@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 // eslint-disable-next-line import/extensions
 import ChevronDown from '@/assets/chevron-down.svg?inline';
 
@@ -24,37 +25,23 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      isOpen: false,
-    };
-  },
   computed: {
+    ...mapState(['activeHeaderTab']),
     dropdownClasses() {
       return [{ 'app-header-dropdown--is-open': this.isOpen }];
     },
+    isOpen() {
+      return this.activeHeaderTab === this.buttonTitle;
+    },
   },
   methods: {
+    ...mapActions(['updateSearchInput', 'updateActiveHeaderTab', 'resetActiveHeaderTab']),
     toggle() {
       if (this.isOpen) {
-        this.close();
+        this.resetActiveHeaderTab();
       } else {
-        this.open();
+        this.updateActiveHeaderTab(this.buttonTitle);
       }
-    },
-    open() {
-      Object.values(this.$parent.$refs)
-        .filter(
-          // eslint-disable-next-line no-underscore-dangle
-          (ref) => ref._uid !== this._uid,
-        )
-        .forEach((ref) => {
-          ref.close();
-        });
-      this.isOpen = true;
-    },
-    close() {
-      this.isOpen = false;
     },
   },
 };

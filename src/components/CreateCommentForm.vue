@@ -156,6 +156,8 @@ export default {
             } else {
               cachedData.comments.nodes.push(comment);
             }
+            this.$emit('success');
+
             store.writeQuery({
               query: getCommentsByPostId,
               variables: { postId: this.postId },
@@ -165,7 +167,6 @@ export default {
         });
         this.message = '';
         this.$v.$reset();
-        this.$emit('success');
       } catch (e) {
         console.log('e:', e);
       } finally {
