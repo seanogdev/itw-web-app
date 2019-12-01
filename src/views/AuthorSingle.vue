@@ -1,13 +1,13 @@
 <template>
   <div class="author">
-    <PostList :query="$options.query" :query-variables="{ id }" />
+    <PostList :query="$options.query" :query-variables="{ nicename }" />
   </div>
 </template>
 
 <script>
 import { generateAuthorName } from '@/utils/helpers';
-import getPostsByAuthorId from '@/apollo/queries/getPostsByAuthorId';
-import getUser from '@/apollo/queries/getUser';
+import getPostsByAuthorNiceName from '@/apollo/queries/getPostsByAuthorNiceName';
+import getUserByNiceName from '@/apollo/queries/getUserByNiceName';
 // @ is an alias to /src
 import PostList from '@/components/PostList.vue';
 
@@ -15,24 +15,21 @@ export default {
   components: {
     PostList,
   },
-  query: getPostsByAuthorId,
+  query: getPostsByAuthorNiceName,
   apollo: {
     users: {
-      query: getUser,
+      query: getUserByNiceName,
       variables() {
         return {
-          id: this.id,
+          nicename: this.nicename,
         };
       },
       skip() {
-        return !this.id;
+        return !this.nicename;
       },
     },
   },
   computed: {
-    id() {
-      return parseInt(this.$route.params.id, 10);
-    },
     author() {
       return this.users ? this.users.edges[0].node : null;
     },
@@ -41,6 +38,9 @@ export default {
         return '';
       }
       return generateAuthorName(this.author);
+    },
+    nicename() {
+      return this.$route.params.nicename;
     },
   },
   metaInfo() {

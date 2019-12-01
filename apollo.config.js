@@ -3,11 +3,11 @@ require('dotenv-flow').config();
 module.exports = {
   client: {
     service: {
-      name: 'itw',
+      name: 'In The Works',
       // URL to the GraphQL API
       url: process.env.VUE_APP_GRAPHQL_ENDPOINT,
     },
     // Files processed by the extension
-    includes: ['src/**/*.vue', 'src/**/*.js'],
+    includes: ['./src/**/*.*'],
   },
 };

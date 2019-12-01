@@ -8,17 +8,17 @@
         <CollectionHeader tag="h3">Other Company News</CollectionHeader>
         <ol>
           <router-link
-            v-for="post in otherPosts"
-            :key="post.node.postId"
+            v-for="{ node: post } in otherPosts"
+            :key="post.postId"
             v-slot="{ href, navigate }"
-            :to="generatePostUrl(post)"
+            :to="post.internalLink"
           >
             <li>
               <a :href="href" @click="navigate">
-                {{ post.node.title | decode }}
+                {{ post.title | decode }}
               </a>
-              <time :datetime="post.node.date">
-                {{ post.node.date | formatDate }}
+              <time :datetime="post.date">
+                {{ post.date | formatDate }}
               </time>
             </li>
           </router-link>

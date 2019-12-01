@@ -8,7 +8,7 @@
         <AppHeaderDropdown button-title="Categories">
           <ul v-if="categories">
             <li v-for="{ node: category } in categories.edges" :key="category.slug">
-              <router-link :to="`/category/${category.slug}`" @click.native="resetActiveHeaderTab">
+              <router-link :to="category.internalLink" @click.native="resetActiveHeaderTab">
                 {{ category.name | decode }}
               </router-link>
             </li>
@@ -17,7 +17,7 @@
         <AppHeaderDropdown button-title="Authors">
           <ul v-if="users">
             <li v-for="{ node: user } in users.edges" :key="user.slug">
-              <router-link :to="`/author/${user.userId}`" @click.native="resetActiveHeaderTab">
+              <router-link :to="user.internalLink" @click.native="resetActiveHeaderTab">
                 {{ user.name }}
               </router-link>
             </li>

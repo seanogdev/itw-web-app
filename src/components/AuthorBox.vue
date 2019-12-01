@@ -5,14 +5,14 @@
       <img :src="author.avatar.url" :alt="authorName" loading="lazy" width="150px" height="150px" />
     </div>
     <div class="author-box-content">
-      <router-link v-slot="{ href, navigate }" :to="`/author/${author.userId}`">
+      <router-link v-slot="{ href, navigate }" :to="author.internalLink">
         <h3 class="author-box-name">
           <a :href="href" @click="navigate">{{ authorName }}</a>
         </h3>
       </router-link>
       <div class="author-box-description" v-html="authorDescription" />
       <div class="author-box-links">
-        <router-link :to="`/author/${author.userId}`">
+        <router-link :to="author.internalLink">
           View all posts by {{ author.firstName }}
         </router-link>
       </div>

@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import PostFields from '@/apollo/fragments/PostFields';
 
 export default gql`
   query getPostsByCategorySlug($slug: String!, $first: Int, $after: String) {
@@ -9,28 +10,10 @@ export default gql`
       }
       edges {
         node {
-          link
-          postId
-          date
-          slug
-          title
-          excerpt
-          featuredImage {
-            altText
-            sourceUrl
-            srcSet
-            sizes
-          }
-          categories {
-            edges {
-              node {
-                link
-                name
-              }
-            }
-          }
+          ...PostFields
         }
       }
     }
   }
+  ${PostFields}
 `;

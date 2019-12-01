@@ -1,6 +1,8 @@
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import resolvers from './resolvers';
+import typeDefs from './typeDefs';
 import introspectionQueryResultData from './fragmentTypes.json';
 
 const uri = process.env.VUE_APP_GRAPHQL_ENDPOINT;
@@ -11,7 +13,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 });
 
 // HTTP connection to the API
-const httpLink = createHttpLink({
+const link = createHttpLink({
   uri,
   credentials,
 });
@@ -21,8 +23,10 @@ const cache = new InMemoryCache({ fragmentMatcher });
 
 // Create the apollo client
 const apolloClient = new ApolloClient({
-  link: httpLink,
+  link,
   cache,
+  typeDefs,
+  resolvers,
 });
 
 export default apolloClient;

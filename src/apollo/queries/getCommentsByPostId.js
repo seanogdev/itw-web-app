@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import UserFields from '../fragments/UserFields';
 
 export default gql`
   query getCommentsByPostId($postId: ID!) {
@@ -17,11 +18,6 @@ export default gql`
                     replies: children {
                       nodes {
                         ...CommentFields
-                        replies: children {
-                          nodes {
-                            ...CommentFields
-                          }
-                        }
                       }
                     }
                   }
@@ -45,14 +41,12 @@ export default gql`
         id
       }
       ... on User {
-        firstName
-        lastName
-        name
-        userId
+        ...UserFields
         avatar(size: 100) {
           url
         }
       }
     }
   }
+  ${UserFields}
 `;

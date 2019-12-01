@@ -4,15 +4,13 @@
       {{ post.date | formatDate }}
     </time>
 
-    <router-link v-if="category" :to="categoryUrl">
+    <router-link v-if="category" :to="category.internalLink">
       {{ category.name }}
     </router-link>
   </div>
 </template>
 
 <script>
-import { parseWpUrl } from '@/utils/helpers';
-
 export default {
   props: {
     post: {
@@ -26,9 +24,6 @@ export default {
         return this.post.categories.edges[0].node;
       }
       return null;
-    },
-    categoryUrl() {
-      return this.category ? parseWpUrl(this.category.link) : null;
     },
   },
 };

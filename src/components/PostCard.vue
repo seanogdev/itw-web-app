@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <router-link :to="postUrl" class="post-card" :class="postCardClass">
+  <router-link :to="post.internalLink" class="post-card" :class="postCardClass">
     <PostImage :post="post" :height="imageHeight" />
     <div class="post-card-main">
       <post-meta :post="post" />
@@ -17,7 +17,6 @@
 <script>
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
-import { generatePostUrl } from '@/utils/helpers';
 
 export default {
   components: {
@@ -47,9 +46,6 @@ export default {
         return 400;
       }
       return 240;
-    },
-    postUrl() {
-      return generatePostUrl(this.post);
     },
   },
 };

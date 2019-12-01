@@ -2,13 +2,22 @@
 <template>
   <div class="comment">
     <div class="comment-card">
-      <router-link v-if="comment.author.avatar" :to="authorUrl" class="comment-card-avatar">
+      <router-link
+        v-if="comment.author.avatar"
+        :to="comment.author.internalLink"
+        class="comment-card-avatar"
+      >
         <img :src="comment.author.avatar.url" width="50" alt="authorName" />
       </router-link>
       <div class="comment-card-content">
-        <router-link :to="authorUrl" class="comment-card-name">
+        <router-link
+          v-if="comment.author.internalLink"
+          :to="comment.author.internalLink"
+          class="comment-card-name"
+        >
           {{ authorName }}
         </router-link>
+        <div v-else class="comment-card-name">{{ authorName }}</div>
         <time :datetime="comment.date" class="comment-card-date">
           {{ comment.date | formatDate }}
         </time>
