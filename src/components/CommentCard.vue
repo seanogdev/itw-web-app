@@ -157,6 +157,12 @@ export default {
       margin-bottom: $spacing-2;
     }
 
+    img,
+    video,
+    iframe {
+      max-width: 100%;
+    }
+
     b,
     strong {
       font-weight: 500;
