@@ -18,7 +18,9 @@
           <div class="post-single-content" v-html="post.content" />
         </div>
       </div>
-      <AuthorBox ref="authorBox" :author="post.author" />
+      <Intersect root-margin="0px 0px 500px 0px" @enter="loadComments">
+        <AuthorBox ref="authorBox" :author="post.author" />
+      </Intersect>
       <div v-if="comments && comments.nodes.length" class="post-comments">
         <CollectionHeader>Comments</CollectionHeader>
         <CommentList :post-id="post.postId" :comments="comments.nodes" />
@@ -29,6 +31,7 @@
 </template>
 
 <script>
+import { Intersect } from 'vue-observable';
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import getPostBySlug from '@/apollo/queries/getPostBySlug';
 import { decode, generateAuthorName } from '@/utils/helpers';
@@ -44,10 +47,11 @@ import PostMeta from '@/components/PostMeta.vue';
 export default {
   components: {
     AuthorBox,
-    CreateCommentForm,
     CollectionHeader,
     CommentList,
+    CreateCommentForm,
     EmptyState,
+    Intersect,
     PostImage,
     PostMeta,
   },
@@ -67,10 +71,7 @@ export default {
           postId: this.post.postId,
         };
       },
-      skip() {
-        // Wait until this post exists
-        return !this.post;
-      },
+      skip: true,
     },
   },
   computed: {
@@ -79,6 +80,9 @@ export default {
     },
   },
   methods: {
+    loadComments() {
+      this.$apollo.queries.comments.skip = false;
+    },
     scrollToAuthorBox() {
       const { authorBox } = this.$refs;
       if (authorBox.$el) {

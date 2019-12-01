@@ -2,7 +2,7 @@
 <template>
   <div class="comment">
     <div class="comment-card">
-      <router-link :to="authorUrl" class="comment-card-avatar">
+      <router-link v-if="comment.author.avatar" :to="authorUrl" class="comment-card-avatar">
         <img :src="comment.author.avatar.url" width="50" alt="authorName" />
       </router-link>
       <div class="comment-card-content">
