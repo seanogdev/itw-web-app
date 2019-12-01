@@ -32,7 +32,7 @@
 <script>
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import getPostBySlug from '@/apollo/queries/getPostBySlug';
-import { decode } from '@/utils/helpers';
+import { decode, generateAuthorName } from '@/utils/helpers';
 
 import AuthorBox from '@/components/AuthorBox.vue';
 import CollectionHeader from '@/components/CollectionHeader.vue';
@@ -76,10 +76,7 @@ export default {
   },
   computed: {
     authorName() {
-      if (this.post.author.firstName && this.post.author.lastName) {
-        return `${this.post.author.firstName} ${this.post.author.lastName}`;
-      }
-      return this.post.author.name;
+      return generateAuthorName(this.post.author);
     },
   },
   methods: {

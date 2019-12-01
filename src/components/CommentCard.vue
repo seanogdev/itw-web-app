@@ -2,6 +2,9 @@
 <template>
   <div class="comment">
     <div class="comment-card">
+      <router-link :to="authorUrl" class="comment-card-avatar">
+        <img :src="comment.author.avatar.url" width="50" alt="authorName" />
+      </router-link>
       <div class="comment-card-content">
         <router-link :to="authorUrl" class="comment-card-name">
           {{ authorName }}
@@ -37,7 +40,7 @@
 <script>
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
-import { focusFirstFocusable } from '@/utils/helpers';
+import { focusFirstFocusable, generateAuthorName } from '@/utils/helpers';
 
 export default {
   name: 'CommentCard',
@@ -69,13 +72,10 @@ export default {
       return this.depth < 5;
     },
     authorName() {
-      if (this.comment.author.firstName && this.comment.author.lastName) {
-        return `${this.comment.author.firstName} ${this.comment.author.lastName}`;
-      }
-      return this.comment.author.name;
+      return generateAuthorName(this.comment.author);
     },
     authorUrl() {
-      return `/authors/${this.comment.author.userId}`;
+      return `/author/${this.comment.author.userId}`;
     },
     replyButtonText() {
       if (this.shouldShowReplyForm) {
@@ -109,14 +109,22 @@ export default {
   margin-top: $spacing-4;
   padding: $spacing-4 $spacing-6;
   background: #fff;
-  overflow: hidden;
   border-radius: 4px;
   border: 1px solid #e9ecf2;
   transition: all 0.2s ease-in-out;
+  display: flex;
 
   &:hover {
     border-color: #c5cada;
   }
+}
+
+.comment-card-avatar {
+  flex: 0 0 50px;
+  margin-right: $spacing-2;
+  overflow: hidden;
+  border-radius: 50%;
+  height: 50px;
 }
 
 .comment-card-name,

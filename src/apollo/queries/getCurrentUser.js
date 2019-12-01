@@ -8,6 +8,9 @@ export default gql`
       name
       firstName
       lastName
+      avatar {
+        url
+      }
     }
   }
 `;

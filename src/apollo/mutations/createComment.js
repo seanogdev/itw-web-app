@@ -35,9 +35,13 @@ export default gql`
             name
             firstName
             lastName
+            avatar(size: 100) {
+              url
+            }
           }
           ... on CommentAuthor {
             name
+            id
           }
         }
       }

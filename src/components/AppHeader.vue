@@ -9,7 +9,7 @@
           <ul v-if="categories">
             <li v-for="{ node: category } in categories.edges" :key="category.slug">
               <router-link :to="`/category/${category.slug}`" @click.native="resetActiveHeaderTab">
-                {{ category.name }}
+                {{ category.name | decode }}
               </router-link>
             </li>
           </ul>

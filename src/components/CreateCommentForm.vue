@@ -1,5 +1,11 @@
 <template>
-  <form ref="form" class="create-comment" :disabled="isLoading" @submit.prevent="submitComment">
+  <form
+    v-if="currentUser"
+    ref="form"
+    class="create-comment"
+    :disabled="isLoading"
+    @submit.prevent="submitComment"
+  >
     <label v-if="title" :for="textareaKey" class="create-comment-title">{{ title }}</label>
     <textarea
       :id="textareaKey"

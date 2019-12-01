@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { nl2br, linkify, decode } from '@/utils/helpers';
+import { nl2br, linkify, decode, generateAuthorName } from '@/utils/helpers';
 
 export default {
   props: {
@@ -32,10 +32,7 @@ export default {
   },
   computed: {
     authorName() {
-      if (this.author.firstName && this.author.lastName) {
-        return `${this.author.firstName} ${this.author.lastName}`;
-      }
-      return this.author.name;
+      return generateAuthorName(this.author);
     },
     authorDescription() {
       if (!this.author.description) {

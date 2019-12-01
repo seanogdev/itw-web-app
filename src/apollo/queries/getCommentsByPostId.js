@@ -49,6 +49,9 @@ export default gql`
         lastName
         name
         userId
+        avatar(size: 100) {
+          url
+        }
       }
     }
   }

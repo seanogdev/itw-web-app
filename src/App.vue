@@ -15,7 +15,7 @@ export default {
     titleTemplate: (titleChunk) => {
       const appName = process.env.VUE_APP_NAME;
       if (titleChunk) {
-        return `${titleChunk} -${appName}`;
+        return `${titleChunk} - ${appName}`;
       }
       return appName;
     },

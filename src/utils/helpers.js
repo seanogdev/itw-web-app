@@ -25,6 +25,13 @@ export function parseWpUrl(link) {
   }
 }
 
+export function generateAuthorName(author) {
+  if (author.firstName && author.lastName) {
+    return `${author.firstName} ${author.lastName}`;
+  }
+  return author.name;
+}
+
 export function generatePostUrl(post) {
   const iso = post.date ? post.date : new Date().toISOString();
   const date = parseISO(iso);
