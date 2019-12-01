@@ -16,7 +16,7 @@ Using vue & vue-apollo behind the scenes to query the data.
 ### 😢Things missing
 - [x] ~~Realtime Search (soon)~~
 - [x] ~~Auth (works but not enabled yet)~~
-- [ ] CreateComment mutation (in progress)
+- [x] ~~CreateComment mutation~~
 - [ ] Like system (less soon)
 
 ## 🛠 Project setup ([vue-cli](https://cli.vuejs.org/))
