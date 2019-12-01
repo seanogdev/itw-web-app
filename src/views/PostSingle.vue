@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="post-single">
-    <Loading v-if="$apollo.queries.post.loading" />
+    <Loading v-if="$apollo.queries.post.loading" class="post-single-loader" />
     <EmptyState v-else-if="!post" message="Post not found" />
     <template v-else>
       <div class="post-single-box">
@@ -21,10 +21,14 @@
       <Intersect root-margin="0px 0px 500px 0px" @enter="loadComments">
         <AuthorBox ref="authorBox" :author="post.author" />
       </Intersect>
-      <div v-if="comments && comments.nodes.length" class="post-comments">
+      <Loading v-if="$apollo.queries.comments.loading" />
+      <div v-else-if="comments && comments.nodes.length" class="post-single-comments">
         <CollectionHeader>Comments</CollectionHeader>
         <CommentList :post-id="post.postId" :comments="comments.nodes" />
         <CreateCommentForm title="Leave a new comment" :post-id="post.postId" />
+      </div>
+      <div v-else class="post-single-comments-empty">
+        <app-button @click="loadComments">Load comments</app-button>
       </div>
     </template>
   </div>
@@ -117,7 +121,7 @@ export default {
   font-size: 15px;
 }
 
-.loader {
+.post-single-loader {
   margin-top: calc(100% - #{$spacing/2});
 }
 
@@ -239,12 +243,19 @@ export default {
   margin-bottom: $spacing-4;
 }
 
-.post-comments {
+.post-single-comments {
   margin: 0 auto $spacing-8;
   max-width: $app-width * 0.8;
 
   .comment-list {
     padding-bottom: $spacing-4;
   }
+}
+
+.post-single-comments-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 </style>
