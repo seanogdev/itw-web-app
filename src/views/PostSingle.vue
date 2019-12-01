@@ -94,12 +94,6 @@ export default {
     loadComments() {
       this.$apollo.queries.comments.skip = false;
     },
-    scrollToAuthorBox() {
-      const { authorBox } = this.$refs;
-      if (authorBox.$el) {
-        authorBox.$el.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
-      }
-    },
   },
   metaInfo() {
     return {
