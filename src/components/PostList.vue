@@ -136,7 +136,7 @@ export default {
 }
 
 .loader {
-  margin-top: calc(100% - $spacing/2);
+  margin-top: calc(100% - #{$spacing/2});
 }
 
 .post-list-button {
