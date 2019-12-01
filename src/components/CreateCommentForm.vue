@@ -138,10 +138,7 @@ export default {
                 date: new Date().toISOString(),
                 author: {
                   __typename: 'User',
-                  name: this.currentUser.name || '',
-                  firstName: this.currentUser.firstName,
-                  lastName: this.currentUser.lastName,
-                  userId: this.currentUser.userId,
+                  ...this.currentUser,
                 },
                 replies: {
                   __typename: 'CommentToCommentConnection',

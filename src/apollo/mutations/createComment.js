@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
-import UserFields from '@/apollo/fragments/UserFields';
-import CommentAuthorFields from '@/apollo/fragments/CommentAuthorFields';
+import CommentFields from '@/apollo/fragments/CommentFields';
 
 export default gql`
   mutation createComment(
@@ -22,26 +21,14 @@ export default gql`
       clientMutationId
       success
       comment {
-        id
-        commentId
-        content
-        date
+        ...CommentFields
         replies: children {
           nodes {
             id
           }
         }
-        author {
-          ... on User {
-            ...UserFields
-          }
-          ... on CommentAuthor {
-            ...CommentAuthorFields
-          }
-        }
       }
     }
   }
-  ${UserFields}
-  ${CommentAuthorFields}
+  ${CommentFields}
 `;

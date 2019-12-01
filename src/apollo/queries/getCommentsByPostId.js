@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
-import UserFields from '../fragments/UserFields';
-import CommentAuthorFields from '../fragments/CommentAuthorFields';
+import CommentFields from '../fragments/CommentFields';
 
 export default gql`
   query getCommentsByPostId($postId: ID!) {
@@ -30,24 +29,5 @@ export default gql`
       }
     }
   }
-
-  fragment CommentFields on Comment {
-    id
-    commentId
-    date
-    content
-    author {
-      ... on CommentAuthor {
-        ...CommentAuthorFields
-      }
-      ... on User {
-        ...UserFields
-        avatar(size: 100) {
-          url
-        }
-      }
-    }
-  }
-  ${CommentAuthorFields}
-  ${UserFields}
+  ${CommentFields}
 `;
