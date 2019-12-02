@@ -103,9 +103,10 @@ export default {
       return this.currentUser && this.currentUser.capabilities.includes('moderate_comments');
     },
     currentUser() {
-      return this.$apollo.provider.defaultClient.readQuery({
+      const { currentUser } = this.$apollo.provider.defaultClient.readQuery({
         query: getCurrentUser,
       });
+      return currentUser || null;
     },
     shouldShowReplyButton() {
       return this.depth < 5 && !!this.currentUser;
