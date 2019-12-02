@@ -22,7 +22,7 @@ const routes = [
       import(/* webpackChunkName: "categories-single" */ '@/views/CategorySingle.vue'),
   },
   {
-    path: '/author/:nicename',
+    path: '/author/:userId',
     name: 'author-single',
     component: () => import(/* webpackChunkName: "categories-single" */ '@/views/AuthorSingle.vue'),
   },

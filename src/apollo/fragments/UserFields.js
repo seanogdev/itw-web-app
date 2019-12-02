@@ -8,7 +8,6 @@ export default gql`
     name
     internalLink @client
     fullName @client
-    nicename
     firstName
     lastName
   }
