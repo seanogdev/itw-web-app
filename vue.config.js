@@ -11,10 +11,9 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '^/wp-content': {
+      '/graphql': {
         target: 'http://localhost:8000',
         ws: true,
-        changeOrigin: true,
       },
     },
   },
