@@ -10,6 +10,9 @@
         <img :src="comment.author.avatar.url" width="50" :alt="comment.author.fullName" />
       </router-link>
       <div class="comment-card-content">
+        <app-button v-if="shouldShowDeleteButton" alt @click="deleteComment">
+          Delete comment
+        </app-button>
         <router-link
           v-if="comment.author.internalLink"
           :to="comment.author.internalLink"
@@ -41,15 +44,20 @@
       :key="comment.replies.nodes.length"
       :depth="depth + 1"
       :post-id="postId"
+      :parent-comment-id="comment.commentId"
       :comments="comment.replies.nodes"
     />
   </div>
 </template>
 
 <script>
+import { focusFirstFocusable, findComments } from '@/utils/helpers';
+import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
+import deleteComment from '@/apollo/mutations/deleteComment';
+
 import CommentList from '@/components/CommentList.vue';
 import CreateCommentForm from '@/components/CreateCommentForm.vue';
-import { focusFirstFocusable } from '@/utils/helpers';
+import getCurrentUser from '@/apollo/queries/getCurrentUser';
 
 export default {
   name: 'CommentCard',
@@ -66,6 +74,10 @@ export default {
       type: Object,
       required: true,
     },
+    parentCommentId: {
+      type: Number,
+      default: null,
+    },
     postId: {
       type: Number,
       required: true,
@@ -77,8 +89,26 @@ export default {
     };
   },
   computed: {
+    shouldShowDeleteButton() {
+      return this.isCurrentUserCommentAuthor || this.isCurrentUserCommentModerator;
+    },
+    isCurrentUserCommentAuthor() {
+      return (
+        this.currentUser &&
+        this.comment.author &&
+        this.currentUser.userId === this.comment.author.userId
+      );
+    },
+    isCurrentUserCommentModerator() {
+      return this.currentUser && this.currentUser.capabilities.includes('moderate_comments');
+    },
+    currentUser() {
+      return this.$apollo.provider.defaultClient.readQuery({
+        query: getCurrentUser,
+      });
+    },
     shouldShowReplyButton() {
-      return this.depth < 5;
+      return this.depth < 5 && !!this.currentUser;
     },
     replyButtonText() {
       if (this.shouldShowReplyForm) {
@@ -88,6 +118,63 @@ export default {
     },
   },
   methods: {
+    async deleteComment() {
+      if (this.isCurrentUserCommentModerator && !this.isCurrentUserCommentAuthor) {
+        // eslint-disable-next-line no-alert
+        const confirm = window.confirm('Are you sure you want to delete this comment?');
+        if (!confirm) {
+          return;
+        }
+      }
+      await this.$apollo.mutate({
+        mutation: deleteComment,
+        variables: {
+          commentId: this.comment.id,
+          clientMutationId: 'deleteComment',
+        },
+        data: {
+          deleteComment: {
+            deletedId: this.comment.id,
+            clientMutationId: 'deleteComment',
+            comment: {
+              commentId: this.comment.commentId,
+              __typename: 'Comment',
+            },
+            __typename: 'DeleteCommentPayload',
+          },
+        },
+        update: (
+          store,
+          {
+            data: {
+              deleteComment: {
+                comment: { commentId },
+              },
+            },
+          },
+        ) => {
+          const query = {
+            query: getCommentsByPostId,
+            variables: { postId: this.postId },
+          };
+          const data = store.readQuery(query);
+          findComments({
+            commentId: this.parentCommentId,
+            comments: data.comments,
+            // eslint-disable-next-line no-unused-vars
+            onFound: (comments) => {
+              // eslint-disable-next-line no-param-reassign
+              const index = comments.findIndex((comment) => comment.commentId === commentId);
+              if (index !== -1) {
+                comments.splice(index, 1);
+              }
+            },
+          });
+
+          store.writeQuery({ ...query, data });
+        },
+      });
+    },
     async toggleReplyForm() {
       this.shouldShowReplyForm = !this.shouldShowReplyForm;
 

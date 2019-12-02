@@ -79,3 +79,25 @@ export const focusFirstFocusable = (element, selectors) => {
     firstFocusable.focus();
   }
 };
+
+export function findComments({ commentId, comments, onFound }) {
+  const parent = comments.nodes;
+  if (!commentId) {
+    onFound(parent);
+    return;
+  }
+  // eslint-disable-next-line no-restricted-syntax
+  for (const node of parent) {
+    if (node.commentId === commentId) {
+      onFound(node.replies.nodes);
+      return;
+    }
+    if (node.replies && node.replies.nodes.length) {
+      findComments({
+        commentId,
+        comments: node.replies,
+        onFound,
+      });
+    }
+  }
+}

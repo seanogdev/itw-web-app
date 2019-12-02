@@ -46,7 +46,7 @@ import autosize from 'autosize';
 import getCurrentUser from '@/apollo/queries/getCurrentUser';
 import createCommentMutation from '@/apollo/mutations/createComment';
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
-import { nl2br } from '@/utils/helpers';
+import { nl2br, findComments } from '@/utils/helpers';
 
 export default {
   props: {
@@ -74,12 +74,12 @@ export default {
       required,
     },
   },
-  apollo: {
-    currentUser: {
-      query: getCurrentUser,
-    },
-  },
   computed: {
+    currentUser() {
+      return this.$apollo.provider.defaultClient.readQuery({
+        query: getCurrentUser,
+      });
+    },
     showCancelButton() {
       return !!this.parentCommentId;
     },
@@ -105,11 +105,8 @@ export default {
       }
     },
     async submitComment() {
-      if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
-      }
-      if (!this.currentUser) {
+      this.$v.$touch();
+      if (!this.currentUser || this.$v.$invalid) {
         return;
       }
       this.isLoading = true;
@@ -124,29 +121,29 @@ export default {
             userId: this.currentUser.userId,
           },
           optimisticResponse: {
-            __typename: 'Mutation',
             createComment: {
-              __typename: 'CreateCommentPayload',
               success: true,
               clientMutationId: 'clientMutationId',
               comment: {
-                __typename: 'Comment',
                 commentId: -1,
                 id: -1,
                 approved: true,
                 content: `${nl2br(this.message)}`,
                 date: new Date().toISOString(),
                 author: {
-                  __typename: 'User',
                   ...this.currentUser,
+                  __typename: 'User',
                 },
                 replies: {
-                  __typename: 'CommentToCommentConnection',
                   nodes: [],
+                  __typename: 'CommentToCommentConnection',
                 },
                 type: 'uhm',
+                __typename: 'Comment',
               },
+              __typename: 'CreateCommentPayload',
             },
+            __typename: 'Mutation',
           },
           update: (
             store,
@@ -156,22 +153,21 @@ export default {
               },
             },
           ) => {
-            const cachedData = store.readQuery({
+            const query = {
               query: getCommentsByPostId,
               variables: { postId: this.postId },
+            };
+            const data = store.readQuery(query);
+            findComments({
+              commentId: this.parentCommentId,
+              comments: data.comments,
+              onFound: (comments) => {
+                comments.push(comment);
+              },
             });
-            if (this.parentCommentId) {
-              this.updateParentComment(cachedData.comments.nodes, comment);
-            } else {
-              cachedData.comments.nodes.push(comment);
-            }
             this.$emit('success');
 
-            store.writeQuery({
-              query: getCommentsByPostId,
-              variables: { postId: this.postId },
-              data: cachedData,
-            });
+            store.writeQuery({ ...query, data });
           },
         });
         this.message = '';
@@ -180,17 +176,6 @@ export default {
         //
       } finally {
         this.isLoading = false;
-      }
-    },
-
-    updateParentComment(nodes, comment) {
-      // eslint-disable-next-line no-restricted-syntax
-      for (const node of nodes) {
-        if (node.commentId === this.parentCommentId) {
-          node.replies.nodes.push(comment);
-        } else if (node.replies && node.replies.nodes.length) {
-          this.updateParentComment(node.replies.nodes, comment);
-        }
       }
     },
   },
