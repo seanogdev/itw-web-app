@@ -133,7 +133,7 @@ export default {
           commentId: this.comment.id,
           clientMutationId: 'deleteComment',
         },
-        data: {
+        optimisticResponse: {
           deleteComment: {
             deletedId: this.comment.id,
             clientMutationId: 'deleteComment',
