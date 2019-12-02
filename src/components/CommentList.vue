@@ -4,6 +4,7 @@
       v-for="comment in comments"
       :key="comment.id"
       :depth="depth"
+      :parent-comment-id="parentCommentId"
       :post-id="postId"
       :comment="comment"
     />
@@ -25,6 +26,10 @@ export default {
     },
     comments: {
       type: Array,
+      default: null,
+    },
+    parentCommentId: {
+      type: Number,
       default: null,
     },
     postId: {

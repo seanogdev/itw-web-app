@@ -41,15 +41,6 @@ export default {
     CollectionHeader,
     PostCard,
   },
-  apollo: {
-    posts: {
-      query: categorySlug ? getPostsByCategorySlug : getPosts,
-      variables: {
-        first: 7,
-        slug: categorySlug,
-      },
-    },
-  },
   computed: {
     otherPosts() {
       if (!this.posts) {
@@ -58,6 +49,15 @@ export default {
       const otherPosts = [...this.posts.edges];
       otherPosts.shift();
       return otherPosts;
+    },
+  },
+  apollo: {
+    posts: {
+      query: categorySlug ? getPostsByCategorySlug : getPosts,
+      variables: {
+        first: 7,
+        slug: categorySlug,
+      },
     },
   },
 };

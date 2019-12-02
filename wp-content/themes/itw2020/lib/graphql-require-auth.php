@@ -14,6 +14,6 @@ function force_graphql_api_authentication( $query ) {
 	}
 
 	if (!is_user_logged_in()) {
-		throw new \GraphQL\Error\UserError( __( 'You do not have permission to access the API', 'your-textdomain' ) );
+		throw new \GraphQL\Error\UserError('You do not have permission to access the API');
 	}
 }
