@@ -5,7 +5,12 @@
       <ChevronDown />
     </button>
     <div class="app-header-dropdown__content">
-      <slot />
+      <Loading v-if="$apollo.queries.result.loading" />
+      <ul v-if="result">
+        <li v-for="{ node } in result.edges" :key="node.id">
+          <slot :node="node" />
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -19,11 +24,37 @@ export default {
   components: {
     ChevronDown,
   },
+  apollo: {
+    result: {
+      query() {
+        return this.query;
+      },
+      skip() {
+        return !this.hasBeenOpened;
+      },
+      update(data) {
+        return data[this.queryKey];
+      },
+    },
+  },
   props: {
+    query: {
+      type: Object,
+      required: true,
+    },
+    queryKey: {
+      type: String,
+      required: true,
+    },
     buttonTitle: {
       type: String,
       required: true,
     },
+  },
+  data() {
+    return {
+      hasBeenOpened: false,
+    };
   },
   computed: {
     ...mapState(['activeHeaderTab']),
@@ -32,6 +63,13 @@ export default {
     },
     isOpen() {
       return this.activeHeaderTab === this.buttonTitle;
+    },
+  },
+  watch: {
+    isOpen() {
+      if (this.isOpen) {
+        this.hasBeenOpened = true;
+      }
     },
   },
   methods: {
@@ -100,20 +138,18 @@ export default {
     transform: translateY(0);
   }
 
-  &::v-deep {
-    ul {
-      max-width: $app-width;
-      overflow: hidden;
-      overflow-y: scroll;
-      display: block;
-      margin: 0 auto;
-      columns: 4;
-      column-gap: $spacing-4;
-    }
-    li {
-      margin-bottom: $spacing-2;
-      font-size: 14px;
-    }
+  ul {
+    max-width: $app-width;
+    overflow: hidden;
+    overflow-y: scroll;
+    display: block;
+    margin: 0 auto;
+    columns: 4;
+    column-gap: $spacing-4;
+  }
+  li {
+    margin-bottom: $spacing-2;
+    font-size: 14px;
   }
 }
 </style>

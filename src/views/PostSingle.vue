@@ -164,15 +164,18 @@ export default {
       margin-bottom: $spacing-2;
     }
 
+    img {
+      max-width: 100%;
+    }
+
+    .aligncenter {
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+    }
+
     .wp-block-image {
       margin-bottom: $spacing-2;
-
-      & > img {
-        width: 100%;
-      }
-      .aligncenter {
-        text-align: center;
-      }
     }
 
     .wp-caption-text {

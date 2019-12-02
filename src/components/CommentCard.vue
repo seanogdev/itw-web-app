@@ -10,9 +10,11 @@
         <img :src="comment.author.avatar.url" width="50" :alt="comment.author.fullName" />
       </router-link>
       <div class="comment-card-content">
-        <app-button v-if="shouldShowDeleteButton" alt @click="deleteComment">
-          Delete comment
-        </app-button>
+        <div class="comment-card-buttons">
+          <app-button v-if="shouldShowDeleteButton" alt @click="deleteComment">
+            Delete
+          </app-button>
+        </div>
         <router-link
           v-if="comment.author.internalLink"
           :to="comment.author.internalLink"
@@ -103,10 +105,10 @@ export default {
       return this.currentUser && this.currentUser.capabilities.includes('moderate_comments');
     },
     currentUser() {
-      const { currentUser } = this.$apollo.provider.defaultClient.readQuery({
+      const query = this.$apollo.provider.defaultClient.readQuery({
         query: getCurrentUser,
       });
-      return currentUser || null;
+      return query && query.currentUser ? query.currentUser : null;
     },
     shouldShowReplyButton() {
       return this.depth < 5 && !!this.currentUser;
@@ -216,6 +218,16 @@ export default {
   overflow: hidden;
   border-radius: 50%;
   height: 50px;
+}
+
+.comment-card-content {
+  flex: 1 0 auto;
+  position: relative;
+}
+
+.comment-card-buttons {
+  position: absolute;
+  right: 0;
 }
 
 .comment-card-name,

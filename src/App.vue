@@ -9,7 +9,6 @@
 
 <script>
 import AppHeader from '@/components/AppHeader.vue';
-import getCurrentUser from './apollo/queries/getCurrentUser';
 
 export default {
   metaInfo: {
@@ -19,11 +18,6 @@ export default {
         return `${titleChunk} - ${appName}`;
       }
       return appName;
-    },
-  },
-  apollo: {
-    currentUser: {
-      query: getCurrentUser,
     },
   },
   components: {
@@ -37,7 +31,7 @@ export default {
 @import '@/styles/reset';
 
 body {
-  background: #f5f5f5;
+  background: #f5f7fa;
   color: $text-primary;
 }
 

@@ -6,22 +6,15 @@
     @submit.prevent="submitComment"
   >
     <label v-if="title" :for="textareaKey" class="create-comment-title">{{ title }}</label>
-    <textarea
+    <AppTextarea
       :id="textareaKey"
       ref="textarea"
       v-model="$v.message.$model"
-      class="create-comment-message"
-      autocapitalize="off"
-      autocomplete="off"
-      :disabled="!currentUser"
-      autocorrect="off"
-      data-lpignore="true"
-      :placeholder="placeholderMessage"
-      rows="2"
       :name="textareaKey"
-      @keydown.enter="handleCmdEnter"
-    >
-    </textarea>
+      :disabled="!currentUser"
+      :placeholder="placeholderMessage"
+      @submit="submitComment"
+    />
     <span v-if="$v.$error" class="create-comment-error">Please provide a message</span>
     <div class="create-comment-buttons">
       <AppButton v-if="showCancelButton" alt class="create-comment-submit" @click="$emit('cancel')">
@@ -47,8 +40,12 @@ import getCurrentUser from '@/apollo/queries/getCurrentUser';
 import createCommentMutation from '@/apollo/mutations/createComment';
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import { nl2br, findComments } from '@/utils/helpers';
+import AppTextarea from '@/components/AppTextarea.vue';
 
 export default {
+  components: {
+    AppTextarea,
+  },
   props: {
     postId: {
       type: Number,
@@ -76,10 +73,10 @@ export default {
   },
   computed: {
     currentUser() {
-      const { currentUser } = this.$apollo.provider.defaultClient.readQuery({
+      const query = this.$apollo.provider.defaultClient.readQuery({
         query: getCurrentUser,
       });
-      return currentUser;
+      return query && query.currentUser ? query.currentUser : null;
     },
     showCancelButton() {
       return !!this.parentCommentId;
@@ -98,13 +95,6 @@ export default {
     autosize(this.$refs.textarea);
   },
   methods: {
-    handleCmdEnter(event) {
-      const systemModifierKey = navigator.platform === 'MacIntel' ? event.metaKey : event.ctrlKey;
-      if (systemModifierKey) {
-        event.preventDefault();
-        this.submitComment();
-      }
-    },
     async submitComment() {
       this.$v.$touch();
       if (!this.currentUser || this.$v.$invalid) {
@@ -203,34 +193,6 @@ export default {
   margin-bottom: $spacing-2;
   font-size: 18px;
   color: $app-primary;
-}
-
-.create-comment-message {
-  margin-bottom: $spacing-2;
-  border: 1px solid lighten($text-secondary, 40%);
-  padding: $spacing-2;
-  font-size: 16px;
-  font-family: $font-family;
-  line-height: 1.7;
-  resize: none;
-  color: $text-secondary;
-  border-radius: 4px;
-
-  &:disabled {
-    opacity: 0.6;
-  }
-
-  &::placeholder {
-    color: #c5cada;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: $text-secondary;
-    &::placeholder {
-      color: #fff;
-    }
-  }
 }
 
 .create-comment-error {

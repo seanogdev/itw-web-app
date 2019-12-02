@@ -5,23 +5,23 @@
         <router-link to="/" class="app-header__logo">
           <Logo />
         </router-link>
-        <AppHeaderDropdown button-title="Categories">
-          <ul v-if="categories">
-            <li v-for="{ node: category } in categories.edges" :key="category.slug">
-              <router-link :to="category.internalLink" @click.native="resetActiveHeaderTab">
-                {{ category.name | decode }}
-              </router-link>
-            </li>
-          </ul>
+        <AppHeaderDropdown
+          button-title="Categories"
+          :query="$options.CategoriesQuery"
+          query-key="categories"
+        >
+          <template v-slot="{ node: category }">
+            <router-link :to="category.internalLink" @click.native="resetActiveHeaderTab">
+              {{ category.name | decode }}
+            </router-link>
+          </template>
         </AppHeaderDropdown>
-        <AppHeaderDropdown button-title="Authors">
-          <ul v-if="users">
-            <li v-for="{ node: user } in users.edges" :key="user.slug">
-              <router-link :to="user.internalLink" @click.native="resetActiveHeaderTab">
-                {{ user.name }}
-              </router-link>
-            </li>
-          </ul>
+        <AppHeaderDropdown button-title="Authors" :query="$options.UsersQuery" query-key="users">
+          <template v-slot="{ node: user }">
+            <router-link :to="user.internalLink" @click.native="resetActiveHeaderTab">
+              {{ user.name }}
+            </router-link>
+          </template>
         </AppHeaderDropdown>
       </div>
       <div class="app-header__section app-header__section--right">
@@ -33,7 +33,7 @@
           @keydown.enter="navigateToHome"
         />
         <AppButton
-          v-if="adminUrl"
+          v-if="canPublishPosts"
           class="app-button--header"
           tag="a"
           target="_blank"
@@ -41,6 +41,13 @@
         >
           Write a Post
         </AppButton>
+        <img
+          v-if="currentUser && currentUser.avatar"
+          class="app-header-user"
+          :src="currentUser.avatar.url"
+          width="40px"
+          height="40px"
+        />
       </div>
     </div>
   </div>
@@ -52,6 +59,7 @@ import AppHeaderDropdown from '@/components/AppHeaderDropdown.vue';
 // eslint-disable-next-line import/extensions
 import Logo from '@/assets/logo.svg?inline';
 import getCategories from '@/apollo/queries/getCategories';
+import getCurrentUser from '@/apollo/queries/getCurrentUser';
 import getUsers from '@/apollo/queries/getUsers';
 
 export default {
@@ -59,14 +67,8 @@ export default {
     AppHeaderDropdown,
     Logo,
   },
-  apollo: {
-    categories: {
-      query: getCategories,
-    },
-    users: {
-      query: getUsers,
-    },
-  },
+  CategoriesQuery: getCategories,
+  UsersQuery: getUsers,
   computed: {
     ...mapState({ searchInputFromState: 'searchInput' }),
     adminUrl() {
@@ -75,6 +77,9 @@ export default {
       }
       return `${process.env.VUE_APP_WORDPRESS_URL}/wp-admin/post-new.php`;
     },
+    canPublishPosts() {
+      return this.currentUser ? this.currentUser.capabilities.includes('publish_posts') : false;
+    },
     searchInput: {
       get() {
         return this.$store.state.searchInputFromState;
@@ -82,6 +87,11 @@ export default {
       set(value) {
         this.updateSearchInput(value);
       },
+    },
+  },
+  apollo: {
+    currentUser: {
+      query: getCurrentUser,
     },
   },
   methods: {
@@ -166,5 +176,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.app-header-user {
+  margin-left: $spacing-4;
+  border-radius: 50%;
+  overflow: hidden;
 }
 </style>
