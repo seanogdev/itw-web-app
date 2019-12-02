@@ -76,9 +76,10 @@ export default {
   },
   computed: {
     currentUser() {
-      return this.$apollo.provider.defaultClient.readQuery({
+      const { currentUser } = this.$apollo.provider.defaultClient.readQuery({
         query: getCurrentUser,
       });
+      return currentUser;
     },
     showCancelButton() {
       return !!this.parentCommentId;

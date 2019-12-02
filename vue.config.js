@@ -15,6 +15,10 @@ module.exports = {
         target: 'http://localhost:8000',
         ws: true,
       },
+      '/wp-admin': {
+        target: 'http://localhost:8000',
+        ws: true,
+      },
     },
   },
   chainWebpack: (config) => {
