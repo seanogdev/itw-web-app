@@ -9,9 +9,6 @@ module.exports = {
       },
     },
   },
-  pluginOptions: {
-    lintStyleOnBuild: true,
-  },
   devServer: {
     proxy: {
       '/graphql': {
