@@ -1,12 +1,14 @@
 @mixin font($name, $weight, $style) {
-    @font-face {
-        font-family: 'FaktSoft';
-        font-style: #{$style};
-        font-weight: $weight;
-        src: url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.woff'),
-        url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.ttf'),
-        url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.eot');
-    }
+  @font-face {
+    font-family: 'FaktSoft';
+    font-style: #{$style};
+    font-weight: $weight;
+    // prettier-ignore
+    src:
+      url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.woff'),
+      url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.ttf'),
+      url('~@/assets/fonts/fakt/#{$name}/FaktSoft-#{$name}.eot');
+  }
 }
 
 @include font('Blond', 300, 'normal');

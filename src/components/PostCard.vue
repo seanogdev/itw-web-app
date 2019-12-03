@@ -77,6 +77,7 @@ export default {
       flex: 1 1 400px;
     }
   }
+
   .post-card-title {
     font-size: 26px;
     font-weight: 500;

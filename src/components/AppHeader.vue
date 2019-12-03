@@ -211,6 +211,7 @@ export default {
   height: 40px;
   font-size: 15px;
   background: transparent;
+
   &:focus {
     outline: none;
     border-color: rgba(#403e7f, 0.5);

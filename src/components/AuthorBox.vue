@@ -68,6 +68,7 @@ export default {
     border-color: $border-hover;
   }
 }
+
 .author-box-image {
   object-fit: cover;
   width: 150px;
@@ -88,11 +89,13 @@ export default {
 
 .author-box-description {
   margin-bottom: $spacing-4;
+
   &::v-deep {
     * {
       line-height: 1.5;
       color: $text-secondary;
     }
+
     p {
       margin-bottom: $spacing;
     }

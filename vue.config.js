@@ -9,6 +9,7 @@ module.exports = {
       },
     },
   },
+
   devServer: {
     proxy: {
       '/graphql': {
@@ -25,6 +26,7 @@ module.exports = {
       },
     },
   },
+
   chainWebpack: (config) => {
     // GraphQL Loader
     config.module
@@ -47,5 +49,10 @@ module.exports = {
         };
         return options;
       });
+  },
+
+  pluginOptions: {
+    lintStyleOnBuild: true,
+    stylelint: {},
   },
 };

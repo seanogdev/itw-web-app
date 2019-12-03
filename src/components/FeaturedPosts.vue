@@ -71,13 +71,14 @@ export default {
 .featured-posts-content {
   @media (min-width: 800px) {
     display: grid;
-    grid-template-columns: 1fr minmax(0px, $spacing * 47);
+    grid-template-columns: 1fr minmax(0, $spacing * 47);
     grid-gap: $spacing * 3;
   }
 }
 
 .other-posts {
   display: none;
+
   @media (min-width: 800px) {
     display: block;
   }

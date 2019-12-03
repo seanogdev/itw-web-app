@@ -148,6 +148,7 @@ export default {
     columns: 4;
     column-gap: $spacing-4;
   }
+
   li {
     margin-bottom: $spacing-2;
     font-size: 14px;

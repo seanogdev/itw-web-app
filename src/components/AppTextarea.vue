@@ -55,6 +55,7 @@ export default {
   &:focus {
     outline: none;
     border-color: $text-secondary;
+
     &::placeholder {
       color: #fff;
     }

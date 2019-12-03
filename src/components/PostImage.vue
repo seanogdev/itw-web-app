@@ -50,6 +50,7 @@ export default {
 .post-image--card {
   height: 240px;
 }
+
 .post-image img {
   width: 100%;
   height: 100%;

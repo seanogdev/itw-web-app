@@ -90,6 +90,7 @@ export default {
   background: transparent;
   border: 1px solid $border;
   color: $text-secondary;
+
   &:disabled {
     background: transparent;
     border-color: lighten($border, 40%);

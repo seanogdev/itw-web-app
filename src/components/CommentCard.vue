@@ -337,7 +337,7 @@ export default {
     }
 
     i,
-    emphasis {
+    em {
       font-style: italic;
     }
 
@@ -356,9 +356,11 @@ export default {
     h1 {
       font-size: 24px;
     }
+
     h2 {
       font-size: 20px;
     }
+
     h3 {
       font-size: 18px;
     }

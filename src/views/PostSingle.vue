@@ -133,6 +133,7 @@ export default {
   font-size: 29px;
   line-height: 1.4;
   margin-bottom: $spacing;
+
   @media (min-width: 800px) {
     font-size: 40px;
   }
@@ -144,6 +145,7 @@ export default {
   font-weight: 300;
   display: inline-block;
   margin-bottom: $spacing-4;
+
   button {
     font-weight: 300;
     font-size: 18px;
@@ -185,6 +187,7 @@ export default {
     .wp-block-embed.is-type-video {
       margin: $spacing-4 0;
       width: 100%;
+
       .wp-block-embed__wrapper {
         width: calc(100% + #{$spacing * 12});
         position: relative;
@@ -207,7 +210,7 @@ export default {
     }
 
     i,
-    emphasis {
+    em {
       font-style: italic;
     }
 
@@ -223,9 +226,11 @@ export default {
     h1 {
       font-size: 28px;
     }
+
     h2 {
       font-size: 24px;
     }
+
     h3 {
       font-size: 20px;
     }
