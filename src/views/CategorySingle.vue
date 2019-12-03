@@ -1,6 +1,10 @@
 <template>
   <div class="category">
-    <PostList :query="$options.query" :query-variables="{ slug: $route.params.slug }" />
+    <PostList
+      :empty-title="`No posts found in ${category.name}`"
+      :query="$options.query"
+      :query-variables="{ slug: $route.params.slug }"
+    />
   </div>
 </template>
 

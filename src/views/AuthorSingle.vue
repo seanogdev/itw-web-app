@@ -1,6 +1,10 @@
 <template>
   <div class="author">
-    <PostList :query="$options.query" :query-variables="{ userId: $route.params.userId }" />
+    <PostList
+     :empty-title="`No posts found for ${author.fullName}`"
+     :query="$options.query"
+     :query-variables="{ userId: $route.params.userId }"
+      />
   </div>
 </template>
 

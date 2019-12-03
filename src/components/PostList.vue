@@ -39,6 +39,10 @@ export default {
     PostCard,
   },
   props: {
+    emptyTitle: {
+      type: String,
+      default: null,
+    },
     query: {
       type: Object,
       required: true,
@@ -75,6 +79,8 @@ export default {
       const searchString = this.$store.state.searchInput;
       if (searchString) {
         message = `${message} with the term "${searchString}"`;
+      } else if (this.emptyTitle) {
+        message = this.emptyTitle;
       }
       return message;
     },
