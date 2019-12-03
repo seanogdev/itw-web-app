@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     alt: {
       type: Boolean,
@@ -29,7 +30,11 @@ export default {
         props.type = 'button';
       }
 
-      props = { ...props, ...this.props };
+      props = {
+        ...props,
+        ...this.$attrs,
+        ...this.props,
+      };
 
       return props;
     },
@@ -43,7 +48,10 @@ export default {
 <style lang="scss" scoped>
 .app-button {
   height: 40px;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   font-size: 16px;
   color: #fff;
   background: $app-primary;
@@ -80,18 +88,18 @@ export default {
 
 .app-button--alt {
   background: transparent;
-  border: 1px solid #e9ecf2;
+  border: 1px solid $border;
   color: $text-secondary;
   &:disabled {
     background: transparent;
-    border-color: lighten(#e9ecf2, 40%);
+    border-color: lighten($border, 40%);
   }
 
   &:hover,
   &:focus,
   &:active {
     background: transparent;
-    border-color: darken(#e9ecf2, 40%);
+    border-color: darken($border, 40%);
   }
 }
 </style>

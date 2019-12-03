@@ -39,7 +39,6 @@ export default {
   border: 1px solid lighten($text-secondary, 40%);
   padding: $spacing-2;
   font-size: 16px;
-  font-family: $font-family;
   line-height: 1.7;
   resize: none;
   color: $text-secondary;
@@ -50,7 +49,7 @@ export default {
   }
 
   &::placeholder {
-    color: #c5cada;
+    color: $border-hover;
   }
 
   &:focus {

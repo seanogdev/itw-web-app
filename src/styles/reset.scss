@@ -135,13 +135,16 @@ li {
   word-break: break-word;
 }
 
+input, button, textarea, body {
+  font-family: $font-family;
+}
+
 button {
   padding: 0;
   margin: 0;
   background: #999;
   border: 0;
   outline: none;
-  font-family: $font-family;
 
   &:hover {
     cursor: pointer;
@@ -150,4 +153,6 @@ button {
 
 svg {
   fill: currentColor;
+  width: 16px;
+  height: auto;
 }

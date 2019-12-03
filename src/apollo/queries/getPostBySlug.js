@@ -13,6 +13,7 @@ export default gql`
       content
       author {
         ...UserFields
+        description
         avatar(size: 100) {
           url
         }

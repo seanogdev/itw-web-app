@@ -5,7 +5,7 @@
         <router-link to="/" class="app-header__logo">
           <Logo />
         </router-link>
-        <AppHeaderDropdown
+        <AppHeaderSection
           button-title="Categories"
           :query="$options.CategoriesQuery"
           query-key="categories"
@@ -15,14 +15,14 @@
               {{ category.name | decode }}
             </router-link>
           </template>
-        </AppHeaderDropdown>
-        <AppHeaderDropdown button-title="Authors" :query="$options.UsersQuery" query-key="users">
+        </AppHeaderSection>
+        <AppHeaderSection button-title="Authors" :query="$options.UsersQuery" query-key="users">
           <template v-slot="{ node: user }">
             <router-link :to="user.internalLink" @click.native="resetActiveHeaderTab">
               {{ user.name }}
             </router-link>
           </template>
-        </AppHeaderDropdown>
+        </AppHeaderSection>
       </div>
       <div class="app-header__section app-header__section--right">
         <input
@@ -32,22 +32,19 @@
           class="app-header-search"
           @keydown.enter="navigateToHome"
         />
-        <AppButton
-          v-if="canPublishPosts"
-          class="app-button--header"
-          tag="a"
-          target="_blank"
-          :href="adminUrl"
-        >
-          Write a Post
-        </AppButton>
-        <img
-          v-if="currentUser && currentUser.avatar"
-          class="app-header-user"
-          :src="currentUser.avatar.url"
-          width="40px"
-          height="40px"
-        />
+
+        <Dropdown v-if="currentUser" class="app-header-user" placement="bottom-end" show-chevron>
+          <template #button>
+            <img v-if="currentUser.avatar" :src="currentUser.avatar.url" width="24" height="24" />
+            <span class="app-header-user-name">{{ currentUser.fullName }}</span>
+          </template>
+
+          <template #default>
+            <DropdownItem v-for="item in headerItems" :key="item.title" v-bind="item.props">
+              {{ item.title }}
+            </DropdownItem>
+          </template>
+        </Dropdown>
       </div>
     </div>
   </div>
@@ -55,7 +52,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import AppHeaderDropdown from '@/components/AppHeaderDropdown.vue';
+import AppHeaderSection from '@/components/AppHeaderSection.vue';
 // eslint-disable-next-line import/extensions
 import Logo from '@/assets/logo.svg?inline';
 import getCategories from '@/apollo/queries/getCategories';
@@ -64,21 +61,50 @@ import getUsers from '@/apollo/queries/getUsers';
 
 export default {
   components: {
-    AppHeaderDropdown,
+    AppHeaderSection,
     Logo,
   },
   CategoriesQuery: getCategories,
   UsersQuery: getUsers,
   computed: {
     ...mapState({ searchInputFromState: 'searchInput' }),
-    adminUrl() {
-      if (!process.env.VUE_APP_WORDPRESS_URL) {
-        return null;
-      }
-      return `${process.env.VUE_APP_WORDPRESS_URL}/wp-admin/post-new.php`;
-    },
     canPublishPosts() {
       return this.currentUser ? this.currentUser.capabilities.includes('publish_posts') : false;
+    },
+    headerItems() {
+      const items = [];
+      if (this.currentUser) {
+        items.push({
+          title: 'Logout',
+          props: {
+            tag: 'a',
+            href: this.logoutUrl,
+          },
+        });
+      }
+      if (this.canPublishPosts) {
+        items.push({
+          title: 'Write Post',
+          props: {
+            tag: 'a',
+            href: this.writePostUrl,
+            target: '_blank',
+          },
+        });
+      }
+      return items;
+    },
+    logoutUrl() {
+      if (!this.wordpressUrl) {
+        return null;
+      }
+      return `${this.wordpressUrl}/wp-admin/wp-login.php?action=logout`;
+    },
+    writePostUrl() {
+      if (!this.wordpressUrl) {
+        return null;
+      }
+      return `${this.wordpressUrl}/wp-admin/post-new.php`;
     },
     searchInput: {
       get() {
@@ -87,6 +113,9 @@ export default {
       set(value) {
         this.updateSearchInput(value);
       },
+    },
+    wordpressUrl() {
+      return process.env.VUE_APP_WORDPRESS_URL;
     },
   },
   apollo: {
@@ -115,14 +144,15 @@ export default {
   z-index: 1;
 
   .app-header-dropdown,
-  .app-button.app-button--header {
+  .app-header-user-name {
     display: none;
   }
 
   @media (min-width: 800px) {
     height: $header-height;
 
-    .app-header-dropdown {
+    .app-header-dropdown,
+    .app-header-user-name {
       display: block;
     }
 
@@ -130,13 +160,14 @@ export default {
       display: flex;
     }
   }
-  svg {
-    fill: transparent;
-  }
 }
 
 .app-header__logo {
   margin-right: $spacing * 6;
+  svg {
+    fill: transparent;
+    width: auto;
+  }
 }
 
 .app-header__content {
@@ -164,7 +195,6 @@ export default {
   height: 40px;
   font-size: 15px;
   background: transparent;
-  font-family: $font-family;
   &:focus {
     outline: none;
     border-color: rgba(#403e7f, 0.5);
@@ -180,7 +210,19 @@ export default {
 
 .app-header-user {
   margin-left: $spacing-4;
-  border-radius: 50%;
-  overflow: hidden;
+
+  ::v-deep .app-button {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    font-size: 14px;
+  }
+
+  img {
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: $spacing;
+  }
 }
 </style>

@@ -52,7 +52,7 @@ export default {
   padding: $spacing-4 $spacing-6;
   background: #fff;
   border-radius: 4px;
-  border: 1px solid #e9ecf2;
+  border: 1px solid $border;
   transition: all 0.2s ease-in-out;
   display: grid;
   grid-template-rows: 150px auto;
@@ -65,7 +65,7 @@ export default {
   }
 
   &:hover {
-    border-color: #c5cada;
+    border-color: $border-hover;
   }
 }
 .author-box-image {

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import VueMeta from 'vue-meta';
 import Vuelidate from 'vuelidate';
+import VTooltip from 'v-tooltip';
 
 import router from './router';
 import defaultClient from '@/apollo/client';
@@ -14,8 +15,9 @@ Vue.config.productionTip = false;
 
 // setup apollo
 Vue.use(VueApollo);
-Vue.use(VueMeta);
 Vue.use(Vuelidate);
+Vue.use(VueMeta);
+Vue.use(VTooltip);
 const apolloProvider = new VueApollo({
   defaultClient,
 });

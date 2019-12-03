@@ -44,7 +44,7 @@ export default {
 <style lang="scss">
 .comment-list {
   .comment-list,
-  .create-comment {
+  .comment-form-reply {
     margin-left: $spacing-4;
   }
 }

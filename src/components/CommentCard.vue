@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="comment">
-    <div class="comment-card">
+    <div v-if="!isEditing" class="comment-card">
       <router-link
         v-if="comment.author.avatar"
         :to="comment.author.internalLink"
@@ -10,11 +10,28 @@
         <img :src="comment.author.avatar.url" width="50" :alt="comment.author.fullName" />
       </router-link>
       <div class="comment-card-content">
-        <div class="comment-card-buttons">
-          <app-button v-if="shouldShowDeleteButton" alt @click="deleteComment">
-            Delete
-          </app-button>
-        </div>
+        <Dropdown class="comment-card-buttons" placement="bottom-end">
+          <template #button>
+            <Kebab />
+          </template>
+
+          <template #default>
+            <DropdownItem
+              v-if="shouldShowEditButton"
+              title="Edit this comment"
+              @click="toggleEditForm"
+            >
+              Edit comment
+            </DropdownItem>
+            <DropdownItem
+              v-if="shouldShowDeleteButton"
+              title="Delete this comment"
+              @click="deleteComment"
+            >
+              Delete comment
+            </DropdownItem>
+          </template>
+        </Dropdown>
         <router-link
           v-if="comment.author.internalLink"
           :to="comment.author.internalLink"
@@ -27,19 +44,22 @@
           {{ comment.date | formatDate }}
         </time>
         <div class="comment-card-body" v-html="comment.content" />
-        <AppButton v-if="shouldShowReplyButton" :alt="shouldShowReplyForm" @click="toggleReplyForm">
+        <AppButton
+          v-if="shouldShowReplyButton"
+          class="comment-reply-button"
+          :alt="shouldShowReplyForm"
+          @click="toggleReplyForm"
+        >
           {{ replyButtonText }}
         </AppButton>
       </div>
     </div>
-    <CreateCommentForm
-      v-if="shouldShowReplyForm"
+    <CommentForm
+      v-if="shouldShowCommentForm"
       ref="commentForm"
-      :parent-comment-id="comment.commentId"
-      :post-id="postId"
-      :title="`Replying to ${comment.author.name.split(' ')[0]}`"
+      v-bind="commentFormProps"
       @cancel="onCancel"
-      @success="onCreateCommentSuccess"
+      @success="onSuccess"
     />
     <CommentList
       v-if="comment.replies && comment.replies.nodes.length"
@@ -53,19 +73,22 @@
 </template>
 
 <script>
-import { focusFirstFocusable, findComments } from '@/utils/helpers';
+import { findComments } from '@/utils/helpers';
 import getCommentsByPostId from '@/apollo/queries/getCommentsByPostId';
 import deleteComment from '@/apollo/mutations/deleteComment';
+import getCurrentUser from '@/apollo/queries/getCurrentUser';
 
 import CommentList from '@/components/CommentList.vue';
-import CreateCommentForm from '@/components/CreateCommentForm.vue';
-import getCurrentUser from '@/apollo/queries/getCurrentUser';
+import CommentForm from '@/components/CommentForm.vue';
+// eslint-disable-next-line import/extensions
+import Kebab from '@/assets/kebab.svg?inline';
 
 export default {
   name: 'CommentCard',
   components: {
     CommentList,
-    CreateCommentForm,
+    CommentForm,
+    Kebab,
   },
   props: {
     depth: {
@@ -87,12 +110,38 @@ export default {
   },
   data() {
     return {
+      isEditing: false,
       shouldShowReplyForm: false,
     };
   },
   computed: {
+    commentFormProps() {
+      let props = {};
+      if (this.isEditing) {
+        props = {
+          comment: this.comment,
+          postId: this.postId,
+          title: 'Edit comment',
+          type: 'edit',
+        };
+      } else if (this.shouldShowReplyForm) {
+        props = {
+          parentCommentId: this.comment.commentId,
+          postId: this.postId,
+          title: `Replying to ${this.comment.author.name.split(' ')[0]}`,
+          type: 'reply',
+        };
+      }
+      return props;
+    },
+    shouldShowCommentForm() {
+      return this.shouldShowReplyForm || this.isEditing;
+    },
     shouldShowDeleteButton() {
       return this.isCurrentUserCommentAuthor || this.isCurrentUserCommentModerator;
+    },
+    shouldShowEditButton() {
+      return this.isCurrentUserCommentAuthor;
     },
     isCurrentUserCommentAuthor() {
       return (
@@ -122,12 +171,10 @@ export default {
   },
   methods: {
     async deleteComment() {
-      if (this.isCurrentUserCommentModerator && !this.isCurrentUserCommentAuthor) {
-        // eslint-disable-next-line no-alert
-        const confirm = window.confirm('Are you sure you want to delete this comment?');
-        if (!confirm) {
-          return;
-        }
+      // eslint-disable-next-line no-alert
+      const confirm = window.confirm('Are you sure you want to delete this comment?');
+      if (!confirm) {
+        return;
       }
       await this.$apollo.mutate({
         mutation: deleteComment,
@@ -178,20 +225,32 @@ export default {
         },
       });
     },
+    async toggleEditForm() {
+      this.isEditing = !this.isEditing;
+
+      // Wait for it to render
+      if (this.isEditing) {
+        await this.$nextTick();
+        this.$refs.commentForm.autosize();
+        this.$refs.commentForm.focus();
+      }
+    },
     async toggleReplyForm() {
       this.shouldShowReplyForm = !this.shouldShowReplyForm;
 
       // Wait for it to render
       await this.$nextTick();
       if (this.shouldShowReplyForm) {
-        focusFirstFocusable(this.$refs.commentForm.$el);
+        this.$refs.commentForm.focus();
       }
     },
     onCancel() {
       this.shouldShowReplyForm = false;
+      this.isEditing = false;
     },
-    onCreateCommentSuccess() {
+    onSuccess() {
       this.shouldShowReplyForm = false;
+      this.isEditing = false;
     },
   },
 };
@@ -203,12 +262,12 @@ export default {
   padding: $spacing-4 $spacing-6;
   background: #fff;
   border-radius: 4px;
-  border: 1px solid #e9ecf2;
+  border: 1px solid $border;
   transition: all 0.2s ease-in-out;
   display: flex;
 
   &:hover {
-    border-color: #c5cada;
+    border-color: $border-hover;
   }
 }
 
@@ -227,24 +286,28 @@ export default {
 
 .comment-card-buttons {
   position: absolute;
-  right: 0;
-}
+  right: -$spacing;
+  top: -$spacing;
 
-.comment-card-name,
-.comment-card-date {
-  display: block;
+  &::v-deep {
+    .dropdown-button {
+      border: none;
+    }
+  }
 }
 
 .comment-card-name {
-  padding-bottom: $spacing;
+  margin-bottom: $spacing;
+  display: inline-block;
   font-size: 19px;
   font-weight: 500;
 }
 
 .comment-card-date {
+  display: block;
   font-size: 14px;
   color: $text-tertiary;
-  padding-bottom: $spacing-3;
+  margin-bottom: $spacing-3;
 }
 
 .comment-card-body {
@@ -300,13 +363,13 @@ export default {
   }
 }
 
-.app-button {
+.comment-reply-button {
   height: 32px;
   padding: 0 $spacing-3;
   font-size: 13px;
 }
 
-.create-comment {
+.comment-form {
   margin-top: $spacing-2;
 }
 </style>

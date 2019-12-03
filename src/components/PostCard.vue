@@ -57,11 +57,11 @@ export default {
   overflow: hidden;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid #e9ecf2;
+  border: 1px solid $border;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    border-color: #c5cada;
+    border-color: $border-hover;
 
     .post-card-title {
       color: $app-primary;

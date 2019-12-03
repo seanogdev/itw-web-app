@@ -35,7 +35,7 @@
         <div v-else class="post-single-comments-load-more">
           There are no comments on this post yet.
         </div>
-        <CreateCommentForm title="Leave a new comment" :post-id="post.postId" />
+        <CommentForm title="Leave a new comment" :post-id="post.postId" />
       </div>
     </template>
   </div>
@@ -50,7 +50,7 @@ import { decode } from '@/utils/helpers';
 import AuthorBox from '@/components/AuthorBox.vue';
 import CollectionHeader from '@/components/CollectionHeader.vue';
 import CommentList from '@/components/CommentList.vue';
-import CreateCommentForm from '@/components/CreateCommentForm.vue';
+import CommentForm from '@/components/CommentForm.vue';
 import EmptyState from '@/components/EmptyState.vue';
 import PostImage from '@/components/PostImage.vue';
 import PostMeta from '@/components/PostMeta.vue';
@@ -60,7 +60,7 @@ export default {
     AuthorBox,
     CollectionHeader,
     CommentList,
-    CreateCommentForm,
+    CommentForm,
     EmptyState,
     Intersect,
     PostImage,
@@ -108,7 +108,7 @@ export default {
   background: #fff;
   overflow: hidden;
   border-radius: 4px;
-  border: 1px solid #e9ecf2;
+  border: 1px solid $border;
   margin-bottom: $spacing-4;
 }
 

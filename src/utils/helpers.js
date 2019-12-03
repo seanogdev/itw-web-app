@@ -33,7 +33,7 @@ export function generateFullName(user) {
 
 export function stripHtml(html) {
   const doc = new DOMParser().parseFromString(html, 'text/html');
-  return doc.body.textContent || '';
+  return doc.body.textContent ? doc.body.textContent.replace(/^\n|\n$/g, '') : '';
 }
 
 export function truncate(str, wordCount = 15) {
@@ -90,6 +90,24 @@ export function findComments({ commentId, comments, onFound }) {
   for (const node of parent) {
     if (node.commentId === commentId) {
       onFound(node.replies.nodes);
+      return;
+    }
+    if (node.replies && node.replies.nodes.length) {
+      findComments({
+        commentId,
+        comments: node.replies,
+        onFound,
+      });
+    }
+  }
+}
+
+export function findComment({ commentId, comments, onFound }) {
+  const parent = comments.nodes;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const node of parent) {
+    if (node.commentId === commentId) {
+      onFound(node);
       return;
     }
     if (node.replies && node.replies.nodes.length) {
