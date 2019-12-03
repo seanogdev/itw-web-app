@@ -52,9 +52,17 @@ export default {
   z-index: 2;
 
   .tooltip-inner {
+    border: 1px solid $border;
     background: white;
     border-radius: 16px;
     padding: $spacing/2 $spacing 4px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &:hover {
+    .tooltip-inner {
+      border-color: $border-hover;
+    }
   }
 
   .tooltip-arrow {
@@ -139,6 +147,10 @@ export default {
 
     .popover-arrow {
       border-color: #fff;
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 

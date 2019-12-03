@@ -141,7 +141,10 @@ export default {
       return this.isCurrentUserCommentAuthor || this.isCurrentUserCommentModerator;
     },
     shouldShowEditButton() {
-      return this.isCurrentUserCommentAuthor;
+      return (
+        this.isCurrentUserCommentAuthor ||
+        (this.isCurrentUserCommentModerator && !this.comment.author.userId)
+      );
     },
     isCurrentUserCommentAuthor() {
       return (

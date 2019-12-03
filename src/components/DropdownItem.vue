@@ -37,16 +37,23 @@ export default {
   text-align: left;
   color: $app-primary;
 
-  &:not(:last-child) {
-    border-bottom: 1px solid $border;
+  &:not(:first-child) {
+    border-top: 1px solid $border;
   }
 
   &:hover,
   &:focus,
   &:active {
+    cursor: pointer;
     background: $border;
     border-color: $border-hover;
-    color: darken($app-primary, 15%);
+    color: darken($app-primary, 10%);
+  }
+
+  &:first-child:hover {
+    & + .dropdown-item {
+      border-color: $border-hover;
+    }
   }
 }
 </style>
