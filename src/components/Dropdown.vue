@@ -84,7 +84,7 @@ export default {
       border-right-color: transparent !important;
       border-bottom-color: transparent !important;
       bottom: -$spacing/2;
-      left: calc(50% - $spacing/2);
+      left: calc(50% - #{$spacing/2});
       margin-top: 0;
       margin-bottom: 0;
     }
@@ -99,7 +99,7 @@ export default {
       border-right-color: transparent !important;
       border-top-color: transparent !important;
       top: -$spacing/2;
-      left: calc(50% - $spacing/2);
+      left: calc(50% - #{$spacing/2});
       margin-top: 0;
       margin-bottom: 0;
     }
@@ -114,7 +114,7 @@ export default {
       border-top-color: transparent !important;
       border-bottom-color: transparent !important;
       left: -$spacing/2;
-      top: calc(50% - $spacing/2);
+      top: calc(50% - #{$spacing/2});
       margin-left: 0;
       margin-right: 0;
     }
@@ -129,7 +129,7 @@ export default {
       border-right-color: transparent !important;
       border-bottom-color: transparent !important;
       right: -$spacing/2;
-      top: calc(50% - $spacing/2);
+      top: calc(50% - #{$spacing/2});
       margin-left: 0;
       margin-right: 0;
     }
