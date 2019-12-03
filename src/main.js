@@ -1,15 +1,21 @@
 import Vue from 'vue';
+
+// plugins
 import VueApollo from 'vue-apollo';
 import VueMeta from 'vue-meta';
 import Vuelidate from 'vuelidate';
 import VTooltip from 'v-tooltip';
 
+// deps
 import router from './router';
 import defaultClient from '@/apollo/client';
 import components from '@/utils/components';
 import filters from '@/utils/filters';
 import store from './store';
 import App from '@/App.vue';
+
+// sw
+import '@/registerServiceWorker';
 
 Vue.config.productionTip = false;
 

@@ -10,6 +10,13 @@ module.exports = {
     },
   },
 
+  pwa: {
+    name: process.env.VUE_APP_NAME,
+    appleMobileWebAppCapable: true,
+    themeColor: '#6a84ed',
+    msTileColor: '#6a84ed',
+  },
+
   devServer: {
     proxy: {
       '/graphql': {
