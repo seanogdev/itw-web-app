@@ -10,7 +10,11 @@
         <img :src="comment.author.avatar.url" width="50" :alt="comment.author.fullName" />
       </router-link>
       <div class="comment-card-content">
-        <Dropdown class="comment-card-buttons" placement="bottom-end">
+        <Dropdown
+          v-if="shouldShowEditButton || shouldShowDeleteButton"
+          class="comment-card-buttons"
+          placement="bottom-end"
+        >
           <template #button>
             <Kebab />
           </template>
