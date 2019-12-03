@@ -114,6 +114,11 @@ export default {
       shouldShowReplyForm: false,
     };
   },
+  apollo: {
+    currentUser: {
+      query: getCurrentUser,
+    },
+  },
   computed: {
     commentFormProps() {
       let props = {};
@@ -155,12 +160,6 @@ export default {
     },
     isCurrentUserCommentModerator() {
       return this.currentUser && this.currentUser.capabilities.includes('moderate_comments');
-    },
-    currentUser() {
-      const query = this.$apollo.provider.defaultClient.readQuery({
-        query: getCurrentUser,
-      });
-      return query && query.currentUser ? query.currentUser : null;
     },
     shouldShowReplyButton() {
       return this.depth < 5 && !!this.currentUser;

@@ -33,10 +33,13 @@
           @keydown.enter="navigateToHome"
         />
 
-        <Dropdown v-if="currentUser" class="app-header-user" placement="bottom-end" show-chevron>
-          <template #button>
+        <Dropdown class="app-header-user" placement="bottom-end" show-chevron>
+          <template v-if="currentUser" #button>
             <img v-if="currentUser.avatar" :src="currentUser.avatar.url" width="24" height="24" />
             <span class="app-header-user-name">{{ currentUser.fullName }}</span>
+          </template>
+          <template v-else #button>
+            <img src="http://www.gravatar.com/avatar/?d=identicon" width="24" height="24" />
           </template>
 
           <template #default>
@@ -78,7 +81,15 @@ export default {
           title: 'Logout',
           props: {
             tag: 'a',
-            href: this.logoutUrl,
+            href: `${this.loginUrl}?action=logout`,
+          },
+        });
+      } else {
+        items.push({
+          title: 'Login',
+          props: {
+            tag: 'a',
+            href: this.loginUrl,
           },
         });
       }
@@ -94,11 +105,11 @@ export default {
       }
       return items;
     },
-    logoutUrl() {
+    loginUrl() {
       if (!this.wordpressUrl) {
         return null;
       }
-      return `${this.wordpressUrl}/wp-admin/wp-login.php?action=logout`;
+      return `${this.wordpressUrl}/wp-login.php`;
     },
     writePostUrl() {
       if (!this.wordpressUrl) {
@@ -163,7 +174,6 @@ export default {
 }
 
 .app-header__logo {
-  margin-right: $spacing-8;
   svg {
     fill: transparent;
     width: auto;
@@ -182,6 +192,12 @@ export default {
 .app-header__section {
   display: flex;
   align-items: center;
+}
+
+.app-header-dropdown {
+  &:first-of-type {
+    margin-left: $spacing-8;
+  }
 }
 
 .app-header__section--right {

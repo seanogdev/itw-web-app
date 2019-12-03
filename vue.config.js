@@ -19,6 +19,10 @@ module.exports = {
         target: 'http://localhost:8000',
         ws: true,
       },
+      '/wp-login.php': {
+        target: 'http://localhost:8000',
+        ws: true,
+      },
     },
   },
   chainWebpack: (config) => {

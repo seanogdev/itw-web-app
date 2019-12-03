@@ -85,6 +85,11 @@ export default {
       isLoading: false,
     };
   },
+  apollo: {
+    currentUser: {
+      query: getCurrentUser,
+    },
+  },
   validations: {
     message: {
       required,
@@ -93,12 +98,6 @@ export default {
   computed: {
     commentFormClasses() {
       return [{ [`comment-form-${this.type}`]: this.type }];
-    },
-    currentUser() {
-      const query = this.$apollo.provider.defaultClient.readQuery({
-        query: getCurrentUser,
-      });
-      return query && query.currentUser ? query.currentUser : null;
     },
     placeholderMessage() {
       if (!this.currentUser) {
