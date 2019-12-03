@@ -163,7 +163,7 @@ export default {
 }
 
 .app-header__logo {
-  margin-right: $spacing * 6;
+  margin-right: $spacing-8;
   svg {
     fill: transparent;
     width: auto;

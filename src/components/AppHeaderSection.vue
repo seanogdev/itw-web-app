@@ -91,7 +91,7 @@ export default {
   color: $text-primary;
   font-size: 15px;
   font-weight: 600;
-  margin-right: $spacing-2;
+  margin-right: $spacing-4;
   user-select: none;
   cursor: pointer;
   display: flex;
@@ -105,13 +105,14 @@ export default {
   svg {
     margin-left: $spacing;
     width: 12px;
+    height: 10px;
     fill: currentColor;
     transition: transform 0.2s ease-in;
   }
 
   .app-header-dropdown--is-open & {
     svg {
-      transform: rotate(-180deg);
+      transform: rotate(180deg);
     }
   }
 }

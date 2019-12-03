@@ -73,6 +73,7 @@ a {
   max-width: $app-width;
   margin: 0 auto;
   padding: $spacing * 4 $spacing-2;
+  min-height: 100vh;
 }
 
 .app-footer {
