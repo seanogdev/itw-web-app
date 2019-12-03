@@ -35,11 +35,24 @@
 
         <Dropdown class="app-header-user" placement="bottom-end" show-chevron>
           <template v-if="currentUser" #button>
-            <img v-if="currentUser.avatar" :src="currentUser.avatar.url" width="24" height="24" />
-            <span class="app-header-user-name">{{ currentUser.fullName }}</span>
+            <img
+              v-if="currentUser.avatar"
+              class="app-header-user-img"
+              :src="currentUser.avatar.url"
+              width="24"
+              height="24"
+            />
+            <span class="app-header-user-name">
+              {{ currentUser.fullName }}
+            </span>
           </template>
           <template v-else #button>
-            <img src="http://www.gravatar.com/avatar/?d=identicon" width="24" height="24" />
+            <img
+              class="app-header-user-img"
+              src="http://www.gravatar.com/avatar/?d=identicon"
+              width="24"
+              height="24"
+            />
           </template>
 
           <template #default>
@@ -236,10 +249,14 @@ export default {
     font-size: 14px;
   }
 
-  img {
+  .app-header-user-img {
+    margin-left: -($spacing/2);
     border-radius: 50%;
     overflow: hidden;
-    margin-right: $spacing;
+  }
+
+  .app-header-user-name {
+    margin-left: $spacing;
   }
 }
 </style>
