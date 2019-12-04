@@ -1,15 +1,12 @@
 import gql from 'graphql-tag';
 import CategoryFields from '@/apollo/fragments/CategoryFields';
 import UserFields from '@/apollo/fragments/UserFields';
+import PostFields from '@/apollo/fragments/PostFields';
 
 export default gql`
   query getPostBySlug($slug: String!) {
     post: postBy(slug: $slug) {
-      link
-      internalLink @client
-      postId
-      title
-      date
+      ...PostFields
       content
       author {
         ...UserFields
@@ -17,12 +14,6 @@ export default gql`
         avatar(size: 100) {
           url
         }
-      }
-      featuredImage {
-        altText
-        sourceUrl
-        srcSet
-        sizes
       }
       categories {
         edges {
@@ -33,6 +24,7 @@ export default gql`
       }
     }
   }
+  ${PostFields}
   ${CategoryFields}
   ${UserFields}
 `;

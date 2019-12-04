@@ -8,6 +8,7 @@ export default gql`
     internalLink @client
     postId
     title
+    likes
     excerpt
     featuredImage {
       altText

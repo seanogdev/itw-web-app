@@ -16,6 +16,7 @@
             <router-link :to="post.author.internalLink">{{ post.author.fullName }}</router-link>
           </span>
           <div class="post-single-content" v-html="post.content" />
+          <div class="post-like-meta">{{ post.likes }} people have liked this post</div>
         </div>
       </div>
       <AuthorBox ref="authorBox" :author="post.author" />
